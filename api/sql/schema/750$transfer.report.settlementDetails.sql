@@ -1,5 +1,6 @@
 ALTER PROCEDURE [transfer].[report.settlementDetails]
     @settlementDate datetime,                 -- setalment report date
+    @deviceId BIGINT = NULL,                  -- device identifier
     @pageSize INT = 25,                       -- how many rows will be returned per page
     @pageNumber INT = 1,                      -- which page number to display
     @orderBy core.orderByTT READONLY,         -- what kind of sort to be used ascending or descending & on which column results to be sorted
@@ -82,8 +83,8 @@ BEGIN TRY
                             WHEN @sortBy = N'transferIdIssuer' THEN CASE WHEN v.channelType = N'iso' 
                                                                             THEN REPLICATE(N'0',30-len(v.transferIdIssuer)) + CAST(v.transferIdIssuer AS NVARCHAR(50)) 
                                                                          ELSE REPLICATE(N'0',30-len(v.transferId)) + CAST(v.transferId AS NVARCHAR(50)) END
-                            WHEN @sortBy = N'deviceId' THEN p.[name]
-                            WHEN @sortBy = N'deviceName' THEN p.[name]
+                            WHEN @sortBy = N'deviceId' THEN processing.x.value(N'(terminalId)[1]', N'NVARCHAR(150)')
+                            WHEN @sortBy = N'deviceName' THEN processing.x.value(N'(terminalName)[1]', N'NVARCHAR(150)')
                         END
                     END ASC,
                  CASE
@@ -113,8 +114,8 @@ BEGIN TRY
                             WHEN @sortBy = N'transferIdIssuer' THEN CASE WHEN v.channelType = N'iso' 
                                                                             THEN REPLICATE(N'0',30-len(v.transferIdIssuer)) + CAST(v.transferIdIssuer AS NVARCHAR(50)) 
                                                                          ELSE REPLICATE(N'0',30-len(v.transferId)) + CAST(v.transferId AS NVARCHAR(50)) END
-                            WHEN @sortBy = N'deviceId' THEN p.[name]
-                            WHEN @sortBy = N'deviceName' THEN p.[name]
+                            WHEN @sortBy = N'deviceId' THEN processing.x.value(N'(terminalId)[1]', N'NVARCHAR(150)')
+                            WHEN @sortBy = N'deviceName' THEN processing.x.value(N'(terminalName)[1]', N'NVARCHAR(150)')
                         END
                     END DESC
           ) AS rowNum,
@@ -136,6 +137,7 @@ BEGIN TRY
         AND v.settlementDate >= DATEADD(DAY, DATEDIFF(DAY, 0, ISNULL(@settlementDate, GETDATE())), 0)
         AND v.settlementDate < DATEADD(DAY, DATEDIFF(DAY, 0, ISNULL(@settlementDate, GETDATE())), 1)
         AND (v.channelType = N'iso' OR p.issuerId != N'cbs')
+        AND (@deviceId IS NULL OR processing.x.value(N'(terminalId)[1]', N'NVARCHAR(150)') = @deviceId)
     )
     SELECT
         sd.channelType,
