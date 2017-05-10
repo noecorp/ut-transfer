@@ -52,7 +52,7 @@ module.exports = (gridStyle) => ({
     filters: [
         { name: 'cardNumber', label: 'Card Number', placeholder: 'Card Number', type: filterElementTypes.searchBox },
         { name: 'accountNumber', label: 'Account Number', placeholder: 'Account Number', type: filterElementTypes.searchBox },
-        { name: 'deviceId', label: 'Device ID', placeholder: 'Device ID', type: filterElementTypes.searchBox },
+        { name: 'deviceId', label: 'Device Id', placeholder: 'Device Id', type: filterElementTypes.searchBox },
         {
             name: 'issuerTxState',
             label: 'Issuer response',
