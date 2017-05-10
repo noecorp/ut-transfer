@@ -34,9 +34,15 @@ module.exports = (gridStyle) => ({
     toolbox: {
         showAdvanced: false,
         maxVisibleInputs: 3,
-        filterAutoFetch: true
+        filterAutoFetch: false
     },
     filters: [
+        {
+            name: 'deviceId',
+            label: 'Device Id',
+            placeholder: 'Device Id',
+            type: filterElementTypes.searchBox
+        },
         {
             label: 'Settlement Date',
             name: 'settlementDate',
