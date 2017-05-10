@@ -1,6 +1,6 @@
 ALTER PROCEDURE [transfer].[report.settlementDetails]
     @settlementDate datetime,                 -- setalment report date
-    @deviceId BIGINT = NULL,                  -- device identifier
+    @deviceId NVARCHAR(50) = NULL,            -- device identifier
     @pageSize INT = 25,                       -- how many rows will be returned per page
     @pageNumber INT = 1,                      -- which page number to display
     @orderBy core.orderByTT READONLY,         -- what kind of sort to be used ascending or descending & on which column results to be sorted
