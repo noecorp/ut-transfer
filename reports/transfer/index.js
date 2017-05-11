@@ -14,11 +14,16 @@ endDate.setMilliseconds(999);
 
 module.exports = (gridStyle) => ({
     title: 'Transfer report',
+    export: {
+        method: 'db/transfer.report.transfer',
+        resultsetName: 'transfers',
+        maxSize: 20000
+    },
     grid: {
         fields: [
             { name: 'transferId', title: 'Trans#' },
             { name: 'cardNumber', title: 'Card Number' },
-            { name: 'transferDateTime', title: 'Date and Time of TXN' },
+            { name: 'transferDateTime', title: 'Date' },
             { name: 'sourceAccount', title: 'Debit Account' },
             { name: 'destinationAccount', title: 'Credit Account' },
             { name: 'description', title: 'Description' },
@@ -40,10 +45,6 @@ module.exports = (gridStyle) => ({
         rowStyleField: 'style',
         externalStyle: gridStyle
     },
-    // export: {
-    //     method: 'your.exportMethod.here', // TODO replace with transfer report strored procedure
-    //     maxSize: 20000
-    // },
     toolbox: {
         showAdvanced: true,
         maxVisibleInputs: 5,

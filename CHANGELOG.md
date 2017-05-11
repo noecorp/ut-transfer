@@ -1,3 +1,44 @@
+<a name="6.10.5"></a>
+## [6.10.5](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.10.4...v6.10.5) (2017-05-11)
+
+
+### Bug Fixes
+
+* total amount/count, stats of successful txn, optimization ([886af8b](https://github.com/softwaregroup-bg/ut-transfer/commit/886af8b))
+
+
+
+<a name="6.10.4"></a>
+## [6.10.4](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.10.3...v6.10.4) (2017-05-11)
+
+
+### Bug Fixes
+
+* add success column in vTransfer ([2366b79](https://github.com/softwaregroup-bg/ut-transfer/commit/2366b79))
+
+
+
+<a name="6.10.3"></a>
+## [6.10.3](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.10.2...v6.10.3) (2017-05-11)
+
+
+### Bug Fixes
+
+* register export/print handlers and provide method and resultset name ([679b009](https://github.com/softwaregroup-bg/ut-transfer/commit/679b009))
+* report column styles ([46246f9](https://github.com/softwaregroup-bg/ut-transfer/commit/46246f9))
+
+
+
+<a name="6.10.2"></a>
+## [6.10.2](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.10.1...v6.10.2) (2017-05-10)
+
+
+### Bug Fixes
+
+* version bump ([#36](https://github.com/softwaregroup-bg/ut-transfer/issues/36)) ([8e9bdba](https://github.com/softwaregroup-bg/ut-transfer/commit/8e9bdba))
+
+
+
 <a name="6.10.1"></a>
 ## [6.10.1](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.10.0...v6.10.1) (2017-05-09)
 
