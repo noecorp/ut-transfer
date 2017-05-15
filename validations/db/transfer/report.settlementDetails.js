@@ -4,6 +4,7 @@ module.exports = {
     description: 'Settlement details report',
     params: joi.object().keys({
         settlementDate: joi.string().allow('', null),
+        deviceId: joi.string().allow('', null),
         orderBy: joi.object().keys({
             field: joi.string(),
             dir: joi.string().valid(['asc', 'desc', ''])

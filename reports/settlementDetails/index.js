@@ -45,6 +45,12 @@ module.exports = (gridStyle) => ({
     },
     filters: [
         {
+            label: 'Device Id',
+            placeholder: 'Device Id',
+            name: 'deviceId',
+            type: filterElementTypes.searchBox
+        },
+        {
             label: 'Settlement Date',
             name: 'settlementDate',
             type: filterElementTypes.datePicker,
