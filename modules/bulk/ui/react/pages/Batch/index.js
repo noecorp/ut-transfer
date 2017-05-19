@@ -2,97 +2,206 @@ import React, { Component, PropTypes } from 'react';
 import {connect} from 'react-redux';
 import {getLink} from 'ut-front/react/routerHelper';
 import { AddTab } from 'ut-front-react/containers/TabMenu';
-import classnames from 'classnames';
-
-import GridToolbox from '../../containers/Batch/GridToolbox';
 import Header from 'ut-front-react/components/PageLayout/Header';
-
-import Grid from '../../containers/Batch/Grid';
-import DetailEdit from '../../containers/Batch/Popups/Details';
-
+import resizibleTypes from 'ut-front-react/components/ResiziblePageLayout/resizibleTypes';
+import ResizibleContainer from 'ut-front-react/components/ResiziblePageLayout/Container';
+import GridToolbox from 'ut-front-react/components/SimpleGridToolbox';
+import Popup from 'ut-front-react/components/Popup';
 import mainStyle from 'ut-front-react/assets/index.css';
 import style from '../style.css';
+import Filters from './Filters';
+import Toolbox from './ToolBox';
+import BulkBatchGrid from './Grid';
+import Pagination from './Filters/Pagination';
+import {bindActionCreators} from 'redux';
+import * as actions from './actions';
+import UploadForm from './UploadForm';
+import DetailEdit from './Popups/Details';
 
-import UploadForm from '../../containers/UploadForm';
-import DeleteBatch from '../../containers/Batch/Popups/DeleteBatch';
-import {fetchBatches} from '../../containers/Batch/Grid/actions';
+const defaultAsideWidth = 200;
+const popUps = {
+    batchDetailsPopup: 'batchDetailsPopup',
+    batchUploadPopup: 'batchUploadPopup'
+};
 
 class BulkBatch extends Component {
     constructor(props, context) {
         super(props, context);
-        this.toggleUploadPopup = this.toggleUploadPopup.bind(this);
-        this.openUploadFile = this.openUploadFile.bind(this);
-        this.getHeaderButtons = this.getHeaderButtons.bind(this);
         this.state = {
-            uploadPopup: false
+            isPopupOpen: false,
+            popupFor: ''
+        };
+        this.togglePopup = this.togglePopup.bind(this);
+        this.toggleFilter = this.toggleFilter.bind(this);
+        this.permissions = {
+            canEdit: this.context.checkPermission('bulk.batch.edit')
         };
     }
-
-    toggleUploadPopup(refresh) {
+    toggleFilter() {
+        this.props.actions.toggleFilter();
+    }
+    componentWillMount() {
+        this.props.actions.fetchBatchTypes();
+    }
+    togglePopup(popupFor) {
         this.setState({
-            uploadPopup: !this.state.uploadPopup
+            isPopupOpen: !this.state.isPopupOpen,
+            popupFor: popupFor
         });
-        if (refresh === true) {
-            this.props.fetchBatches({actorId: this.props.actorId});
+    }
+    getTitle(batchTypeName) {
+        return 'Bulk Payments - ' + title();
+        function title() {
+            switch (batchTypeName) {
+                case 'debit':
+                    return 'Debit';
+                case 'credit':
+                    return 'Credit';
+                case 'merchants':
+                    return 'Credit Merchants';
+                default:
+                    return 'Batch';
+            }
         }
     }
-    openUploadFile() {
-
-    }
-    getHeaderButtons() {
-        let buttons = [];
-        this.context.checkPermission('bulk.batch.add') && buttons.push({text: 'Upload Batch', onClick: this.toggleUploadPopup});
+    getDetailsAction() {
+        let buttons = []; var self = this;
+        var canEditByStatus = this.props.selectedBatch && ['new', 'rejected'].includes(this.props.selectedBatch.get('status').toLowerCase());
+        if (this.permissions.canEdit && canEditByStatus) {
+            buttons.push({
+                label: 'Save',
+                type: 'submit',
+                onClick: () => {
+                    let {batchDetails} = self.props;
+                    self.props.actions.saveBatch(batchDetails);
+                    self.togglePopup();
+                },
+                styleType: 'primaryDialog'
+            });
+        }
+        buttons.push({
+            label: 'Cancel',
+            onClick: this.togglePopup,
+            styleType: 'secondaryDialog'
+        });
         return buttons;
     }
-
-    render() {
-        let canEdit = this.props.canEditByStatus && this.context.checkPermission('bulk.batch.add');
-        return (
-        <div className={mainStyle.contentTableWrap} style={{minWidth: '925px'}}>
-                <AddTab pathname={getLink('ut-transfer:bulkBatch')} title='Bulk Payments' />
-                <div>
-                        <Header text='Bulk Payments - Batch' buttons={this.getHeaderButtons()} />
-                </div>
-                <div className={classnames(mainStyle.actionBarWrap, style.actionBarWrap)}>
-                    <GridToolbox batchId={this.props.checkedRow.batchId} />
-                </div>
-                <div className={classnames(mainStyle.tableWrap, style.tableWrap)}>
-                        <div className={style.grid}>
-                            <Grid />
-                        </div>
-                </div>
-                {this.state.uploadPopup &&
+    getPopupActions() {
+        switch (this.state.popupFor) {
+            case popUps.batchDetailsPopup:
+                return this.getDetailsAction();
+            default:
+                return [{
+                    label: 'Cancel',
+                    onClick: this.togglePopup,
+                    styleType: 'secondaryDialog'
+                }];
+        }
+    }
+    getPopUpContent() {
+        var canEditByStatus = this.props.selectedBatch && ['new', 'rejected'].includes(this.props.selectedBatch.get('status').toLowerCase());
+        switch (this.state.popupFor) {
+            case popUps.batchDetailsPopup:
+                return (<DetailEdit canEdit={this.permissions.canEdit && canEditByStatus} />);
+            /*  case popUps.batchUploadPopup:
+                return (
                     <UploadForm
-                      onClose={this.toggleUploadPopup}
+                      onClose={this.togglePopup}
+                      batchTypeName={this.props.batchTypeName}
+                    />); */
+            default:
+                return null;
+        }
+    }
+    getPopUpTitle() {
+        switch (this.state.popupFor) {
+            case popUps.batchDetailsPopup:
+                return 'Batch Details';
+            // case popUps.batchUploadPopup:
+            //     return 'Create Batch';
+            default:
+                return null;
+        }
+    }
+    render() {
+        var self = this;
+        let { selectedBatch, batchTypeName } = this.props;
+        let contentNormalWidth = window.innerWidth - defaultAsideWidth;
+        var content = (
+            <div className={mainStyle.contentTableWrap}>
+                <div className={mainStyle.actionBarWrap}>
+                    {
+                        <GridToolbox
+                          title={selectedBatch && !self.props.showFilter ? 'Show Filters' : selectedBatch ? 'Show Buttons' : 'Filter by'}
+                          toggle={this.toggleFilter}
+                          isTitleLink={!!selectedBatch}
+                          opened>
+                            { selectedBatch && !self.props.showFilter ? (
+                              <div className={style.actionWrap}>
+                                <Toolbox togglePopup={this.togglePopup} batchTypeName={batchTypeName} />
+                               </div>
+                            ) : <Filters />}
+                        </GridToolbox>
+                    }
+                </div>
+                 <BulkBatchGrid batchTypeName={batchTypeName} togglePopup={this.togglePopup} />
+                 <Pagination />
+            </div>
+        );
+        var resizibleContainerCols = [
+            {type: resizibleTypes.CONTENT, id: 'roleContent', width: contentNormalWidth, normalWidth: contentNormalWidth, child: content}
+        ];
+        return (
+            <div>
+                <AddTab pathname={getLink('ut-transfer:bulkBatch', {batchTypeName: this.props.batchTypeName})} title={this.getTitle(this.props.batchTypeName)} />
+                <Header text={this.getTitle(this.props.batchTypeName)}
+                  buttons={[{text: 'Create Batch', onClick: () => { self.togglePopup(popUps.batchUploadPopup); }}]} />
+                <ResizibleContainer cols={resizibleContainerCols} />
+                <Popup
+                  isOpen={self.state.isPopupOpen && this.state.popupFor !== popUps.batchUploadPopup}
+                  header={{text: this.getPopUpTitle()}}
+                  closePopup={self.togglePopup}
+                  footer={{actionButtons: this.getPopupActions()}}>
+                  { self.state.isPopupOpen && this.state.popupFor !== popUps.batchUploadPopup ? this.getPopUpContent() : (<div />)}
+                </Popup>
+                {this.state.isPopupOpen && this.state.popupFor === popUps.batchUploadPopup &&
+                    <UploadForm
+                      onClose={this.togglePopup}
+                      batchTypeName={this.props.batchTypeName}
                     />
                 }
-                <DeleteBatch />
-                <DetailEdit canEdit={canEdit} />
-        </div>
+            </div>
         );
     }
 }
 
 BulkBatch.propTypes = {
-    fetchBatches: PropTypes.func,
-    checkedRow: PropTypes.object,
-    actorId: PropTypes.string,
-    canEditByStatus: PropTypes.bool
+    selectedBatch: PropTypes.object,
+    showFilter: PropTypes.bool,
+    uploadForm: PropTypes.object,
+    errors: PropTypes.object,
+    batchDetails: PropTypes.object,
+    batchTypeName: PropTypes.string,
+    actions: PropTypes.object
 };
 
 BulkBatch.contextTypes = {
     checkPermission: PropTypes.func.isRequired
 };
 
-export default connect(
-    (state, ownProps) => {
-        return {
-            checkedRow: state.bulkBatchGrid.get('checkedRow').toJS(),
-            actorId: state.login.getIn(['result', 'identity.check', 'actorId']),
-            canEditByStatus: ['new', 'rejected'].includes(state.bulkBatchDetailEditPopup.getIn(['item', 'status']))
-        };
-    },
-    {
-        fetchBatches
-    }
-)(BulkBatch);
+function mapStateToProps(state, ownProps) {
+    var uploadForm = state.bulkBatch.get('uploadForm');
+    return {
+        batchTypeName: ownProps.params.batchTypeName,
+        errors: uploadForm.get('errors'),
+        selectedBatch: state.bulkBatch.get('selectedBatch'),
+        showFilter: state.bulkBatch.get('showFilter'),
+        batchDetails: state.bulkBatch.get('batchDetails'),
+        uploadForm
+    };
+}
+export default connect(mapStateToProps, (dispatch) => {
+    return {
+        actions: bindActionCreators(actions, dispatch)
+    };
+})(BulkBatch);

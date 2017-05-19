@@ -1,3 +1,7 @@
-import Main from './Batch';
+import BulkBatch from './Batch';
+import Payment from './Payment';
 
-export { Main };
+export {
+     Payment,
+     BulkBatch
+};

@@ -1,0 +1,3 @@
+export const TOGGLE_PRELOAD = Symbol('TOGGLE_PRELOAD');
+export const CHANGE_BATCH_INPUT = Symbol('CHANGE_BATCH_INPUT');
+export const CLEAR_BATCH_PROFILE = Symbol('CLEAR_BATCH_PROFILE');

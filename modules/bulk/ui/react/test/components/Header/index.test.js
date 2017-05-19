@@ -9,7 +9,7 @@ test('Testing Header Component inside ../components/Header/index.js', t => {
     t.plan(3); // Plan how many asserting you would have
 
     let props = {
-        batchName: 'new',
+        batchTypeName: 'new',
         batchStatus: 'new'
     };
 
