@@ -9,9 +9,8 @@ DECLARE @parentItemNameId bigint
 IF NOT EXISTS (SELECT * FROM [core].[itemType] WHERE [name] = 'batchAction')
 BEGIN
     INSERT INTO [core].[itemType]([alias], [name],[description],[table],[keyColumn],[nameColumn])
-    VALUES('batchAction', 'batchAction', 'batchAction', '[bulk].[batchAction]', 'itemNameId', 'itemName')
+    VALUES('batchAction', 'batchAction', 'batchAction', '[bulk].[batchAction]', 'itemNameId', NULL)
 END
-
 
 DELETE FROM @itemNameTranslationTT
 

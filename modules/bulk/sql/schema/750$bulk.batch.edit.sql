@@ -17,10 +17,9 @@ END
 UPDATE b
     SET
     b.name = ub.name,
-    b.account= ub.account,
-    b.description = ISNULL(ub.description, b.description),
+    b.account= ISNULL(ub.account, b.account),
+    b.description = ub.description,
     b.updatedOn= GETDATE(),
-    b.reason= ub.reason,
     b.updatedBy= @userId
 FROM [bulk].[batch] b
 JOIN @batch ub on ub.batchId = b.batchId

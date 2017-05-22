@@ -1,6 +1,5 @@
 ALTER PROCEDURE [bulk].[batch.add] -- add new batch
     @batch [bulk].[batchTT] READONLY, -- batch infromation
-    @upload [bulk].[uploadTT] READONLY, -- upload file information
     @meta core.metaDataTT READONLY -- information for the user that makes the operation
 AS
 BEGIN TRY
@@ -30,15 +29,11 @@ FROM [bulk].[batchStatus] bs
 JOIN [core].[itemName] ci ON ci.itemNameId = bs.itemNameId
 WHERE ci.itemCode = 'uploading'
 
-INSERT INTO [bulk].[batch] (name, batchStatusId, batchTypeId, description, account, updatedOn, updatedBy, createdBy, createdOn, validatedOn)
-SELECT name, @batchStatusId, batchTypeId, description, account, GETDATE(), @userId, @userId, GETDATE(), validatedOn
+INSERT INTO [bulk].[batch] (name, batchStatusId, batchTypeId, description, account, updatedOn, updatedBy, createdBy, createdOn, validatedOn, originalFilename, fileName)
+SELECT name, @batchStatusId, batchTypeId, description, account, GETDATE(), @userId, @userId, GETDATE(), validatedOn, originalFilename, fileName
 FROM @batch
 
 SET @batchId = SCOPE_IDENTITY()
-
-INSERT INTO [bulk].[upload] (batchId, fileName, originalFileName)
-SELECT @batchId, fileName, originalFileName
-FROM @upload
 
 EXEC [bulk].[batch.get] @batchId = @batchId, @meta = @meta
 

@@ -35,7 +35,7 @@ CREATE TABLE #payment (
     [sequenceNumber] [INT],
     [account] [NVARCHAR](100),
     [customerName] [NVARCHAR](100),
-    [amount] [DECIMAL],
+    [amount] [DECIMAL](18,2),
     [currency] [NVARCHAR](3),
     [excutionDate] [DATETIME2](0),
     [paymentStatusId] [TINYINT],
@@ -43,6 +43,10 @@ CREATE TABLE #payment (
     [rowNum] INT, 
     [recordsTotal] INT
     )
+
+DECLARE @sequenceNumString  VARCHAR(20) =  '%' + CONVERT(VARCHAR(20), @sequenceNumber) + '%'
+SET	@account = '%' + @account + '%'
+SET @customerName = '%' + @customerName + '%'
 
 ;WITH CTE AS(
     SELECT p.paymentId, b.batchId, p.sequenceNumber, p.customerName, p.paymentStatusId,
@@ -52,18 +56,21 @@ CREATE TABLE #payment (
                 CASE
                     WHEN @sortBy = 'customerName' THEN p.customerName
                     WHEN @sortBy = 'paymentStatus' THEN ci.itemName
-                    WHEN @sortBy = 'sequenceNumber' THEN p.sequenceNumber
-                    WHEN @sortBy = 'amount' THEN p.amount
-                    WHEN @sortBy = 'account' THEN p.account
+                    WHEN @sortBy = 'sequenceNumber' THEN CONVERT(VARCHAR(50), p.sequenceNumber)
+                    WHEN @sortBy = 'amount' THEN CONVERT(VARCHAR(50), p.amount)
+                    WHEN @sortBy = 'account' THEN CONVERT(VARCHAR(50), p.account)
+                    WHEN @sortBy = 'currency' THEN p.currency
+
                 END
             END,
             CASE WHEN @sortOrder = 'DESC' THEN
                 CASE
                     WHEN @sortBy = 'customerName' THEN p.customerName
                     WHEN @sortBy = 'paymentStatus' THEN ci.itemName
-                    WHEN @sortBy = 'sequenceNumber' THEN p.sequenceNumber
-                    WHEN @sortBy = 'amount' THEN p.amount
-                    WHEN @sortBy = 'account' THEN p.account
+                    WHEN @sortBy = 'sequenceNumber' THEN CONVERT(VARCHAR(50), p.sequenceNumber)
+                    WHEN @sortBy = 'amount' THEN CONVERT(VARCHAR(50), p.amount)
+                    WHEN @sortBy = 'account' THEN CONVERT(VARCHAR(50), p.account)
+                    WHEN @sortBy = 'currency' THEN p.currency
                 END
             END DESC) rowNum,
             COUNT(*) OVER(PARTITION BY 1) AS recordsTotal
@@ -74,7 +81,7 @@ CREATE TABLE #payment (
     WHERE b.batchId = @batchId
         AND (@paymentStatusId IS NULL OR p.paymentStatusId = @paymentStatusId)
         AND (@customerName IS NULL OR p.customerName LIKE @customerName)
-        AND (@sequenceNumber IS NULL OR p.sequenceNumber LIKE @sequenceNumber)
+        AND (@sequenceNumber IS NULL OR p.sequenceNumber LIKE @sequenceNumString)
         AND (@account IS NULL OR p.account LIKE @account)
 )
 

@@ -5,7 +5,7 @@ CREATE TABLE [bulk].[payment] (
     [account] [NVARCHAR](50) NOT NULL, -- the account based on the account type
     [customerName] [NVARCHAR](100) NOT NULL, -- name of the customer
     [description] [NVARCHAR](1000), -- The description of the transaction provided by the intiator
-    [amount] [DECIMAL] NOT NULL, -- amount to debit/credit
+    [amount] [DECIMAL](18,2) NOT NULL, -- amount to debit/credit
     [currency] [NVARCHAR](3) NOT NULL, -- ISO 4217 currency code
     [excutionDate] [DATETIME2](0), -- when the payment was attempted
     [paymentStatusId] [TINYINT] NOT NULL, -- id of the status

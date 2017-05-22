@@ -57,6 +57,9 @@ IF @account is not null
     join [core].[itemName] as ci  on ci.itemNameId = cc.itemNameId
     WHERE bb.account = @account
 
+SET @batchName = '%' + @batchName + '%'
+SET @account = '%' + @account + '%'
+
 ;WITH CTE1 AS(
     SELECT b.batchId,b.name, b.batchStatusId, ci.itemName as [status],
     b.batchTypeId, b.account, b.createdOn, b.validatedOn, b.updatedOn,
@@ -68,9 +71,10 @@ IF @account is not null
     JOIN [bulk].[batchStatus] bs ON bs.batchStatusId= b.batchStatusId
     JOIN [core].[itemName] ci on ci.itemNameId = bs.itemNameId
     JOIN [bulk].[batchType] bt ON bt.batchTypeId = b.batchTypeId
-    WHERE (@batchStatusId IS NULL OR b.batchStatusId = @batchStatusId)
+    WHERE b.batchTypeId = @batchTypeId
+          AND (@batchStatusId IS NULL OR b.batchStatusId = @batchStatusId)
           AND (@batchName IS NULL OR b.name LIKE @batchName)
-          AND (@account IS NULL OR b.account LIKE @account)
+          AND (@account IS NULL OR b.account LIKE  @account)
 )
 ,CTE2 as (SELECT * ,
             ROW_NUMBER() OVER(ORDER BY

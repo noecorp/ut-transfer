@@ -16,19 +16,15 @@ END
 
 SELECT 'batch' as resultSetName
 
-SELECT b.batchId, b.name, b.batchStatusId, cibs.itemName as status, cibt.itemName as batchType, b.batchTypeId, b.account, b.updatedOn, b.reason, b.createdBy, b.createdOn, b.validatedOn,
-        (SELECT COUNT(paymentId) FROM [bulk].[payment] WHERE batchId= @batchId) AS paymentsCount
+SELECT b.batchId, b.name, b.description, b.batchStatusId, cibs.itemName as status, cibt.itemName as batchType, b.batchTypeId,
+        b.account, b.updatedOn, b.reason, b.createdOn, b.validatedOn, b.fileName, b.originalFilename,
+        (SELECT COUNT(paymentId) FROM [bulk].[payment] WHERE batchId= @batchId) AS paymentsCount,
+        (SELECT SUM(amount) FROM [bulk].[payment] WHERE batchId = @batchId)  AS totalAmount
 FROM [bulk].[batch] b
 JOIN [bulk].[batchStatus] bs on bs.batchStatusId = b.batchStatusId
 JOIN [bulk].[batchType] bt on bt.batchTypeId = b.batchTypeId
 JOIN [core].[itemName] cibs ON cibs.itemNameId = bs.itemNameId
 JOIN [core].[itemName] cibt ON cibt.itemNameId = bt.itemNameId
-WHERE batchId = @batchId
-
-SELECT 'upload' as resultSetName
-
-SELECT batchId, fileName, originalFileName, uploadId
-FROM [bulk].[upload]
 WHERE batchId = @batchId
 
 EXEC core.auditCall @procid = @@PROCID, @params = @callParams

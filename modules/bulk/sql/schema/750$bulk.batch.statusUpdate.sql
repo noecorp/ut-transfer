@@ -1,18 +1,18 @@
 ALTER PROCEDURE [bulk].[batch.statusUpdate] -- to do status action
     @batchId BIGINT, -- id of the Batch
     @actionName VARCHAR(100), -- name of the Batch action to do
-    @reason varchar(max),
+    @reason VARCHAR(1000), -- reason for of the status update
     @meta core.metaDataTT READONLY -- information for the user that makes the operation
 AS
 BEGIN TRY
     DECLARE @callParams XML
     DECLARE @userId BIGINT = (SELECT [auth.actorId] FROM @meta)
-    
+
     DECLARE @currentStatusId TINYINT
 
-     SELECT @currentStatusId = batchStatusId
-     FROM [bulk].[batch] b 
-     WHERE batchId = @batchId 
+    SELECT @currentStatusId = batchStatusId
+    FROM [bulk].[batch] b 
+    WHERE batchId = @batchId 
 
     if @currentStatusId is null
         RAISERROR('bulk.batchNotFound', 16, 1);
@@ -38,7 +38,7 @@ BEGIN TRY
             UPDATE b
             SET
                 b.batchStatusId = @toStatusId,
-                b.reason = ISNULL(b.reason, @reason),
+                b.reason = ISNULL(@reason, b.reason),
                 b.updatedOn = GETDATE(),
                 b.validatedOn = CASE WHEN @actionName='completeVerification' THEN GETDATE() ELSE b.validatedOn END,
                 b.updatedBy = @userId

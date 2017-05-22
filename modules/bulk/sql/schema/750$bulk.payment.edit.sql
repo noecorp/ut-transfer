@@ -14,15 +14,22 @@ BEGIN
     RETURN 55555
 END
 
+DECLARE @paymentStatusId TINYINT
+
+SELECT @paymentStatusId = paymentStatusId
+FROM [bulk].[paymentStatus] ps
+JOIN [core].[itemName] ci ON ci.itemNameId = ps.itemNameId
+WHERE ci.itemCode = 'modified'
+
 UPDATE p
 SET
     p.account = ub.account,
     p.customerName = ub.customerName,
     p.[description] = ub.[description],
     p.amount = ub.amount,
-    p.excutionDate = ub.excutionDate,
     p.updatedOn = GETDATE(),
-    p.updatedBy = @userId
+    p.updatedBy = @userId,
+    p.paymentStatusId = @paymentStatusId
 FROM [bulk].[payment] p
 JOIN @payment ub on ub.paymentId = p.paymentId
 

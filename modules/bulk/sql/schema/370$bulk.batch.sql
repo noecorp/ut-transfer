@@ -6,7 +6,9 @@ CREATE TABLE [bulk].[batch] (
     [account] [NVARCHAR](50)  NULL, -- id of the account
     [description] [NVARCHAR](MAX) NULL, -- description of the batch
     [transactionType] [NVARCHAR](50) NULL,-- type of transaction
-    [reason] [NVARCHAR](MAX), -- reaason for the batch delete/reject
+    [fileName] [NVARCHAR](250) NOT NULL, -- name of the batch file in the syatem
+    [originalFilename] [NVARCHAR](250) NOT NULL, -- name of the batch file
+    [reason] [NVARCHAR](1000), -- reaason for the batch delete/reject
     [createdBy] BIGINT NOT NULL, -- id of the actor-maker
     [createdOn] [DATETIME2](0) NOT NULL, -- date of the file upload
     [validatedOn] [DATETIMEOFFSET](7) NULL, -- validated on timestamp
