@@ -15,7 +15,7 @@ BEGIN TRY
             RETURN 55555
         END
 
-    IF @paymentStatusID is not null
+    IF @paymentStatusID IS NOT NULL
         BEGIN
             UPDATE p
             SET

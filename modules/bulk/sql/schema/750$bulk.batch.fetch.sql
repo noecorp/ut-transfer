@@ -1,15 +1,15 @@
 ALTER PROCEDURE [bulk].[batch.fetch] -- get list of batches
     @fromDate date, --filter by from date
-    @toDate date, --filter by from date
+    @toDate date, --filter by to date
     @batchTypeId TINYINT, -- id of the batch type
     @batchStatusId TINYINT,--id of the bathc status
     @batchName VARCHAR(100), --filter by batch name
     @account VARCHAR(50), --filte by batch account
     @pageSize INT = 25, -- how many rows will be returned per page
     @pageNumber INT = 1, -- which page number to display
-    @sortBy VARCHAR(50) = '', -- ON which column results to be sorted
-    @sortOrder VARCHAR(4) = 'ASC', --what kind of sort to be used AScending or descending
-    @meta core.metaDataTT READONLY -- informatiON for the user that makes the operatiON
+    @sortBy VARCHAR(50) = '', -- on which column results to be sorted
+    @sortOrder VARCHAR(4) = 'ASC', --what kind of sort to be used ascending or descending
+    @meta core.metaDataTT READONLY -- information for the user that makes the operation
 AS
 BEGIN TRY
 
