@@ -4,9 +4,7 @@ module.exports = {
     params: joi.object({
         batchId: joi.number().required(),
         actionName: joi.string().required(),
-        reason: joi.string().allow(null),
-        comment: joi.string().allow(null)
+        reason: joi.string().allow(null)
     }),
     result: joi.object({})
 };
-
