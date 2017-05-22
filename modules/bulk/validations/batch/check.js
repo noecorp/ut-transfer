@@ -3,7 +3,6 @@ module.exports = {
     description: 'check the validity of the payments',
     notes: '',
     params: joi.object().keys({
-        actorId: joi.string().example('4'),
         async: joi.bool().optional().description('whether to check synchronously or asynchronously'),
         batchId: joi.number().example(1).description('the id of the batch'),
         payments: joi.array().items(joi.number()).optional().description('array of payment IDs')
@@ -18,7 +17,7 @@ module.exports = {
         uploadInfo: joi.string().allow(''),
         actorId: joi.string().example('4'),
         fileName: joi.string().example('1493211327449_batch-dfsp1.csv'),
-        originalFileName: joi.string().example('batch-dfsp1.csv'),
+        originalFilename: joi.string().example('batch-dfsp1.csv'),
         validatedOn: joi.string().example('2017-04-26T12:55:28.182Z').allow(null)
     })
 };

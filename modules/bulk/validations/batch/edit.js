@@ -1,18 +1,13 @@
 var joi = require('joi');
 module.exports = {
-    description: '',
-    notes: '',
+    description: 'Edit batch',
     params: joi.object({
-        batch: joi.array().items(
-            joi.object({
-                name: joi.string(),
-                account: joi.string(),
-                updatedOn: joi.date(),
-                rejectReason: joi.string(),
-                updatedBy: joi.string(),
-                validatedOn: joi.date()
-            })
-        )
+        batch: joi.object({
+            batchId: joi.string().required(),
+            name: joi.string().required(),
+            account: joi.string().allow(null),
+            description: joi.string().required()
+        })
     }),
-    result: joi.object({})
+    result: joi.object([])
 };

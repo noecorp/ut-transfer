@@ -9,7 +9,8 @@ module.exports = {
             batchStatusId: joi.number().allow(null),
             batchTypeId: joi.number().required(),
             account: joi.string().allow(null),
-            fileName: joi.string().allow(null)
+            fileName: joi.string().required(),
+            originalFilenname: joi.string().required()
         })
     }),
     result: joi.object({
@@ -17,10 +18,10 @@ module.exports = {
             batchId: joi.string().required(),
             name: joi.string().required(),
             batchStatusId: joi.number(),
-            batchTypeId: joi.number().allow(null),
+            batchTypeId: joi.number(),
             account: joi.string().allow(null),
-            updatedOn: joi.date().allow(null),
-            createdOn: joi.date().allow(null),
+            updatedOn: joi.date(),
+            createdOn: joi.date(),
             validatedOn: joi.date().allow(null)
         }))
     })

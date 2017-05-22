@@ -8,7 +8,7 @@ import * as actionCreators from './actions';
 import style from '../../style.css';
 import FormInput from 'ut-front-react/components/FormInput';
 import TextArea from 'ut-front-react/components/Input/TextArea';
-import {getBatchNameValidations} from './helpers';
+import {validations} from '../../helpers';
 
 let UploadForm = React.createClass({
     propTypes: {
@@ -18,8 +18,7 @@ let UploadForm = React.createClass({
         batchId: PropTypes.string,
         batchTypeName: PropTypes.string,
         file: PropTypes.object,
-        name: PropTypes.string,
-        description: PropTypes.string,
+        batch: PropTypes.object,
         checkBatch: PropTypes.bool,
         errors: PropTypes.object,
         result: PropTypes.object
@@ -30,7 +29,7 @@ let UploadForm = React.createClass({
     },
     onClose() {
         this.props.actions.clearBatchProfile();
-        this.props.onClose(!this.canUpload());
+        this.props.onClose();
         if (!this.canUpload()) {
             this.props.actions.fetchBatches();
         }
@@ -38,7 +37,7 @@ let UploadForm = React.createClass({
     onSubmit(e) {
         e.preventDefault();
         var file = this.props.file;
-        var checkBatch = this.props.checkBatch;
+        let {checkBatch, batch} = this.props;
         var data = new window.FormData();
         if (!file) {
             return this.props.actions.changeField({
@@ -46,22 +45,22 @@ let UploadForm = React.createClass({
                 value: new Error('Please load the batch file')
             });
         }
-        if (!this.props.name) {
+        if (!batch.name) {
             return this.props.actions.changeField({
                 key: 'result',
                 value: new Error('Please enter the batch name')
             });
         }
-        data.append('file', file);
-        data.append('fileName', file.name);
-        data.append('name', this.props.name);
-        data.append('description', this.props.description);
-        data.append('batchTypeId', this.props.batchType.key);
+        batch.batchTypeId = this.props.batchType.key;
         if (this.props.batchId) {
-            data.append('batchId', this.props.batchId);
+            batch.batchId = this.props.batchId;
         }
         if (checkBatch) {
             data.append('checkBatch', checkBatch);
+        }
+        data.append('file', file);
+        for (var key in batch) {
+            data.append(key, batch[key]);
         }
         data.processData = false;
         data.contentType = false;
@@ -125,6 +124,10 @@ let UploadForm = React.createClass({
             key: 'file',
             value: this.refs.fileInput.refs.inputNode.files[0]
         });
+        this.handleChange({
+            key: 'batch,originalFilename',
+            value: this.refs.fileInput.refs.inputNode.files[0].name
+        });
     },
     onCheckboxChange() {
         this.handleChange({
@@ -133,28 +136,30 @@ let UploadForm = React.createClass({
         });
     },
     getFormBody() {
-        let { errors, name, file, description } = this.props;
+        let { errors } = this.props;
+        let {name, description, originalFilename} = this.props.batch;
         if (this.canUpload()) {
             return (
                 <div className={style.fileInput}>
                     <div className={style.inputOuterWrapper}>
-                        <Input value={name} type='text' keyProp={'name'} name='name'
-                          validators={getBatchNameValidations()}
+                        <Input value={name} type='text'
+                          keyProp={'batch,name'} name='name'
+                          validators={validations.batchNameValidations}
                           isValid={errors.get('name') === undefined}
                           errorMessage={errors.get('name')}
                           label='Batch Name' onChange={this.handleChange} />
                     </div>
                     <div className={style.infoInputWrapper}>
-                        <Input value={file && file.name} readonly label='Upload Batch' inputWrapClassName={style.inputWrapClassName} />
+                        <Input value={originalFilename} readonly label='Upload Batch' inputWrapClassName={style.inputWrapClassName} />
                     </div>
                     <div className={style.buttonsWrapper}>
                         <div className={style.buttonsInnerWrapper}>
                             <label htmlFor='fileInput' className={style.browseBtn} onClick={this.onClick} >Browse...</label>
-                            <FormInput ref='fileInput' type='file' keyProp={'fileName'} acceptType='text/csv' onChange={this.onFileChange} />
+                            <FormInput ref='fileInput' type='file' keyProp={'originalFilename'} acceptType='text/csv' onChange={this.onFileChange} />
                         </div>
                     </div>
                     <div className={style.inputOuterWrapper}>
-                        <TextArea label='Description' name='comment' value={description} keyProp={'description'}
+                        <TextArea label='Description' name='comment' value={description} keyProp={'batch,description'}
                           onChange={this.handleChange} />
                     </div>
                     <div className={style.inputOuterWrapper}>
@@ -211,13 +216,12 @@ export default connect(
     (state, ownProps) => {
         return {
             batchTypeName: ownProps.batchTypeName,
-            name: state.bulkBatchUpload.get('name'),
-            description: state.bulkBatchUpload.get('description'),
             checkBatch: state.bulkBatchUpload.get('checkBatch'),
             result: state.bulkBatchUpload.get('result'),
             batchType: getBatchType(ownProps.batchTypeName, state.bulkBatch.get('batchTypes').toJS() || []) || {},
             errors: state.bulkBatchUpload.get('errors'),
-            file: state.bulkBatchUpload.get('file')
+            file: state.bulkBatchUpload.get('file'),
+            batch: state.bulkBatchUpload.get('batch').toJS()
         };
     },
     (dispatch) => {

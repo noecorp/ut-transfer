@@ -1,5 +1,8 @@
 import * as actionTypes from './actionTypes';
 import { updateTabTitle } from 'ut-front-react/containers/TabMenu/actions';
+import { reduceObject } from '../helpers';
+
+const paymentEditable = ['customerName', 'paymentId', 'description', 'account', 'amount'];
 
 export const fetchPayments = (params) => ({
     type: actionTypes.FETCH_PAYMENTS,
@@ -50,7 +53,7 @@ export const savePayment = (payment) => ({
     type: actionTypes.SAVE_PAYMENT,
     method: 'bulk.payment.edit',
     params: {
-        payment
+        payment: reduceObject(paymentEditable, payment)
     }
 });
 
@@ -73,12 +76,9 @@ export const changeBatchStatus = ({batchId, actionName, reason}) => ({
     }
 });
 
-export const setField = (key, value) => ({
+export const setField = (params) => ({
     type: actionTypes.SET_PAYMENT_FIELD,
-    params: {
-        key,
-        value
-    }
+    params
 });
 
 export const selectPayment = (payment, isSelected) => ({

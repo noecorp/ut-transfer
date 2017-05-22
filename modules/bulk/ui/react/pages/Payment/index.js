@@ -56,13 +56,15 @@ class BulkPayment extends Component {
         }
     }
     componentWillReceiveProps(nextProps) {
-        if ((this.props.params.batchId !== nextProps.params.batchId) ||
-            (nextProps.batchChanged && nextProps.batchChanged !== this.props.batchChanged)) {
+        var batchChanged = (this.props.params.batchId !== nextProps.params.batchId) ||
+            (nextProps.batchChanged && nextProps.batchChanged !== this.props.batchChanged);
+        if (batchChanged) {
             this.props.actions.getPaymentBatch(this.props.params.batchId);
         }
         if (nextProps.paymentBatch.get('batchId') !== this.props.paymentBatch.get('batchId')) {
             this.props.actions
-            .changeTabTitle(getLink('ut-transfer:bulkPayment', {batchId: this.props.params.batchId, batchTypeName: this.props.batchTypeName}),
+            .changeTabTitle(getLink('ut-transfer:bulkPayment',
+              {batchId: this.props.params.batchId, batchTypeName: this.props.batchTypeName}),
             'Bulk Payments - ' + nextProps.paymentBatch.get('name'));
         }
     }
@@ -74,14 +76,16 @@ class BulkPayment extends Component {
     }
     getDetailsAction() {
         let buttons = []; var self = this;
-        var canEditByStatus = this.props.selectedPayment && ['new', 'rejected'].includes(this.props.paymentBatch.get('status').toLowerCase());
+        let {selectedPayment, errors} = this.props;
+        var canEditByStatus = selectedPayment && ['new', 'rejected'].includes(this.props.paymentBatch.get('status').toLowerCase());
         if (this.permissions.canEdit && canEditByStatus) {
             buttons.push({
                 label: 'Save',
                 type: 'submit',
+                disabled: !!errors.get('paymentDetails') && errors.get('paymentDetails').size > 0,
                 onClick: () => {
                     let {paymentDetails} = self.props;
-                    self.props.actions.savePayment(paymentDetails);
+                    self.props.actions.savePayment(paymentDetails.toJS());
                     self.togglePopup();
                 },
                 styleType: 'primaryDialog'
@@ -161,7 +165,6 @@ class BulkPayment extends Component {
                 {
                     label: actionName === batchActions.ready ? 'Ready Batch' : actionName === batchActions.pay ? 'Pay Batch' : 'Submit',
                     onClick: () => {
-                        debugger;
                         changeBatchStatus({batchId, actionName});
                         closeConfirmDialog();
                     }

@@ -8,19 +8,18 @@ module.exports = {
         batch: joi.array().items(joi.object({
             batchId: joi.string().required(),
             name: joi.string().required(),
-            batchStatusId: joi.number().allow(null),
+            batchStatusId: joi.number(),
             status: joi.string().required(),
-            batchType: joi.string().allow(null),
-            batchTypeId: joi.number().allow(null),
+            batchType: joi.string(),
+            batchTypeId: joi.number(),
             account: joi.string(),
-            updatedOn: joi.date().allow(null),
-            rejectReason: joi.string().allow(null),
-            createdBy: joi.date().allow(null),
-            createdOn: joi.string().allow(null),
+            updatedOn: joi.date(),
+            reason: joi.string().allow(null),
+            createdBy: joi.date(),
             validatedOn: joi.date().allow(null),
-            descrption: joi.string().allow(null),
+            description: joi.string().allow(null),
             paymentsCount: joi.number(),
-            totalAmount: joi.number()
+            totalAmount: joi.any()
         }))
     })
 };

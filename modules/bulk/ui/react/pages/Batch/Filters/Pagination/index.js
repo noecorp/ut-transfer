@@ -1,13 +1,14 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
-import Pagination from 'ut-core/ui/react/containers/Pagination';
+import AdvancedPagination from 'ut-front-react/components/AdvancedPagination';
 import { updateGridPagination } from '../../actions';
+import style from '../../../style.css';
 
 class BatchGridPagination extends Component {
     render() {
         return (
-            <div>
-                <Pagination pagination={this.props.pagination} onUpdate={this.props.updateGridPagination} />
+            <div className={style.paginationWrap}>
+                <AdvancedPagination pagination={this.props.pagination} onUpdate={this.props.updateGridPagination} />
             </div>
         );
     }

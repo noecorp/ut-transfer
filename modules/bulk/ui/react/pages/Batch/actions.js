@@ -1,4 +1,6 @@
 import * as actionTypes from './actionTypes';
+import {reduceObject} from '../helpers';
+const batchEditable = ['account', 'name', 'description', 'batchId'];
 
 export const fetchBatches = (params) => ({
     type: actionTypes.FETCH_BATCHES,
@@ -47,7 +49,7 @@ export const saveBatch = (batch) => ({
     type: actionTypes.SAVE_BATCH,
     method: 'bulk.batch.edit',
     params: {
-        batch
+        batch: reduceObject(batchEditable, batch)
     }
 });
 
@@ -73,12 +75,9 @@ export const refetchBatches = () => ({
     type: actionTypes.REFETCH_BATCHES
 });
 
-export const setField = (key, value) => ({
+export const setField = (params) => ({
     type: actionTypes.SET_BATCH_FIELD,
-    params: {
-        key,
-        value
-    }
+    params
 });
 
 export const selectBatch = (batch, isSelected) => ({

@@ -1,8 +1,9 @@
 import React, {Component, PropTypes} from 'react';
 import immutable from 'immutable';
 import {connect} from 'react-redux';
-import Pagination from 'ut-core/ui/react/containers/Pagination';
+import AdvancedPagination from 'ut-front-react/components/AdvancedPagination';
 import { updateGridPagination } from '../../actions';
+import style from '../../../style.css';
 
 var defaultPagination = {
     pageSize: 25,
@@ -14,8 +15,8 @@ var defaultPagination = {
 class PaymentGridPagination extends Component {
     render() {
         return (
-            <div>
-                <Pagination pagination={this.props.pagination} onUpdate={this.props.updateGridPagination} />
+            <div className={style.paginationWrap}>
+                <AdvancedPagination pagination={this.props.pagination} onUpdate={this.props.updateGridPagination} />
             </div>
         );
     }

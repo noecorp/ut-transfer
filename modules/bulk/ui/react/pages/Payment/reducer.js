@@ -90,12 +90,19 @@ export const bulkPayment = (state = defaultState, action) => {
             state = state.set('pagination', defaultState.get('pagination'));
             return state;
         case actionTypes.CLEAR_PAYMENT_FILTER:
-            return state.set('filters', fromJS({})).set('filterChanged', true);
+            return state.set('customFilterSelected', null)
+            .set('filters', fromJS({})).set('filterChanged', true);
         case actionTypes.SELECT_PAYMENT:
             return state.set('showFilter', false)
                 .set('selectedPayment', action.params.isSelected ? fromJS(action.params.payment) : null);
         case actionTypes.SET_PAYMENT_FIELD:
-            return state.setIn(action.params.key.split(','), action.params.value);
+            if (action.params.error) {
+                return state.setIn(['errors'].concat(action.params.key.split(',')), action.params.errorMessage)
+                    .setIn(action.params.key.split(','), action.params.value);
+            } else {
+                return state.setIn(action.params.key.split(','), action.params.value)
+                    .deleteIn(['errors'].concat(action.params.key.split(',')));
+            }
         case actionTypes.TOGGLE_PAYMENT_FILTER:
             return state.set('showFilter', !state.get('showFilter'));
         // confirmDialog actions

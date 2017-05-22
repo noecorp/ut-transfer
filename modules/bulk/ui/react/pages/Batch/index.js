@@ -70,10 +70,11 @@ class BulkBatch extends Component {
         if (this.permissions.canEdit && canEditByStatus) {
             buttons.push({
                 label: 'Save',
+                disabled: !!self.props.errors.get('batchDetails') && self.props.errors.get('batchDetails').size > 0,
                 type: 'submit',
                 onClick: () => {
                     let {batchDetails} = self.props;
-                    self.props.actions.saveBatch(batchDetails);
+                    self.props.actions.saveBatch(batchDetails.toJS());
                     self.togglePopup();
                 },
                 styleType: 'primaryDialog'
@@ -103,12 +104,6 @@ class BulkBatch extends Component {
         switch (this.state.popupFor) {
             case popUps.batchDetailsPopup:
                 return (<DetailEdit canEdit={this.permissions.canEdit && canEditByStatus} />);
-            /*  case popUps.batchUploadPopup:
-                return (
-                    <UploadForm
-                      onClose={this.togglePopup}
-                      batchTypeName={this.props.batchTypeName}
-                    />); */
             default:
                 return null;
         }
@@ -117,8 +112,6 @@ class BulkBatch extends Component {
         switch (this.state.popupFor) {
             case popUps.batchDetailsPopup:
                 return 'Batch Details';
-            // case popUps.batchUploadPopup:
-            //     return 'Create Batch';
             default:
                 return null;
         }
@@ -178,7 +171,6 @@ class BulkBatch extends Component {
 BulkBatch.propTypes = {
     selectedBatch: PropTypes.object,
     showFilter: PropTypes.bool,
-    uploadForm: PropTypes.object,
     errors: PropTypes.object,
     batchDetails: PropTypes.object,
     batchTypeName: PropTypes.string,
@@ -190,14 +182,12 @@ BulkBatch.contextTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-    var uploadForm = state.bulkBatch.get('uploadForm');
     return {
         batchTypeName: ownProps.params.batchTypeName,
-        errors: uploadForm.get('errors'),
+        errors: state.bulkBatch.get('errors'),
         selectedBatch: state.bulkBatch.get('selectedBatch'),
         showFilter: state.bulkBatch.get('showFilter'),
-        batchDetails: state.bulkBatch.get('batchDetails'),
-        uploadForm
+        batchDetails: state.bulkBatch.get('batchDetails')
     };
 }
 export default connect(mapStateToProps, (dispatch) => {

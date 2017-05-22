@@ -1,3 +1,4 @@
+var joi = require('joi');
 module.exports = {
     'batch.add': require('./batch/add.js'),
     'batch.edit': require('./batch/edit.js'),
@@ -11,5 +12,10 @@ module.exports = {
     'payment.fetch': require('./payment/fetch.js'),
     'payment.get': require('./payment/get.js'),
     'payment.statusUpdate': require('./payment/statusUpdate.js'),
-    'payment.statusFetch': require('./payment/statusFetch.js')
+    'payment.statusFetch': require('./payment/statusFetch.js'),
+    'batch.create': {
+        description: 'Add batch',
+        params: joi.any(),
+        result: joi.any()
+    }
 };
