@@ -1,6 +1,9 @@
 ALTER PROCEDURE [transfer].[push.confirmIssuer]
     @transferId bigint,
-    @transferIdIssuer varchar(50)
+    @transferIdIssuer varchar(50),
+    @type varchar(50),
+    @message varchar(250),
+    @details XML
 AS
 SET NOCOUNT ON
 
@@ -13,4 +16,16 @@ WHERE
     transferId = @transferId AND
     issuerTxState = 1
 
-IF @@ROWCOUNT <> 1 RAISERROR('transfer.confirmIssuer', 16, 1);
+DECLARE @COUNT int = @@ROWCOUNT
+
+SET @type = ISNULL (@type, 'transfer.push.confirmIssuer')
+
+EXEC [transfer].[push.event]
+    @transferId = @transferId,
+    @type = @type,
+    @state = 'confirm',
+    @source = 'issuer',
+    @message = @message,
+    @udfDetails = @details
+
+IF @COUNT <> 1 RAISERROR('transfer.confirmIssuer', 16, 1);

@@ -1,7 +1,18 @@
-var { filterElementTypes } = require('ut-front-react/components/GridToolBox/types');
+import { filterElementTypes } from 'ut-front-react/components/GridToolBox/types';
+import reportStyle from '../../assets/static/css/reportStyle.css';
+
+let date = new Date();
+date.setHours(0);
+date.setMinutes(0);
+date.setSeconds(0);
+date.setMilliseconds(0);
 
 module.exports = (gridStyle) => ({
     title: 'Settlement Report',
+    export: {
+        method: 'db/transfer.report.settlement',
+        resultsetName: 'settlement'
+    },
     grid: {
         fields: [
             {name: 'productName', title: 'Product Name'},
@@ -15,7 +26,7 @@ module.exports = (gridStyle) => ({
         allowColumnConfig: true,
         method: 'db/transfer.report.settlement',
         resultsetName: 'settlement',
-        externalStyle: gridStyle
+        externalStyle: {...reportStyle, ...gridStyle}
     },
     toolbox: {
         showAdvanced: false,
@@ -23,11 +34,11 @@ module.exports = (gridStyle) => ({
         filterAutoFetch: true
     },
     filters: [
-        { name: 'cardNumber', label: 'Card Number', placeholder: 'Card Number', type: filterElementTypes.searchBox },
         {
             label: 'Settlement Date',
             name: 'settlementDate',
-            type: filterElementTypes.datePicker
+            type: filterElementTypes.datePicker,
+            defaultValue: date
         },
         {
             type: filterElementTypes.clear, validateFilter: false

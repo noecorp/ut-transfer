@@ -1,11 +1,28 @@
-var { filterElementTypes } = require('ut-front-react/components/GridToolBox/types');
+import { filterElementTypes } from 'ut-front-react/components/GridToolBox/types';
+import reportStyle from '../../assets/static/css/reportStyle.css';
+
+let startDate = new Date();
+startDate.setHours(0);
+startDate.setMinutes(0);
+startDate.setSeconds(0);
+startDate.setMilliseconds(0);
+
+let endDate = new Date();
+endDate.setHours(23);
+endDate.setMinutes(59);
+endDate.setSeconds(59);
+endDate.setMilliseconds(999);
 
 module.exports = (gridStyle) => ({
     title: 'Transfer Type Statistics ',
+    export: {
+        method: 'db/transfer.report.byTypeOfTransfer',
+        resultsetName: 'transferTransactyonType'
+    },
     grid: {
         fields: [
-            { name: 'agreatepredicate', title: 'Transaction Type' },
-            { name: 'transferCount', title: 'Transaction Count' },
+            { name: 'agreatepredicate', title: 'Transfer Type' },
+            { name: 'transferCount', title: 'Transfer Count' },
             { name: 'transferCountPercent', title: '%' },
             { name: 'amountBilling', title: 'Billing Amount' },
             { name: 'amountBillingPercent', title: '%' },
@@ -22,7 +39,7 @@ module.exports = (gridStyle) => ({
         method: 'db/transfer.report.byTypeOfTransfer',
         resultsetName: 'transferTransactyonType',
         allowColumnConfig: true,
-        externalStyle: gridStyle
+        externalStyle: {...reportStyle, ...gridStyle}
     },
     toolbox: {
         showAdvanced: false,
@@ -45,10 +62,14 @@ module.exports = (gridStyle) => ({
             }
         },
         {
-            labelFrom: 'Transaction From',
-            labelTo: 'Transaction To',
+            labelFrom: 'Transfer From',
+            labelTo: 'Transfer To',
             nameMap: {from: 'startDate', to: 'endDate'},
-            type: filterElementTypes.dateTimePickerBetween
+            type: filterElementTypes.dateTimePickerBetween,
+            defaultValue: {
+                from: startDate,
+                to: endDate
+            }
         }
     ],
     order: {

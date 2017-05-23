@@ -1,16 +1,19 @@
 var {evalResult, formatNumber, formatDate} = require('ut-report/assets/script/common');
 
 module.exports = {
+    staticResources: [
+        {rel: 'stylesheet', type: 'text/css', href: '/s/ut-transfer/repository/css/reportStyle.css'}
+    ],
     transformCellValue: function({allowHtml, nodeContext, dateFormat, locale}) {
         return (value, field, data, isHeader) => {
-            var classNames = ['cell'];
+            var classNames = [];
             var result = value;
 
             switch (field.name) {
                 case 'transferDateTime':
                     if (!isHeader) {
-                        if (value) {
-                            result = formatDate(value, 'DD-MM-YYYY hh:mm:ss');
+                        if (result) {
+                            result = formatDate(result, 'DD-MM-YYYY hh:mm:ss');
                         }
                     }
                     break;
@@ -19,7 +22,7 @@ module.exports = {
                 case 'amountBilling':
                 case 'transferAmount':
                     if (!isHeader) {
-                        result = formatNumber(value);
+                        result = formatNumber(result);
                         classNames.push('textColorBlue');
                     }
                     classNames.push('rightAlign');

@@ -1,3 +1,251 @@
+<a name="6.12.5"></a>
+## [6.12.5](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.12.4...v6.12.5) (2017-05-22)
+
+
+
+<a name="6.12.4"></a>
+## [6.12.4](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.12.3...v6.12.4) (2017-05-22)
+
+
+
+<a name="6.12.3"></a>
+## [6.12.3](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.12.2...v6.12.3) (2017-05-22)
+
+
+
+<a name="6.12.2"></a>
+## [6.12.2](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.12.1...v6.12.2) (2017-05-22)
+
+
+
+<a name="6.12.1"></a>
+## [6.12.1](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.12.0...v6.12.1) (2017-05-22)
+
+
+
+<a name="6.12.0"></a>
+# [6.12.0](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.11.6...v6.12.0) (2017-05-19)
+
+
+### Features
+
+* improve reversals ([39d80b3](https://github.com/softwaregroup-bg/ut-transfer/commit/39d80b3))
+
+
+
+<a name="6.11.6"></a>
+## [6.11.6](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.11.5...v6.11.6) (2017-05-19)
+
+
+
+<a name="6.11.5"></a>
+## [6.11.5](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.11.4...v6.11.5) (2017-05-18)
+
+
+### Bug Fixes
+
+* amount to cents handling ([a60b208](https://github.com/softwaregroup-bg/ut-transfer/commit/a60b208))
+
+
+
+<a name="6.11.4"></a>
+## [6.11.4](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.11.3...v6.11.4) (2017-05-17)
+
+
+### Bug Fixes
+
+* modularise styles handling ([f2214fc](https://github.com/softwaregroup-bg/ut-transfer/commit/f2214fc))
+
+
+
+<a name="6.11.3"></a>
+## [6.11.3](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.11.2...v6.11.3) (2017-05-17)
+
+
+### Bug Fixes
+
+* use correct state name ([ac78f86](https://github.com/softwaregroup-bg/ut-transfer/commit/ac78f86))
+
+
+
+<a name="6.11.2"></a>
+## [6.11.2](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.11.1...v6.11.2) (2017-05-17)
+
+
+### Bug Fixes
+
+* pass expected parameters ([e893c24](https://github.com/softwaregroup-bg/ut-transfer/commit/e893c24))
+
+
+
+<a name="6.11.1"></a>
+## [6.11.1](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.11.0...v6.11.1) (2017-05-16)
+
+
+### Bug Fixes
+
+* change function definition of ruleValidate ([#47](https://github.com/softwaregroup-bg/ut-transfer/issues/47)) ([6fc4b66](https://github.com/softwaregroup-bg/ut-transfer/commit/6fc4b66))
+
+
+
+<a name="6.11.0"></a>
+# [6.11.0](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.10.10...v6.11.0) (2017-05-16)
+
+
+### Features
+
+* record more details during transfer ([bcf454e](https://github.com/softwaregroup-bg/ut-transfer/commit/bcf454e))
+
+
+
+<a name="6.10.10"></a>
+## [6.10.10](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.10.9...v6.10.10) (2017-05-15)
+
+
+### Bug Fixes
+
+* remove classnames ([#46](https://github.com/softwaregroup-bg/ut-transfer/issues/46)) ([e9e590d](https://github.com/softwaregroup-bg/ut-transfer/commit/e9e590d))
+
+
+
+<a name="6.10.9"></a>
+## [6.10.9](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.10.8...v6.10.9) (2017-05-15)
+
+
+### Bug Fixes
+
+* improve reports ([aa58f8b](https://github.com/softwaregroup-bg/ut-transfer/commit/aa58f8b))
+
+
+
+<a name="6.10.8"></a>
+## [6.10.8](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.10.7...v6.10.8) (2017-05-15)
+
+
+### Bug Fixes
+
+* add event record when confirming issuer ([#45](https://github.com/softwaregroup-bg/ut-transfer/issues/45)) ([96a95ad](https://github.com/softwaregroup-bg/ut-transfer/commit/96a95ad))
+
+
+
+<a name="6.10.7"></a>
+## [6.10.7](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.10.6...v6.10.7) (2017-05-12)
+
+
+### Bug Fixes
+
+* add permission ([ee4011c](https://github.com/softwaregroup-bg/ut-transfer/commit/ee4011c))
+
+
+
+<a name="6.10.6"></a>
+## [6.10.6](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.10.5...v6.10.6) (2017-05-11)
+
+
+### Bug Fixes
+
+* include pagination in result and expect joi array instead of any in report validations ([#41](https://github.com/softwaregroup-bg/ut-transfer/issues/41)) ([738d598](https://github.com/softwaregroup-bg/ut-transfer/commit/738d598))
+
+
+
+<a name="6.10.5"></a>
+## [6.10.5](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.10.4...v6.10.5) (2017-05-11)
+
+
+### Bug Fixes
+
+* total amount/count, stats of successful txn, optimization ([886af8b](https://github.com/softwaregroup-bg/ut-transfer/commit/886af8b))
+
+
+
+<a name="6.10.4"></a>
+## [6.10.4](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.10.3...v6.10.4) (2017-05-11)
+
+
+### Bug Fixes
+
+* add success column in vTransfer ([2366b79](https://github.com/softwaregroup-bg/ut-transfer/commit/2366b79))
+
+
+
+<a name="6.10.3"></a>
+## [6.10.3](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.10.2...v6.10.3) (2017-05-11)
+
+
+### Bug Fixes
+
+* register export/print handlers and provide method and resultset name ([679b009](https://github.com/softwaregroup-bg/ut-transfer/commit/679b009))
+* report column styles ([46246f9](https://github.com/softwaregroup-bg/ut-transfer/commit/46246f9))
+
+
+
+<a name="6.10.2"></a>
+## [6.10.2](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.10.1...v6.10.2) (2017-05-10)
+
+
+### Bug Fixes
+
+* version bump ([#36](https://github.com/softwaregroup-bg/ut-transfer/issues/36)) ([8e9bdba](https://github.com/softwaregroup-bg/ut-transfer/commit/8e9bdba))
+
+
+
+<a name="6.10.1"></a>
+## [6.10.1](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.10.0...v6.10.1) (2017-05-09)
+
+
+### Bug Fixes
+
+* parameters are datetime ([7570ea7](https://github.com/softwaregroup-bg/ut-transfer/commit/7570ea7))
+
+
+
+<a name="6.10.0"></a>
+# [6.10.0](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.9.5...v6.10.0) (2017-05-05)
+
+
+### Bug Fixes
+
+* optimization ([67d86b6](https://github.com/softwaregroup-bg/ut-transfer/commit/67d86b6))
+* remove redundant filter ([#32](https://github.com/softwaregroup-bg/ut-transfer/issues/32)) ([3d66850](https://github.com/softwaregroup-bg/ut-transfer/commit/3d66850))
+* set filter default values & rename transaction to transfer ([#33](https://github.com/softwaregroup-bg/ut-transfer/issues/33)) ([56ffca4](https://github.com/softwaregroup-bg/ut-transfer/commit/56ffca4))
+
+
+### Features
+
+* Settlement details report ([#34](https://github.com/softwaregroup-bg/ut-transfer/issues/34)) ([98a11c3](https://github.com/softwaregroup-bg/ut-transfer/commit/98a11c3))
+
+
+
+<a name="6.9.5"></a>
+## [6.9.5](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.9.4...v6.9.5) (2017-05-04)
+
+
+### Bug Fixes
+
+* handle iso channel ([ca7884c](https://github.com/softwaregroup-bg/ut-transfer/commit/ca7884c))
+
+
+
+<a name="6.9.4"></a>
+## [6.9.4](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.9.3...v6.9.4) (2017-05-03)
+
+
+### Bug Fixes
+
+* temporarily remove permission check ([9a8d6b1](https://github.com/softwaregroup-bg/ut-transfer/commit/9a8d6b1))
+
+
+
+<a name="6.9.3"></a>
+## [6.9.3](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.9.2...v6.9.3) (2017-05-03)
+
+
+### Bug Fixes
+
+* order ([843adf5](https://github.com/softwaregroup-bg/ut-transfer/commit/843adf5))
+
+
+
 <a name="6.9.2"></a>
 ## [6.9.2](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.9.1...v6.9.2) (2017-05-03)
 
