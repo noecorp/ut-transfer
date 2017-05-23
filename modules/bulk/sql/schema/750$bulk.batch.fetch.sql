@@ -56,8 +56,8 @@ SET @batchName = '%' + @batchName + '%'
 SET @account = '%' + @account + '%'
 
 ;WITH CTE1 AS(
-    SELECT b.batchId,b.batchName, b.batchStatusId, ci.itemName AS [status],
-    b.batchTypeId, b.batchAccount, b.createdON, b.validatedON, b.updatedON, 
+    SELECT b.batchId,b.name, b.batchStatusId, ci.itemName AS [status],
+    b.batchTypeId, b.account, b.createdON, b.validatedON, b.updatedON, 
     (SELECT COUNT(paymentId) FROM [bulk].[payment] WHERE batchId = b.batchId) AS paymentsCount,
     (SELECT SUM(amount) FROM [bulk].[payment] WHERE batchId = b.batchId)  AS totalAmount,
     COUNT(*) OVER(PARTITION BY 1) AS recordsTotal,
@@ -66,21 +66,21 @@ SET @account = '%' + @account + '%'
     JOIN [bulk].[batchStatus] bs ON bs.batchStatusId= b.batchStatusId
     JOIN [core].[itemName] ci ON ci.itemNameId = bs.itemNameId
     JOIN [bulk].[batchType] bt ON bt.batchTypeId = b.batchTypeId
-    LEFT JOIN [ledger].[account] AS la ON la.accountNumber = b.batchAccount
+    LEFT JOIN [ledger].[account] AS la ON la.accountNumber = b.account
     LEFT JOIN [ledger].[product] AS lp ON lp.productId = la.productId
     LEFT JOIN [core].[currency] AS cc  ON cc.currencyId = lp.currencyId
     
     WHERE b.batchTypeId = @batchTypeId
           AND (@batchStatusId IS NULL OR b.batchStatusId = @batchStatusId)
-          AND (@batchName IS NULL OR b.batchName LIKE @batchName)
-          AND (@account IS NULL OR b.batchAccount LIKE  @account)
+          AND (@batchName IS NULL OR b.name LIKE @batchName)
+          AND (@account IS NULL OR b.account LIKE  @account)
           AND (@fromDate IS NULL OR @toDate IS NULL  OR (b.createdON >= @fromDate AND b.createdON <= @toDate) )
 )
 ,CTE2 AS (SELECT * ,
             ROW_NUMBER() OVER(ORDER BY
             CASE WHEN @sortOrder = 'ASC' THEN
                 CASE
-                    WHEN @sortBy = 'name'    THEN CTE1.batchName
+                    WHEN @sortBy = 'name'    THEN CTE1.name
                     WHEN @sortBy = 'status'       THEN CTE1.[status]
                     WHEN @sortBy = 'updatedON'  THEN CONVERT(VARCHAR(100), CTE1.updatedON)
                     WHEN @sortBy = 'paymentsCount' THEN CONVERT(VARCHAR(100), CTE1.paymentsCount)
@@ -91,7 +91,7 @@ SET @account = '%' + @account + '%'
             END,
             CASE WHEN @sortOrder = 'DESC' THEN
                 CASE
-                    WHEN @sortBy = 'name'    THEN CTE1.batchName
+                    WHEN @sortBy = 'name'    THEN CTE1.name
                     WHEN @sortBy = 'status'       THEN CTE1.[status]
                     WHEN @sortBy = 'updatedON'  THEN CONVERT(VARCHAR(100), CTE1.updatedON)
                     WHEN @sortBy = 'paymentsCount' THEN CONVERT(VARCHAR(100), CTE1.paymentsCount)
@@ -104,7 +104,7 @@ SET @account = '%' + @account + '%'
             )
 
 INSERT INTO #batch(batchId, name, batchStatusId, [status], currency, batchTypeId, account, createdON, validatedON, paymentsCount, rowNum, recordsTotal, totalAmount, updatedON)
-SELECT batchId, batchName, batchStatusId, [status], currency, batchTypeId, batchAccount, createdON, validatedON, paymentsCount, rowNum, recordsTotal, totalAmount ,updatedON
+SELECT batchId, name, batchStatusId, [status], currency, batchTypeId, account, createdON, validatedON, paymentsCount, rowNum, recordsTotal, totalAmount ,updatedON
 FROM CTE2
 WHERE @pageNumber IS NULL OR @pageSize IS NULL OR rowNum BETWEEN ((@pageNumber - 1) * @pageSize) + 1 AND @pageSize * (@pageNumber)
 
