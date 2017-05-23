@@ -1,27 +1,37 @@
-var { filterElementTypes } = require('ut-front-react/components/GridToolBox/types');
+import { filterElementTypes } from 'ut-front-react/components/GridToolBox/types';
+import reportStyle from '../../assets/static/css/reportStyle.css';
 
-var startDate = new Date();
+let startDate = new Date();
 startDate.setHours(0);
 startDate.setMinutes(0);
 startDate.setSeconds(0);
+startDate.setMilliseconds(0);
 
-var endDate = new Date();
+let endDate = new Date();
 endDate.setHours(23);
 endDate.setMinutes(59);
 endDate.setSeconds(59);
+endDate.setMilliseconds(999);
 
 module.exports = (gridStyle) => ({
     title: 'Transfer report',
+    export: {
+        method: 'db/transfer.report.transfer',
+        resultsetName: 'transfers',
+        maxSize: 20000
+    },
     grid: {
         fields: [
             { name: 'transferId', title: 'Trans#' },
             { name: 'cardNumber', title: 'Card Number' },
-            { name: 'transferDateTime', title: 'Date and Time of TXN' },
+            { name: 'transferDateTime', title: 'Transfer Date' },
             { name: 'sourceAccount', title: 'Debit Account' },
             { name: 'destinationAccount', title: 'Credit Account' },
             { name: 'description', title: 'Description' },
             { name: 'transferIdAcquirer', title: 'RRN' },
             { name: 'transferAmount', title: 'Transfer Amount' },
+            { name: 'issuerFee', title: 'Issuer Fee' },
+            { name: 'acquirerFee', title: 'Acquirer Fee' },
             { name: 'transferCurrency', title: 'Currency' },
             { name: 'terminalId', title: 'Device Id' },
             { name: 'terminalName', title: 'Device Location' },
@@ -36,12 +46,8 @@ module.exports = (gridStyle) => ({
         method: 'db/transfer.report.transfer',
         resultsetName: 'transfers',
         rowStyleField: 'style',
-        externalStyle: gridStyle
+        externalStyle: {...reportStyle, ...gridStyle}
     },
-    // export: {
-    //     method: 'your.exportMethod.here', // TODO replace with transfer report strored procedure
-    //     maxSize: 20000
-    // },
     toolbox: {
         showAdvanced: true,
         maxVisibleInputs: 5,

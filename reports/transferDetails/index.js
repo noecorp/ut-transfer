@@ -1,15 +1,32 @@
-var { filterElementTypes } = require('ut-front-react/components/GridToolBox/types');
+import { filterElementTypes } from 'ut-front-react/components/GridToolBox/types';
+import reportStyle from '../../assets/static/css/reportStyle.css';
+
+let startDate = new Date();
+startDate.setHours(0);
+startDate.setMinutes(0);
+startDate.setSeconds(0);
+startDate.setMilliseconds(0);
+
+let endDate = new Date();
+endDate.setHours(23);
+endDate.setMinutes(59);
+endDate.setSeconds(59);
+endDate.setMilliseconds(999);
 
 module.exports = (gridStyle) => ({
     title: 'Transfer Details',
+    export: {
+        method: 'db/transfer.transferDetails.get',
+        resultsetName: 'transferDetails'
+    },
     grid: {
         fields: [
-            { name: 'transferId', title: 'Transfer Id' },
+            { name: 'transferId', title: 'Trans#' },
             { name: 'channelType', title: 'Device Type' },
             { name: 'channelId', title: 'Device Id' },
-            { name: 'typeTransaction', title: 'Transaction Type' },
+            { name: 'typeTransaction', title: 'Transfer Type' },
             { name: 'transferDateTime', title: 'Transfer Date' },
-            { name: 'transferAmount', title: 'Transaction Amount' },
+            { name: 'transferAmount', title: 'Transfer Amount' },
             { name: 'amountBilling', title: 'Billing Amount' },
             { name: 'amountSettlement', title: 'Settlement Amount' },
             { name: 'transferCurrency', title: 'Currency' }
@@ -17,7 +34,7 @@ module.exports = (gridStyle) => ({
         method: 'db/transfer.transferDetails.get',
         resultsetName: 'transferDetails',
         allowColumnConfig: true,
-        externalStyle: gridStyle
+        externalStyle: {...reportStyle, ...gridStyle}
     },
     toolbox: {
         showAdvanced: true,
@@ -46,8 +63,8 @@ module.exports = (gridStyle) => ({
         },
         {
             name: 'processingCode',
-            label: 'Transaction Type',
-            placeholder: 'Transaction Type',
+            label: 'Transfer Type',
+            placeholder: 'Transfer Type',
             type: filterElementTypes.dropDown,
             showAllOption: false,
             canSelectPlaceholder: true,
@@ -59,8 +76,8 @@ module.exports = (gridStyle) => ({
             }
         },
         {
-            labelFrom: 'Transaction From',
-            labelTo: 'Transaction To',
+            labelFrom: 'Transfer From',
+            labelTo: 'Transfer To',
             nameMap: {from: 'startDate', to: 'endDate'},
             type: filterElementTypes.dateTimePickerBetween
         }
