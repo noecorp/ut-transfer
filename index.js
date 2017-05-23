@@ -6,7 +6,7 @@ module.exports = () => ({
         errors: require('./errors'),
         'db/transfer': require('./api/sql'),
         bulk: require('./modules/bulk'),
-        bulkHTTP: require('./modules/bulk/http')
+        bulkHTTP: require('./modules/bulk/http'),
         transferHTTP: require('./http')
     },
     validations: {
