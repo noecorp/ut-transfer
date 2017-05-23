@@ -20,9 +20,9 @@ DECLARE @endRow INT = @startRow + @pageSize - 1
 DECLARE @callParams XML 
 DECLARE @currency VARCHAR(3) 
 
--- checks if the user hAS a right to make the operatiON
-DECLARE @actiONID VARCHAR(100) =  OBJECT_SCHEMA_NAME(@@PROCID) + '.' +  OBJECT_NAME(@@PROCID), @return int = 0
-EXEC @return = [user].[permissiON.check] @actiONId =  @actiONID, @objectId = null, @meta = @meta
+-- checks if the user hAS a right to make the operation
+DECLARE @actionID VARCHAR(100) =  OBJECT_SCHEMA_NAME(@@PROCID) + '.' +  OBJECT_NAME(@@PROCID), @return int = 0
+EXEC @return = [user].[permission.check] @actionID =  @actionID, @objectId = null, @meta = @meta
 IF @return != 0
 BEGIN
     RETURN 55555
@@ -42,13 +42,13 @@ CREATE TABLE #batch(
     [currency] [VARCHAR] (3),
     [batchTypeId] [TINYINT],
     [account] [BIGINT],
-    [createdON] [DATETIME2](0),
-    [validatedON] [DATETIMEOFFSET](7),
+    [createdOn] [DATETIME2](0),
+    [validatedOn] [DATETIMEOFFSET](7),
     [paymentsCount] [INT],
     [rowNum] [INT], 
     [recordsTotal] [INT],
     [totalAmount] [decimal](18, 0),
-    [updatedON] [datetime2](0))
+    [updatedOn] [datetime2](0))
 
 
 
@@ -57,7 +57,7 @@ SET @account = '%' + @account + '%'
 
 ;WITH CTE1 AS(
     SELECT b.batchId,b.name, b.batchStatusId, ci.itemName AS [status],
-    b.batchTypeId, b.account, b.createdON, b.validatedON, b.updatedON, 
+    b.batchTypeId, b.account, b.createdOn, b.validatedOn, b.updatedOn, 
     (SELECT COUNT(paymentId) FROM [bulk].[payment] WHERE batchId = b.batchId) AS paymentsCount,
     (SELECT SUM(amount) FROM [bulk].[payment] WHERE batchId = b.batchId)  AS totalAmount,
     COUNT(*) OVER(PARTITION BY 1) AS recordsTotal,
@@ -74,7 +74,7 @@ SET @account = '%' + @account + '%'
           AND (@batchStatusId IS NULL OR b.batchStatusId = @batchStatusId)
           AND (@batchName IS NULL OR b.name LIKE @batchName)
           AND (@account IS NULL OR b.account LIKE  @account)
-          AND (@fromDate IS NULL OR @toDate IS NULL  OR (b.createdON >= @fromDate AND b.createdON <= @toDate) )
+          AND (@fromDate IS NULL OR @toDate IS NULL  OR (b.createdOn >= @fromDate AND b.createdOn <= @toDate) )
 )
 ,CTE2 AS (SELECT * ,
             ROW_NUMBER() OVER(ORDER BY
@@ -82,7 +82,7 @@ SET @account = '%' + @account + '%'
                 CASE
                     WHEN @sortBy = 'name'    THEN CTE1.name
                     WHEN @sortBy = 'status'       THEN CTE1.[status]
-                    WHEN @sortBy = 'updatedON'  THEN CONVERT(VARCHAR(100), CTE1.updatedON)
+                    WHEN @sortBy = 'updatedOn'  THEN CONVERT(VARCHAR(100), CTE1.updatedOn)
                     WHEN @sortBy = 'paymentsCount' THEN CONVERT(VARCHAR(100), CTE1.paymentsCount)
                     WHEN @sortBy = 'totalAmount'  THEN CONVERT(VARCHAR(100), CTE1.totalAmount)
                     WHEN @sortBy = 'currency' THEN CTE1.currency
@@ -93,7 +93,7 @@ SET @account = '%' + @account + '%'
                 CASE
                     WHEN @sortBy = 'name'    THEN CTE1.name
                     WHEN @sortBy = 'status'       THEN CTE1.[status]
-                    WHEN @sortBy = 'updatedON'  THEN CONVERT(VARCHAR(100), CTE1.updatedON)
+                    WHEN @sortBy = 'updatedOn'  THEN CONVERT(VARCHAR(100), CTE1.updatedOn)
                     WHEN @sortBy = 'paymentsCount' THEN CONVERT(VARCHAR(100), CTE1.paymentsCount)
                     WHEN @sortBy = 'totalAmount'  THEN CONVERT(VARCHAR(100), CTE1.totalAmount)
                     WHEN @sortBy = 'currency' THEN CTE1.currency
@@ -103,18 +103,18 @@ SET @account = '%' + @account + '%'
             FROM CTE1
             )
 
-INSERT INTO #batch(batchId, name, batchStatusId, [status], currency, batchTypeId, account, createdON, validatedON, paymentsCount, rowNum, recordsTotal, totalAmount, updatedON)
-SELECT batchId, name, batchStatusId, [status], currency, batchTypeId, account, createdON, validatedON, paymentsCount, rowNum, recordsTotal, totalAmount ,updatedON
+INSERT INTO #batch(batchId, name, batchStatusId, [status], currency, batchTypeId, account, createdOn, validatedOn, paymentsCount, rowNum, recordsTotal, totalAmount, updatedOn)
+SELECT batchId, name, batchStatusId, [status], currency, batchTypeId, account, createdOn, validatedOn, paymentsCount, rowNum, recordsTotal, totalAmount ,updatedOn
 FROM CTE2
 WHERE @pageNumber IS NULL OR @pageSize IS NULL OR rowNum BETWEEN ((@pageNumber - 1) * @pageSize) + 1 AND @pageSize * (@pageNumber)
 
 SELECT 'batches' AS resultSetName
 
-SELECT batchId, name, batchStatusId, [status], currency, batchTypeId, account, createdON, validatedON, paymentsCount, rowNum, recordsTotal, totalAmount, updatedON 
+SELECT batchId, name, batchStatusId, [status], currency, batchTypeId, account, createdOn, validatedOn, paymentsCount, rowNum, recordsTotal, totalAmount, updatedOn 
 FROM #batch
 ORDER BY rowNum
 
-SELECT 'paginatiON' AS resultSetName
+SELECT 'pagination' AS resultSetName
 
 SELECT TOP 1 @pageSize AS pageSize, recordsTotal AS recordsTotal, @pageNumber AS pageNumber, (recordsTotal - 1) / @pageSize + 1 AS pagesTotal
 FROM #batch

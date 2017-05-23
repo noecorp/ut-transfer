@@ -12,7 +12,7 @@ module.exports = {
             status: joi.string().required(),
             batchType: joi.string(),
             batchTypeId: joi.number(),
-            account: joi.string(),
+            account: joi.string().allow(null),
             updatedOn: joi.date(),
             reason: joi.string().allow(null),
             createdBy: joi.date(),

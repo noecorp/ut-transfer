@@ -21,6 +21,7 @@ module.exports = {
             status: joi.string().required(),
             batchTypeId: joi.number().required(),
             account: joi.string().allow(null),
+            currency: joi.string().allow(null),
             createdOn: joi.date().allow(null),
             validatedOn: joi.date().allow(null),
             paymentsCount: joi.number(),
