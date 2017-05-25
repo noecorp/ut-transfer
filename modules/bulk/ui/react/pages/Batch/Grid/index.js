@@ -7,7 +7,6 @@ import mainStyle from 'ut-front-react/assets/index.css';
 import {Link} from 'react-router';
 
 const sortableColumns = [true, true, true, true, true, true, true];
-
 const linkableColumns = [false, false, false, false, false, false];
 
 const fields = [
