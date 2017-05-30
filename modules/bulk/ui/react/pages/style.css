@@ -106,7 +106,6 @@
     flex-shrink: 1;
     flex-grow: 1;
     flex-basis: auto;
-    width: 200px;
     max-width: 240px;
     /*min-width: 190px;*/
     text-overflow: ellipsis;
@@ -120,7 +119,6 @@
 
 .clearFilterWrap {
     margin-left: 20px;
-    margin-right: 20px;
 }
 
 .inputWrapper {
@@ -354,7 +352,7 @@
 
 .customSearchDropdown {
     float: left;
-    width: 45%;
+    width: 40%;
     background-color: #F4F4F4;
 }
 .customSearchDropdown svg {
@@ -363,7 +361,7 @@
 }
 .customSearchTextField {
     float: left;
-    width: 55%;
+    width: 60%;
 }
 .pagination {
     position: fixed;
@@ -590,22 +588,3 @@
     bottom: 34px;
     padding: 0 40px 0 20px;
 }
-.dropdownWrap {
-    position: absolute;
-    margin-left: 182px;
-    width: 318px;
-}
-.searchDropdown {
-    float: left;
-    width: 36.5%;
-    background-color: #F4F4F4;
-}
-.searchDropdown svg {
-    background-color: transparent;
-    fill: #000 !important;
-}
-.searchTextField {
-    float: left;
-    width: 63.5%;
-}
-

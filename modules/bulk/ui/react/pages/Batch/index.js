@@ -17,14 +17,11 @@ import {bindActionCreators} from 'redux';
 import * as actions from './actions';
 import UploadForm from './UploadForm';
 import DetailEdit from './Popups/Details';
-import AdvancedSearch from './Popups/AdvanceSearch';
-import Button from 'ut-front-react/components/StandardButton';
 
 const defaultAsideWidth = 200;
 const popUps = {
     batchDetailsPopup: 'batchDetailsPopup',
-    batchUploadPopup: 'batchUploadPopup',
-    batchSearch: 'batchSearch'
+    batchUploadPopup: 'batchUploadPopup'
 };
 
 class BulkBatch extends Component {
@@ -83,18 +80,6 @@ class BulkBatch extends Component {
                 styleType: 'primaryDialog'
             });
         }
-        if (this.state.popupFor === popUps.batchSearch) {
-            buttons.push({
-                label: 'Search',
-                type: 'submit',
-                onClick: () => {
-                    let filters = this.props.filters;
-                    self.props.actions.changeFilter({'key': filters, value: filters.value});
-                    self.togglePopup();
-                },
-                styleType: 'primaryDialog'
-            });
-        }
         buttons.push({
             label: 'Cancel',
             onClick: this.togglePopup,
@@ -105,8 +90,6 @@ class BulkBatch extends Component {
     getPopupActions() {
         switch (this.state.popupFor) {
             case popUps.batchDetailsPopup:
-                return this.getDetailsAction();
-            case popUps.batchSearch:
                 return this.getDetailsAction();
             default:
                 return [{
@@ -121,8 +104,6 @@ class BulkBatch extends Component {
         switch (this.state.popupFor) {
             case popUps.batchDetailsPopup:
                 return (<DetailEdit canEdit={this.permissions.canEdit && canEditByStatus} />);
-            case popUps.batchSearch:
-                return (<AdvancedSearch />);
             default:
                 return null;
         }
@@ -131,8 +112,6 @@ class BulkBatch extends Component {
         switch (this.state.popupFor) {
             case popUps.batchDetailsPopup:
                 return 'Batch Details';
-            case popUps.batchSearch:
-                return 'Advanced Search';
             default:
                 return null;
         }
@@ -154,8 +133,7 @@ class BulkBatch extends Component {
                               <div className={style.actionWrap}>
                                 <Toolbox togglePopup={this.togglePopup} batchTypeName={batchTypeName} />
                                </div>
-                            ) : <div className={style.filterWrap}><div><Filters /></div><div><Button className='defaultBtn' text='Advanced Search' label='Search' onClick={() => { self.togglePopup(popUps.batchSearch); }} /></div>
-                            </div>}
+                            ) : <Filters />}
                         </GridToolbox>
                     }
                 </div>
@@ -196,9 +174,7 @@ BulkBatch.propTypes = {
     errors: PropTypes.object,
     batchDetails: PropTypes.object,
     batchTypeName: PropTypes.string,
-    actions: PropTypes.object,
-    filters: PropTypes.object
-
+    actions: PropTypes.object
 };
 
 BulkBatch.contextTypes = {
@@ -210,7 +186,6 @@ function mapStateToProps(state, ownProps) {
         batchTypeName: ownProps.params.batchTypeName,
         errors: state.bulkBatch.get('errors'),
         selectedBatch: state.bulkBatch.get('selectedBatch'),
-        filters: state.bulkBatch.get('filters'),
         showFilter: state.bulkBatch.get('showFilter'),
         batchDetails: state.bulkBatch.get('batchDetails')
     };
