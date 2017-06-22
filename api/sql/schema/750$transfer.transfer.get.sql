@@ -28,7 +28,7 @@ DECLARE @transfer AS TABLE (transferId bigint, transferTypeId bigint, acquirerCo
                             cardId bigint, sourceAccount varchar(50), destinationAccount varchar(50), expireTime datetime, expireCount int, reversed bit, retryTime datetime,
                             retryCount int, ledgerTxState smallint, issuerTxState smallint, acquirerTxState smallint, merchantTxState smallint, issuerId varchar(50), ledgerId varchar(50),
                             transferCurrency varchar(3), transferAmount money,  acquirerFee money, issuerFee money, transferFee money,[description] varchar(250), issuerPort varchar(50),
-                            ledgerPort varchar(50),udfAcquirer xml, pendingId int, pullTransactionId bigint, pushTransactionId bigint, pendingExpireTime datetime, params nvarchar(max))
+                            ledgerPort varchar(50),udfAcquirer xml, pendingId int, pullTransactionId bigint, pushTransactionId bigint, pendingExpireTime datetime, params nvarchar(max), dueDate date)
 
 -- get by pull transaction id
 INSERT INTO
@@ -78,7 +78,8 @@ SELECT TOP 1
     tp.pullTransactionId,
     tp.pushTransactionId,
     tp.expireTime,
-    tp.params
+    tp.params,
+    tp.dueDate
 FROM
     [transfer].[transfer] t
 JOIN
@@ -147,7 +148,8 @@ BEGIN
         tp.pullTransactionId,
         tp.pushTransactionId,
         tp.expireTime,
-        tp.params
+        tp.params,
+        tp.dueDate
     FROM
         [transfer].[transfer] t
     JOIN
@@ -239,6 +241,9 @@ SELECT 'transferPending' AS resultSetName
 SELECT
     pendingId,
     pullTransactionId,
-    pushTransactionId, expireTime, params
+    pushTransactionId,
+    expireTime,
+    params,
+    dueDate
 FROM
     @transfer

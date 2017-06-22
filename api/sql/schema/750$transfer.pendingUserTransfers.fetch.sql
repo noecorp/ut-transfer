@@ -22,7 +22,7 @@ JOIN
 JOIN
     @userAvailableAccounts an ON an.[value] = tp.[approvalAccountNumber]
 WHERE
-    tp.[status] = 1
+    tp.[status] = 1 AND (tp.dueDate = cast(GETDATE() as date) OR tp.dueDate IS NULL)
 
 SELECT 'pullTransactions' AS resultSetName
 SELECT
