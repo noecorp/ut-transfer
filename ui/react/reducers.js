@@ -11,6 +11,8 @@ import {transferPartnerCreate} from './containers/Partners/Popups/CreatePartner/
 
 import {transferPartnerDetails} from './containers/Partners/Popups/Details/reducer';
 
+import transfersBudget from './pages/Transfer/Budget/reducers';
+
 const defaultStateConfig = fromJS({
     partners: {
         grid: {
@@ -41,5 +43,7 @@ export default {
             return state.mergeDeep(fromJS(action.config));
         }
         return state;
-    }
+    },
+
+    transfersBudget
 };

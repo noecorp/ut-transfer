@@ -21,7 +21,7 @@ import Details from './../../containers/Partners/Popups/Details';
 import PartnerCreate from './../../containers/Partners/Popups/CreatePartner';
 import {openCreatePartnerPopup} from './../../containers/Partners/Popups/CreatePartner/actions';
 
-import style from '../style.css';
+import style from './style.css';
 
 class Partner extends Component {
     getResizibleCols() {
