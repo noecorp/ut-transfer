@@ -25,6 +25,23 @@
             "iban": "BG39CREX92601016221000"
         }
     ],
+    "beneficiaries": {
+        "transfersBudget": [
+            {
+                "name": "ТД на НАП, гр. Бургас",
+                "iban": "BG16STSA93003311147861",
+                "bank": "Банка ДСК"
+            }
+        ],
+        "transfers": [
+            {
+                "name": "Ани Иванова",
+                "iban": "BG16STSA93003311147861",
+                "country": "bg",
+                "bank": "Банка ДСК"
+            }
+        ]
+    },
     "transfers": [
         {
             "transferId": "00ZCMG45987NON1",

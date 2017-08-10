@@ -1,16 +1,27 @@
 import immutable from 'immutable';
+import { documentTypes } from './staticData';
+console.log(documentTypes);
 
 export const defaultState = {
+    activeTabData: {
+        mode: '',
+        id: ''
+    },
     create: {
         create: {
             data: {},
             dropdownData: {
-                accounts: []
-            },
-            remote: {
-                accounts: []
+                accounts: [],
+                documentTypes: documentTypes
             },
             screenConfiguration: {}
+        }
+    },
+    remote: {
+        accounts: [],
+        customerData: {
+            firstName: null,
+            lastName: null
         }
     }
 };

@@ -1,9 +1,19 @@
 import * as actionTypes from './actionTypes';
 
+export const setActiveTab = ({ mode, id }) => ({
+    type: actionTypes.SET_ACTIVE_TAB,
+    params: { mode, id }
+});
+
 export const getScreenConfiguration = (key) => ({
     type: actionTypes.GET_SCREEN_CONFIGURATION,
     method: 'user.screenConfiguration.get',
     params: { key }
+});
+
+export const fetchCustomerData = () => ({
+    type: actionTypes.FETCH_CUSTOMER_DATA,
+    method: 'transfer.onlineBanking.customerData.fetch'
 });
 
 export const fetchAccounts = () => ({
