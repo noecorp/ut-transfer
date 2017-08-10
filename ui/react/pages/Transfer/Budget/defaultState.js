@@ -2,7 +2,16 @@ import immutable from 'immutable';
 
 export const defaultState = {
     create: {
-        screenConfiguration: {}
+        create: {
+            data: {},
+            dropdownData: {
+                accounts: []
+            },
+            remote: {
+                accounts: []
+            },
+            screenConfiguration: {}
+        }
     }
 };
 

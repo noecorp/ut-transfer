@@ -6,5 +6,8 @@ module.exports = {
     'partner.add': require('./partner.add'),
     'partner.edit': require('./partner.edit'),
     'partner.get': require('./partner.get'),
-    'reason.list': require('./reason.list')
+    'reason.list': require('./reason.list'),
+    'onlineBanking.transfer.create': require('./onlineBanking.transfer.create'),
+    'onlineBanking.transfer.fetch': require('./onlineBanking.transfer.fetch'),
+    'onlineBanking.account.fetch': require('./onlineBanking.account.fetch')
 };

@@ -6,24 +6,21 @@ import Page from 'ut-front-react/components/PageLayout/Page';
 import { AddTab } from 'ut-front-react/containers/TabMenu';
 import Header from 'ut-front-react/components/PageLayout/Header';
 
-import {
-    getScreenConfiguration
-} from '../actions';
+import TransferBudgetCreateContainer from '../../../../containers/Transfer/Budget/Create';
 
-import trasnferStyle from '../../style.css';
+import transferStyle from '../../style.css';
 
 class TransferBudgetCreate extends Component {
 //
-    componentWillMount() {
-        this.props.getScreenConfiguration({ key: 'transferBudgetCreate' });
-    }
-
     render() {
         return (
             <Page>
                 <AddTab pathname={getLink('ut-transfer:transfersBudgetCreate')} title={'Create Budget Transfer'} />
-                <div className={trasnferStyle.pageContainer}>
+                <div className={transferStyle.pageContainer}>
                     <Header text={'Create Budget Transfer'} />
+                    <div className={transferStyle.transferContainer}>
+                        <TransferBudgetCreateContainer mode='create' id='create' />
+                    </div>
                 </div>
             </Page>
         );
@@ -32,13 +29,12 @@ class TransferBudgetCreate extends Component {
 }
 
 TransferBudgetCreate.propTypes = {
-    getScreenConfiguration: PropTypes.func
+    getScreenConfiguration: PropTypes.func,
+    fetchAccounts: PropTypes.func
 };
 
 const mapStateToProps = (state, ownProps) => ({});
-const mapDispatchToProps = {
-    getScreenConfiguration
-};
+const mapDispatchToProps = {};
 
 export default connect(
     mapStateToProps,

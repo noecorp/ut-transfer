@@ -468,6 +468,19 @@ module.exports = {
     },
     'pendingUserTransfers.fetch': function(msg, $meta) {
         return this.bus.importMethod('db/transfer.pendingUserTransfers.fetch')(msg, $meta);
+    },
+    'onlineBanking.account.fetch': function(msg, $meta) {
+        return {
+            accounts: []
+        };
+    },
+    'onlineBanking.transfer.fetch': function(msg, $meta) {
+        return {
+            transfers: []
+        };
+    },
+    'onlineBanking.transfer.create': function(msg, $meta) {
+        return {};
     }
 };
 // todo handle timeout from destination port
