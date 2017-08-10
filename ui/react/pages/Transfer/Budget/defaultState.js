@@ -1,6 +1,5 @@
 import immutable from 'immutable';
 import { documentTypes } from './staticData';
-console.log(documentTypes);
 
 export const defaultState = {
     activeTabData: {
@@ -11,8 +10,8 @@ export const defaultState = {
         create: {
             data: {},
             dropdownData: {
-                accounts: [],
-                documentTypes: documentTypes
+                account: [],
+                documentType: documentTypes
             },
             screenConfiguration: {}
         }

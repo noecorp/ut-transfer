@@ -25,12 +25,22 @@ class TransferBudgetCreate extends Component {
         this.props.fetchAccounts();
     }
 
+    get actionButtons() {
+        return [
+            { text: 'Създай и изпрати', performFullValidation: true, onClick: () => {}, styleType: 'primaryLight' },
+            { text: 'Създай', performFullValidation: true, onClick: () => {} },
+            { text: 'Затвори', onClick: () => {} }
+        ];
+    }
+
     render() {
         return (
             <Page>
                 <AddTab pathname={getLink('ut-transfer:transfersBudgetCreate')} title={'Плащане към бюджета'} />
                 <div className={transferStyle.pageContainer}>
-                    <Header text={'Платежно нареждане (плащане към бюджета)'} />
+                    <Header
+                      text={'Платежно нареждане (плащане към бюджета)'}
+                      buttons={this.actionButtons} />
                     <div className={transferStyle.transferContainer}>
                         <TransferBudgetContainer mode='create' id='create' />
                     </div>

@@ -19,6 +19,8 @@ export default function transfersBudget(state = defaultStateImmutable, action) {
             return transferBudgetReducers.fetchAccounts(state, action, options);
         case actionTypes.FETCH_CUSTOMER_DATA:
             return transferBudgetReducers.fetchCustomerData(state, action, options);
+        case actionTypes.EDIT_TRANSFER_FIELD:
+            return transferBudgetReducers.editTransferField(state, action, options);
     }
     return state;
 };
