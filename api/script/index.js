@@ -1,3 +1,6 @@
+const path = require('path');
+const fs = require('fs');
+
 const DECLINED = {
     ledger: ['transfer.insufficientFunds', 'transfer.invalidAccount', 'transfer.genericDecline', 'transfer.incorrectPin'],
     issuer: ['transfer.insufficientFunds', 'transfer.invalidAccount', 'transfer.genericDecline', 'transfer.incorrectPin'],
@@ -470,13 +473,20 @@ module.exports = {
         return this.bus.importMethod('db/transfer.pendingUserTransfers.fetch')(msg, $meta);
     },
     'onlineBanking.account.fetch': function(msg, $meta) {
+        const mockOnlineBankingFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking.json');
+        const mockOnlineBankingData = fs.readFileSync(mockOnlineBankingFilePath, 'UTF-8');
+        const data = JSON.parse(mockOnlineBankingData);
         return {
-            accounts: []
+            customerInfo: data.customerInfo,
+            accounts: data.accounts
         };
     },
     'onlineBanking.transfer.fetch': function(msg, $meta) {
+        const mockOnlineBankingFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking.json');
+        const mockOnlineBankingData = fs.readFileSync(mockOnlineBankingFilePath, 'UTF-8');
+        const data = JSON.parse(mockOnlineBankingData);
         return {
-            transfers: []
+            accounts: data.transfers
         };
     },
     'onlineBanking.transfer.create': function(msg, $meta) {
