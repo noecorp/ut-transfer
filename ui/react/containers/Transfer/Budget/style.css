@@ -1,0 +1,24 @@
+.wrap {
+    
+}
+.formWrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.formLeft {
+    flex-basis: 49%;
+}
+.formRight {
+    flex-basis: 49%;
+}
+.inputWrap {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 10px;
+}
+.inputWrap:last-child{
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}

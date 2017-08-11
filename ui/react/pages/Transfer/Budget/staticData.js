@@ -1,0 +1,42 @@
+export const bics = [
+    { bic: 'BUINBGSF', name: 'ТБ Алианц България' },
+    { bic: 'CRBABGSF', name: 'Алфа банк - клон България' },
+    { bic: 'BNPABGSX', name: 'БНП Париба С.А.' },
+    { bic: 'BGUSBGSF', name: 'Българо-американска кредитна банка' },
+    { bic: 'BPBIBGSF', name: 'Пощенска банка' },
+    { bic: 'DEMIBGSF', name: 'Търговска банка Д.' },
+    { bic: 'STSABGSF', name: 'Банка ДСК' },
+    { bic: 'BNBGBGSF', name: 'Българска народна банка' },
+    { bic: 'BNBGBGSD', name: 'Българска народна банка - РИНГС' },
+    { bic: 'BINVBGSF', name: 'Креди Агрикол България' },
+    { bic: 'TBIBBGSF', name: 'Ти Би Ай Банк' },
+    { bic: 'ISBKBGSF', name: 'Ишбанк АГ' },
+    { bic: 'IORTBGSF', name: 'Инвестбанк' },
+    { bic: 'INGBBGSF', name: 'ИНГ Банк Н.В' },
+    { bic: 'IABGBGSF', name: 'Интернешенъл Асет Банк' },
+    { bic: 'NASBBGSF', name: 'Българска банка за развитие' },
+    { bic: 'UBBSBGSF', name: 'Обединена българска банка' },
+    { bic: 'SOMBBGSF', name: 'Общинска банка' },
+    { bic: 'PRCBBGSF', name: 'Прокредит банк' },
+    { bic: 'PIRBBGSF', name: 'Банка Пиреос' },
+    { bic: 'FINVBGSF', name: 'Първа инвестиционна банка' },
+    { bic: 'RZBBBGSF', name: 'Райфайзен банк България' },
+    { bic: 'BUIBBGSF', name: 'СИБАНК' },
+    { bic: 'TTBBBG22', name: 'Сосиете Женерал Експресбанк' },
+    { bic: 'TEXIBGSF', name: 'Тексим банк' },
+    { bic: 'CITIBGSF', name: 'Ситибанк Н.А. - клон София' },
+    { bic: 'CREXBGSF', name: 'Токуда Банк' },
+    { bic: 'UNCRBGSF', name: 'Уникредит Булбанк' },
+    { bic: 'TCZBBGSF', name: 'Те-Дже Зираат Банкасъ - клон София' },
+    { bic: 'CECBBGSF', name: 'Централна кооперативна банка' }
+];
+
+export const documentTypes = [
+    { key: '1', name: 'Декларация' },
+    { key: '2', name: 'Ревизионен акт' },
+    { key: '3', name: 'Наказателно постановление' },
+    { key: '4', name: 'Авансова вноска' },
+    { key: '5', name: 'Данъчен партиден номер на имот' },
+    { key: '6', name: 'Постановление за принудително събиране' },
+    { key: '9', name: 'Други' }
+];

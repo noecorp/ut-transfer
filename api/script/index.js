@@ -472,12 +472,19 @@ module.exports = {
     'pendingUserTransfers.fetch': function(msg, $meta) {
         return this.bus.importMethod('db/transfer.pendingUserTransfers.fetch')(msg, $meta);
     },
+    'onlineBanking.customerData.fetch': function(msg, $meta) {
+        const mockOnlineBankingFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking.json');
+        const mockOnlineBankingData = fs.readFileSync(mockOnlineBankingFilePath, 'UTF-8');
+        const data = JSON.parse(mockOnlineBankingData);
+        return {
+            customerData: data.customerData
+        };
+    },
     'onlineBanking.account.fetch': function(msg, $meta) {
         const mockOnlineBankingFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking.json');
         const mockOnlineBankingData = fs.readFileSync(mockOnlineBankingFilePath, 'UTF-8');
         const data = JSON.parse(mockOnlineBankingData);
         return {
-            customerInfo: data.customerInfo,
             accounts: data.accounts
         };
     },

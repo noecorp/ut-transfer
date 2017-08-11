@@ -9,5 +9,6 @@ module.exports = {
     'reason.list': require('./reason.list'),
     'onlineBanking.transfer.create': require('./onlineBanking.transfer.create'),
     'onlineBanking.transfer.fetch': require('./onlineBanking.transfer.fetch'),
-    'onlineBanking.account.fetch': require('./onlineBanking.account.fetch')
+    'onlineBanking.account.fetch': require('./onlineBanking.account.fetch'),
+    'onlineBanking.customerData.fetch': require('./onlineBanking.customerData.fetch')
 };
