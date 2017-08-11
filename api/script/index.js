@@ -485,8 +485,19 @@ module.exports = {
         const mockOnlineBankingFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking.json');
         const mockOnlineBankingData = fs.readFileSync(mockOnlineBankingFilePath, 'UTF-8');
         const data = JSON.parse(mockOnlineBankingData);
+        const transfers = data.transfers.map(transfer => {
+            if (typeof transfer.sourceAccount === 'number') {
+                transfer.sourceAccount =
+                    data.accounts.filter(account => account.accountNumber === transfer.sourceAccount)[0];
+            }
+            if (typeof transfer.destinationAccount === 'number') {
+                transfer.destinationAccount =
+                    data.accounts.filter(account => account.accountNumber === transfer.destinationAccount)[0];
+            }
+            return transfer;
+        });
         return {
-            accounts: data.transfers
+            accounts: transfers
         };
     },
     'onlineBanking.transfer.create': function(msg, $meta) {
