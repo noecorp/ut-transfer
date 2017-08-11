@@ -109,7 +109,7 @@ function mapStateToProps(state, ownProps) {
         country: state.transferSwift.getIn(['beneficiary', 'country']),
         address: state.transferSwift.getIn(['beneficiary', 'address']),
         accountNumber: state.transferSwift.getIn(['beneficiary', 'accountNumber']),
-        city: state.transferSwift.getIn(['beneficiary', 'accountNumber']),
+        city: state.transferSwift.getIn(['beneficiary', 'city']),
 
         errors: state.transferSwift.getIn(['errors', 'beneficiary'], immutable.Map())
     };

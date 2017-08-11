@@ -28,8 +28,8 @@ class Transfer extends Component {
                           label={<span><Text>Priority Of Transfer</Text> *</span>}
                           boldLabel
                           keyProp='priority'
-                          isValid={this.props.errors.get('issuingBranchId') === undefined}
-                          errorMessage={this.props.errors.get('issuingBranchId')}
+                          isValid={this.props.errors.get('priority') === undefined}
+                          errorMessage={this.props.errors.get('priority')}
                           onSelect={this.handleInputChange('priority')}
                           data={this.props.priorities.toJS()}
                         />

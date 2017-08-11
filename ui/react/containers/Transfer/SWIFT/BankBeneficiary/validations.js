@@ -1,4 +1,6 @@
 import { validationTypes, textValidations, dropdownValidations } from 'ut-front-react/validator/constants.js';
+import React from 'react';
+import Text from 'ut-front-react/components/Text';
 
 export function getBankBeneficiaryValidations() {
     return [
@@ -14,8 +16,7 @@ export const swiftValidation = {
     key: ['bankBeneficiary', 'swift'],
     type: validationTypes.text,
     rules: [
-        {type: textValidations.isRequired, errorMessage: 'Swift is required.'},
-        {type: textValidations.length, minVal: 2, maxVal: 100, errorMessage: 'Swift should be between 2 and 100 symbols long.'}
+        {type: textValidations.isRequired, errorMessage: <Text>Swift is required</Text>}
     ]
 };
 
@@ -23,8 +24,7 @@ export const cityValidation = {
     key: ['bankBeneficiary', 'city'],
     type: validationTypes.text,
     rules: [
-        {type: textValidations.isRequired, errorMessage: 'City is required.'},
-        {type: textValidations.length, minVal: 2, maxVal: 100, errorMessage: 'City should be between 2 and 100 symbols long.'}
+        {type: textValidations.isRequired, errorMessage: <Text>City is required</Text>}
     ]
 };
 
@@ -32,8 +32,7 @@ export const nameValidation = {
     key: ['bankBeneficiary', 'name'],
     type: validationTypes.text,
     rules: [
-        {type: textValidations.isRequired, errorMessage: 'Name is required.'},
-        {type: textValidations.length, minVal: 2, maxVal: 200, errorMessage: 'Name should be between 2 and 200 symbols long.'}
+        {type: textValidations.isRequired, errorMessage: <Text>Name is required</Text>}
     ]
 };
 
@@ -41,7 +40,7 @@ export const countryValidation = {
     key: ['bankBeneficiary', 'country'],
     type: validationTypes.dropdown,
     rules: [
-         {type: dropdownValidations.isRequired, errorMessage: 'Country is required.'}
+         {type: dropdownValidations.isRequired, errorMessage: <Text>Country is required</Text>}
     ]
 };
 
@@ -49,7 +48,6 @@ export const addressValidation = {
     key: ['bankBeneficiary', 'address'],
     type: validationTypes.text,
     rules: [
-        {type: textValidations.isRequired, errorMessage: 'Address is required.'},
-        {type: textValidations.length, minVal: 2, maxVal: 200, errorMessage: 'Address should be between 2 and 200 symbols long.'}
+        {type: textValidations.isRequired, errorMessage: <Text>Address is required</Text>}
     ]
 };
