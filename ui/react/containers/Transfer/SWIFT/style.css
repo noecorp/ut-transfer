@@ -1,0 +1,23 @@
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.halfWidth {
+    display: inline-block;
+    width: 49%;
+}
+
+.rowPaddings {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.borderBottom {
+    border-bottom: 2px solid #E6E6E6;;
+}
+
+.contentBoxesWrapper {
+    width: 95%;
+    margin: 0px auto;
+}
