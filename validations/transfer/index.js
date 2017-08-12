@@ -10,5 +10,8 @@ module.exports = {
     'onlineBanking.transfer.create': require('./onlineBanking.transfer.create'),
     'onlineBanking.transfer.fetch': require('./onlineBanking.transfer.fetch'),
     'onlineBanking.account.fetch': require('./onlineBanking.account.fetch'),
-    'onlineBanking.customerData.fetch': require('./onlineBanking.customerData.fetch')
+    'onlineBanking.customerData.fetch': require('./onlineBanking.customerData.fetch'),
+    'onlineBanking.transferTemplate.fetch': require('./onlineBanking.transferTemplate.fetch'),
+    'onlineBanking.transferTemplate.create': require('./onlineBanking.transferTemplate.create'),
+    'onlineBanking.transferTemplate.get': require('./onlineBanking.transferTemplate.get')
 };

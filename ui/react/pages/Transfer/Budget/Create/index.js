@@ -25,21 +25,25 @@ class TransferBudgetCreate extends Component {
         this.props.fetchAccounts();
     }
 
+    translate(key) {
+        return this.context.translate(key);
+    }
+
     get actionButtons() {
         return [
-            { text: 'Създай и изпрати', performFullValidation: true, onClick: () => {}, styleType: 'primaryLight' },
-            { text: 'Създай', performFullValidation: true, onClick: () => {} },
-            { text: 'Затвори', onClick: () => {} }
+            { text: this.translate('Create and Close'), performFullValidation: true, onClick: () => {}, styleType: 'primaryLight' },
+            { text: this.translate('Create'), performFullValidation: true, onClick: () => {} },
+            { text: this.translate('Close'), onClick: () => {} }
         ];
     }
 
     render() {
         return (
             <Page>
-                <AddTab pathname={getLink('ut-transfer:transfersBudgetCreate')} title={'Плащане към бюджета'} />
+                <AddTab pathname={getLink('ut-transfer:transfersBudgetCreate')} title={this.translate('Transfer to the Budget')} />
                 <div className={transferStyle.pageContainer}>
                     <Header
-                      text={'Платежно нареждане (плащане към бюджета)'}
+                      text={this.translate('Payment slip (transfer to the Budget)')}
                       buttons={this.actionButtons} />
                     <div className={transferStyle.transferContainer}>
                         <TransferBudgetContainer mode='create' id='create' />
@@ -50,6 +54,10 @@ class TransferBudgetCreate extends Component {
     }
 //
 }
+
+TransferBudgetCreate.contextTypes = {
+    translate: PropTypes.func
+};
 
 TransferBudgetCreate.propTypes = {
     getScreenConfiguration: PropTypes.func,

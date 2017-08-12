@@ -1,7 +1,5 @@
 .pageContainer {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+    
 }
 .transferContainer {
     margin: 20px;

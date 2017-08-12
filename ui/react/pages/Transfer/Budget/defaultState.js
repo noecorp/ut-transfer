@@ -9,6 +9,7 @@ export const defaultState = {
     create: {
         create: {
             data: {},
+            errors: {},
             dropdownData: {
                 account: [],
                 documentType: documentTypes

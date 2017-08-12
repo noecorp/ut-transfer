@@ -1,4 +1,6 @@
 import immutable from 'immutable';
+import { Validator } from 'ut-front-react/utils/validator';
+import { bics, paymentTypes } from './staticData';
 
 const REQUESTED = 'requested';
 const FINISHED = 'finished';
@@ -49,14 +51,37 @@ export const fetchAccounts = (state, action, options) => {
 };
 
 export const editTransferField = (state, action, options) => {
-    const { field, value } = action.params;
+    const { field, value, errorMessage } = action.params;
     const { activeTabMode, activeTabId } = options;
-    let newState = state.setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], field], value);
+    state = state.setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], field], value);
+    if (errorMessage) {
+        state = state.setIn([activeTabMode, activeTabId, 'errors', field], errorMessage);
+    } else {
+        state = state.deleteIn([activeTabMode, activeTabId, 'errors', field]);
+    }
     if (field === 'account') {
         let customerData = state.getIn([activeTabMode, activeTabId, 'remote', 'customerData']);
-        newState = newState
+        state = state
             .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'sourceName'], customerData.get('name'))
             .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'civilIdentifier'], customerData.getIn(['civilIdentifier', 'value']));
     }
-    return newState;
+    if (field === 'iban' && value.length === 22) {
+        let bicIdentifier = value.substr(4, 4).toUpperCase();
+        let correspondingBic = bics.find(bic => bic.identifier === bicIdentifier);
+        if (correspondingBic) {
+            state = state.setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'bic'], correspondingBic.bic);
+        }
+        let paymentTypeIdentifier = value.substr(12, 2);
+        let correspondingPaymentType = paymentTypes[paymentTypeIdentifier];
+        var paymentTypesDropdownData = [];
+        Object.keys(correspondingPaymentType.codes).forEach(key => {
+            paymentTypesDropdownData.push({
+                key, name: correspondingPaymentType.codes[key]
+            });
+        });
+        if (correspondingPaymentType) {
+            state = state.setIn([activeTabMode, activeTabId, 'dropdownData', 'paymentType'], immutable.fromJS(correspondingPaymentType));
+        }
+    }
+    return state;
 };

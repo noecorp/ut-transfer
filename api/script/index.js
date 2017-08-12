@@ -473,7 +473,7 @@ module.exports = {
         return this.bus.importMethod('db/transfer.pendingUserTransfers.fetch')(msg, $meta);
     },
     'onlineBanking.customerData.fetch': function(msg, $meta) {
-        const mockOnlineBankingFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking.json');
+        const mockOnlineBankingFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'accounts.json');
         const mockOnlineBankingData = fs.readFileSync(mockOnlineBankingFilePath, 'UTF-8');
         const data = JSON.parse(mockOnlineBankingData);
         return {
@@ -481,7 +481,7 @@ module.exports = {
         };
     },
     'onlineBanking.account.fetch': function(msg, $meta) {
-        const mockOnlineBankingFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking.json');
+        const mockOnlineBankingFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'accounts.json');
         const mockOnlineBankingData = fs.readFileSync(mockOnlineBankingFilePath, 'UTF-8');
         const data = JSON.parse(mockOnlineBankingData);
         return {
@@ -489,7 +489,7 @@ module.exports = {
         };
     },
     'onlineBanking.transfer.fetch': function(msg, $meta) {
-        const mockOnlineBankingFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking.json');
+        const mockOnlineBankingFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'transfers.json');
         const mockOnlineBankingData = fs.readFileSync(mockOnlineBankingFilePath, 'UTF-8');
         const data = JSON.parse(mockOnlineBankingData);
         return {
@@ -498,6 +498,15 @@ module.exports = {
     },
     'onlineBanking.transfer.create': function(msg, $meta) {
         return {};
+    },
+    'onlineBanking.transferTemplate.create': function(msg, $meta) {
+
+    },
+    'onlineBanking.transferTemplate.get': function(msg, $meta) {
+
+    },
+    'onlineBanking.transferTemplate.fetch': function(msg, $meta) {
+
     }
 };
 // todo handle timeout from destination port
