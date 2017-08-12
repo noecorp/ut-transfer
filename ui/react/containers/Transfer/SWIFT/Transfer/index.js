@@ -18,54 +18,68 @@ class Transfer extends Component {
             this.props.changeField(['transfer', fieldName], data.value, data);
         };
     }
+
+    renderLeftColumn() {
+        return (
+             <div className={style.formRight}>
+                <div className={style.inputWrap}>
+                    <Dropdown
+                      defaultSelected={this.props.priority}
+                      label={<span><Text>Priority Of Transfer</Text> *</span>}
+                      boldLabel
+                      keyProp='priority'
+                      isValid={this.props.errors.get('priority') === undefined}
+                      errorMessage={this.props.errors.get('priority')}
+                      onSelect={this.handleInputChange('priority')}
+                      data={this.props.priorities.toJS()}
+                    />
+                </div>
+                <div className={style.inputWrap}>
+                    <Input value={this.props.otherBankCosts} label={<Text>Other Bank Costs</Text>}
+                      onChange={this.handleInputChange('otherBankCosts')}
+                      keyProp='otherBankCosts'
+                      boldLabel
+                      validators={otherBankCostsValidation.rules}
+                      isValid={this.props.errors.get('otherBankCosts') === undefined}
+                      errorMessage={this.props.errors.get('otherBankCosts')}
+                    />
+                </div>
+            </div>
+        );
+    }
+
+    renderRightColumn() {
+        return (
+            <div className={style.formRight}>
+                <div className={style.inputWrap}>
+                    <Input value={this.props.reason} label={<Text>Transfer Reason</Text>}
+                      onChange={this.handleInputChange('reason')}
+                      keyProp='reason'
+                      boldLabel
+                      validators={reasonValidation.rules}
+                      isValid={this.props.errors.get('reason') === undefined}
+                      errorMessage={this.props.errors.get('reason')}
+                    />
+                </div>
+                <div className={style.inputWrap}>
+                    <Input value={this.props.comments} label={<Text>More Info</Text>}
+                      onChange={this.handleInputChange('comments')}
+                      keyProp='comments'
+                      boldLabel
+                      validators={commentsValidation.rules}
+                      isValid={this.props.errors.get('comments') === undefined}
+                      errorMessage={this.props.errors.get('comments')}
+                    />
+                </div>
+            </div>
+        );
+    }
     render() {
         return (
             <TitledContentBox title={<Text>Transfer</Text>}>
-                <div className={style.row}>
-                    <div className={classnames(style.halfWidth, style.rowPaddings, style.borderBottom)}>
-                        <Dropdown
-                          defaultSelected={this.props.priority}
-                          label={<span><Text>Priority Of Transfer</Text> *</span>}
-                          boldLabel
-                          keyProp='priority'
-                          isValid={this.props.errors.get('priority') === undefined}
-                          errorMessage={this.props.errors.get('priority')}
-                          onSelect={this.handleInputChange('priority')}
-                          data={this.props.priorities.toJS()}
-                        />
-                    </div>
-                    <div className={classnames(style.halfWidth, style.rowPaddings, style.borderBottom)}>
-                        <Input value={this.props.reason} label={<Text>Transfer Reason</Text>}
-                          onChange={this.handleInputChange('reason')}
-                          keyProp='reason'
-                          boldLabel
-                          validators={reasonValidation.rules}
-                          isValid={this.props.errors.get('reason') === undefined}
-                          errorMessage={this.props.errors.get('reason')}
-                        />
-                    </div>
-                </div>
-                <div className={style.row}>
-                    <div className={classnames(style.halfWidth, style.rowPaddings)}>
-                        <Input value={this.props.otherBankCosts} label={<Text>Other Bank Costs</Text>}
-                          onChange={this.handleInputChange('otherBankCosts')}
-                          keyProp='otherBankCosts'
-                          boldLabel
-                          validators={otherBankCostsValidation.rules}
-                          isValid={this.props.errors.get('otherBankCosts') === undefined}
-                          errorMessage={this.props.errors.get('otherBankCosts')}
-                        />
-                    </div>
-                    <div className={classnames(style.halfWidth, style.rowPaddings)}>
-                        <Input value={this.props.comments} label={<Text>More Info</Text>}
-                          onChange={this.handleInputChange('comments')}
-                          keyProp='comments'
-                          boldLabel
-                          validators={commentsValidation.rules}
-                          isValid={this.props.errors.get('comments') === undefined}
-                          errorMessage={this.props.errors.get('comments')}
-                        />
-                    </div>
+                <div className={style.formWrap}>
+                    {this.renderLeftColumn()}
+                    {this.renderRightColumn()}
                 </div>
             </TitledContentBox>
         );

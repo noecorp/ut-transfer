@@ -10,7 +10,10 @@ export function getSenderValidations() {
         ibanOrdererValidation,
         cityValidation,
         transferDestinationValidation,
-        countryValidation
+        countryValidation,
+        currencyValidation,
+        sumValidation,
+        addressValidation
     ];
 }
 
@@ -75,5 +78,21 @@ export const countryValidation = {
     type: validationTypes.dropdown,
     rules: [
         {type: dropdownValidations.isRequired, errorMessage: <Text>Country is required</Text>}
+    ]
+};
+
+export const currencyValidation = {
+    key: ['sender', 'currency'],
+    type: validationTypes.dropdown,
+    rules: [
+        {type: dropdownValidations.isRequired, errorMessage: <Text>Currency is required</Text>}
+    ]
+};
+
+export const sumValidation = {
+    key: ['sender', 'sum'],
+    type: validationTypes.text,
+    rules: [
+        {type: textValidations.isRequired, errorMessage: <Text>Amount is required</Text>}
     ]
 };

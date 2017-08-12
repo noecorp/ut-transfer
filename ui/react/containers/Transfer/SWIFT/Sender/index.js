@@ -10,7 +10,15 @@ import style from './../style.css';
 import classnames from 'classnames';
 
 import {changeField} from './../actions';
-import {phoneValidation, nameValidation, ibanOrdererValidation, addressValidation, cityValidation} from './validations';
+import {
+    phoneValidation,
+    nameValidation,
+    ibanOrdererValidation,
+    addressValidation,
+    cityValidation,
+    currencyValidation,
+    sumValidation
+} from './validations';
 
 class Orderer extends Component {
     handleInputChange(fieldName) {
@@ -21,7 +29,8 @@ class Orderer extends Component {
 
     renderLeftColumn() {
         return (
-            <div className={style.contentBoxColumn}>
+            <div className={style.formLeft}>
+                <div className={style.inputWrap}>
                     <Dropdown
                       defaultSelected={this.props.sourceAccount}
                       label={<span><Text>Source Account</Text> *</span>}
@@ -33,21 +42,129 @@ class Orderer extends Component {
                       data={this.props.sourceAccounts.toJS()}
                       className={style.rowPaddings}
                     />
+                </div>
+                <div className={style.inputWrap}>
+                    <Input value={this.props.name} label={<Text>Name</Text>}
+                      onChange={this.handleInputChange('name')}
+                      keyProp='name'
+                      boldLabel
+                      validators={nameValidation.rules}
+                      isValid={this.props.errors.get('name') === undefined}
+                      errorMessage={this.props.errors.get('name')}
+                    />
+                </div>
+                <div className={style.inputWrap}>
+                    <Input value={this.props.address} label={<Text>Address</Text>}
+                      onChange={this.handleInputChange('address')}
+                      keyProp='address'
+                      boldLabel
+                      validators={addressValidation.rules}
+                      isValid={this.props.errors.get('address') === undefined}
+                      errorMessage={this.props.errors.get('address')}
+                    />
+                </div>
+                <div className={style.inputWrap}>
+                    <Input value={this.props.city} label={<Text>City</Text>}
+                      onChange={this.handleInputChange('city')}
+                      keyProp='city'
+                      boldLabel
+                      validators={cityValidation.rules}
+                      isValid={this.props.errors.get('city') === undefined}
+                      errorMessage={this.props.errors.get('city')}
+                    />
+                </div>
+                <div className={style.inputWrap}>
+                    <Dropdown
+                      defaultSelected={this.props.country}
+                      label={<span><Text>Country</Text> *</span>}
+                      boldLabel
+                      keyProp='country'
+                      isValid={this.props.errors.get('country') === undefined}
+                      errorMessage={this.props.errors.get('country')}
+                      onSelect={this.handleInputChange('country')}
+                      data={this.props.countries}
+                      className={style.rowPaddings}
+                    />
+                </div>
             </div>
         );
     }
 
     renderRightColumn() {
         return (
-            <div>
-
+            <div className={style.formRight}>
+                <div className={style.inputWrap}>
+                    <Input value={this.props.phone} label={<Text>Phone</Text>}
+                      onChange={this.handleInputChange('phone')}
+                      keyProp='phone'
+                      boldLabel
+                      validators={phoneValidation.rules}
+                      isValid={this.props.errors.get('phone') === undefined}
+                      errorMessage={this.props.errors.get('phone')}
+                    />
+                </div>
+                <div className={style.inputWrap}>
+                    <Input value={this.props.ibanOrderer} label={<Text>Sender IBAN</Text>}
+                      onChange={this.handleInputChange('ibanOrderer')}
+                      keyProp='ibanOrderer'
+                      boldLabel
+                      validators={ibanOrdererValidation.rules}
+                      isValid={this.props.errors.get('ibanOrderer') === undefined}
+                      errorMessage={this.props.errors.get('ibanOrderer')}
+                    />
+                </div>
+                <div className={classnames(style.inputWrap)}>
+                    <div style={{display: 'flex'}}>
+                        <div className={style.amountCurrencyLabel}>Amount / Currency</div>
+                        <div className={style.amountCurrencyFieldWrapper} >
+                            <div className={style.flexColumn}>
+                                <Input value={this.props.phone}
+                                  onChange={this.handleInputChange('sum')}
+                                  keyProp='sum'
+                                  boldLabel
+                                  validators={sumValidation.rules}
+                                  isValid={this.props.errors.get('sum') === undefined}
+                                />
+                                {this.props.errors.get('sum') && <div className={style.errorMessage}>{this.props.errors.get('sum')}</div>}
+                            </div>
+                            <div className={style.flexColumn}>
+                                <Dropdown
+                                  defaultSelected={this.props.currency}
+                                  boldLabel
+                                  keyProp='currency'
+                                  isValid={this.props.errors.get('currency') === undefined}
+                                  onSelect={this.handleInputChange('currency')}
+                                  data={this.props.currencies}
+                                  className={style.rowPaddings}
+                                />
+                                {this.props.errors.get('currency') && <div className={style.errorMessage}>{this.props.errors.get('currency')}</div>}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className={style.inputWrap}>
+                    <Dropdown
+                      defaultSelected={this.props.transferDestination}
+                      label={<span><Text>Source Account</Text> *</span>}
+                      boldLabel
+                      keyProp='transferDestination'
+                      isValid={this.props.errors.get('transferDestination') === undefined}
+                      errorMessage={this.props.errors.get('transferDestination')}
+                      onSelect={this.handleInputChange('transferDestination')}
+                      data={this.props.transferDestinations.toJS()}
+                      className={style.rowPaddings}
+                    />
+                </div>
             </div>
         );
     }
     render() {
         return (
             <TitledContentBox title={<Text>Sender</Text>}>
-                {this.renderLeftColumn()}
+                <div className={style.formWrap}>
+                    {this.renderLeftColumn()}
+                    {this.renderRightColumn()}
+                </div>
             </TitledContentBox>
         );
     }
@@ -68,15 +185,22 @@ Orderer.propTypes = {
     transferDestination: PropTypes.string.isRequired,
     country: PropTypes.string.isRequired,
     errors: PropTypes.object.isRequired,
-
+    currencies: PropTypes.arrayOf(PropTypes.shape({
+        key: PropTypes.string,
+        name: PropTypes.string
+    })),
     changeField: PropTypes.func.isRequired
 };
 
+Orderer.defaultProps = {
+    currencies: []
+};
+
 function mapStateToProps(state, ownProps) {
+    debugger;
     return {
         sourceAccounts: state.transferSwift.get('sourceAccounts'),
         transferDestinations: state.transferSwift.get('transferDestinations'),
-        countries: state.transferSwift.get('countries'),
 
         sourceAccount: state.transferSwift.getIn(['sender', 'sourceAccount']),
         phone: state.transferSwift.getIn(['sender', 'phone']),
@@ -89,7 +213,9 @@ function mapStateToProps(state, ownProps) {
         transferDestination: state.transferSwift.getIn(['sender', 'transferDestination']),
         country: state.transferSwift.getIn(['sender', 'country']),
 
-        errors: state.transferSwift.getIn(['errors', 'sender'], immutable.Map())
+        errors: state.transferSwift.getIn(['errors', 'sender'], immutable.Map()),
+        countries: state.transferSwift.getIn(['nomenclatures', 'country']).toJS(),
+        currencies: state.transferSwift.getIn(['nomenclatures', 'currency']).toJS()
     };
 }
 

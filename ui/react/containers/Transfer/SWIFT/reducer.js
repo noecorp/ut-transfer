@@ -1,8 +1,10 @@
-import immutable from 'immutable';
+import { fromJS } from 'immutable';
 import * as actionTypes from './actionTypes';
-// import {methodRequestState} from 'ut-front-react/constants';
+import {methodRequestState} from 'ut-front-react/constants';
 
-const defaultState = immutable.fromJS({
+import { formatRuleItems } from './helpers';
+
+const defaultState = fromJS({
     sender: {
         sourceAccount: '',
         phone: '',
@@ -40,7 +42,11 @@ const defaultState = immutable.fromJS({
     recipients: [],
     sourceAccounts: [],
     transferDestinations: [],
-    errors: {}
+    errors: {},
+    nomenclatures: {
+        currency: [],
+        country: []
+    }
 });
 
 export default function transferSwift(state = defaultState, action) {
@@ -56,6 +62,11 @@ export default function transferSwift(state = defaultState, action) {
                 .setIn([...action.key], action.value);
         case actionTypes.SET_ERRORS:
             return state.mergeDeepIn(['errors'], action.params);
+        case actionTypes.FETCH_NOMENCLATURES:
+            if (action.methodRequestState === methodRequestState.FINISHED) {
+                return state.set('nomenclatures', fromJS(formatRuleItems(action.result.items)));
+            }
+            return state;
     }
 
     return state;

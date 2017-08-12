@@ -7,11 +7,21 @@ import Beneficiary from './Beneficiary';
 import Transfer from './Transfer';
 import style from './style.css';
 
-import {changeField} from './actions';
+import nomeclaturesConfiguration from '../../../configuration/nomenclatures';
+import {
+    fetchNomenclatures,
+    sendMessage
+} from './actions';
+
+const propTypes = {
+    // mapDispatchToProps
+    fetchNomenclatures: PropTypes.func.isRequired
+};
 
 class Swift extends Component {
-    componentWillMount() {
-        // fetch data for dropdowns
+    componentDidMount() {
+        this.props.fetchNomenclatures(nomeclaturesConfiguration);
+        this.props.sendMessage();
     }
     render() {
         return (
@@ -25,15 +35,13 @@ class Swift extends Component {
     }
 }
 
-Swift.propTypes = {
-    changeField: PropTypes.func.isRequired
+Swift.propTypes = propTypes;
+
+const mapStateToProps = (state) => ({});
+
+const mapDispatchToProps = {
+    fetchNomenclatures,
+    sendMessage
 };
 
-function mapStateToProps(state, ownProps) {
-    return {};
-}
-
-export default connect(
-    mapStateToProps,
-    {changeField}
-)(Swift);
+export default connect(mapStateToProps, mapDispatchToProps)(Swift);

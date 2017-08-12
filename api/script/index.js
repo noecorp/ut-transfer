@@ -1,5 +1,12 @@
 const path = require('path');
 const fs = require('fs');
+const randomize = require('randomatic');
+const Nexmo = require('nexmo');
+
+var nexmo = new Nexmo({
+    apiKey: '036be2be',
+    apiSecret: '9970f46b95ae70c7'
+  });
 
 const DECLINED = {
     ledger: ['transfer.insufficientFunds', 'transfer.invalidAccount', 'transfer.genericDecline', 'transfer.incorrectPin'],
@@ -489,17 +496,20 @@ module.exports = {
         };
     },
     'onlineBanking.transfer.fetch': function(msg, $meta) {
-        const mockOnlineBankingFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'transfers.json');
-        const mockOnlineBankingData = fs.readFileSync(mockOnlineBankingFilePath, 'UTF-8');
-        const data = JSON.parse(mockOnlineBankingData);
-        const transfers = data.transfers.map(transfer => {
+        const mockOnlineBankingTransfersFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'transfers.json');
+        const mockOnlineBankingAccountsFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'accounts.json');
+        const mockTransfersData = fs.readFileSync(mockOnlineBankingTransfersFilePath, 'UTF-8');
+        const mockAccountsData = fs.readFileSync(mockOnlineBankingAccountsFilePath, 'UTF-8');
+        const transfersData = JSON.parse(mockTransfersData);
+        const accountsData = JSON.parse(mockAccountsData);
+        const transfers = transfersData.transfers.map(transfer => {
             if (typeof transfer.sourceAccount === 'number') {
                 transfer.sourceAccount =
-                    data.accounts.filter(account => account.accountNumber === transfer.sourceAccount)[0];
+                    accountsData.accounts.filter(account => account.accountNumber === transfer.sourceAccount)[0];
             }
             if (typeof transfer.destinationAccount === 'number') {
                 transfer.destinationAccount =
-                    data.accounts.filter(account => account.accountNumber === transfer.destinationAccount)[0];
+                    accountsData.accounts.filter(account => account.accountNumber === transfer.destinationAccount)[0];
             }
             return transfer;
         });
@@ -518,6 +528,22 @@ module.exports = {
     },
     'onlineBanking.transferTemplate.fetch': function(msg, $meta) {
 
+    },
+    'onlineBanking.transfer.requestOTP': function(msg, $meta) {
+        // nexmo.message.sendSms('Tokuda Bank', '359876966554', 'Test Message', null);
+        // return new Promise((resolve, reject) => {
+        //     const callback = (error, result) => {
+        //         if (error) reject(error);
+        //         resolve(result);
+        //     };
+        //     nexmo.message.sendSms('Tokuda Bank', '359876966554', 'Test Message', callback);
+        // }).then(() => {
+        //     return {
+        //         success: true
+        //     };
+        // });
+        return { success: true };
     }
+
 };
 // todo handle timeout from destination port

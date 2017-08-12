@@ -1,6 +1,7 @@
 {
-    "transfers": [
+     "transfers": [
         {
+            "currency": "BGN",
             "transferId": "00ZCMG45987NON1",
             "sourceAccount": 1,
             "type": "transfer",
@@ -14,6 +15,7 @@
             "dateTime": "2017-08-01 15:30"
         },
         {
+            "currency": "BGN",
             "transferId": "00ZMCG55123MON2",
             "sourceAccount": 1,
             "type": "transfer",
@@ -27,11 +29,13 @@
             "dateTime": "2017-08-02 15:30"
         },
         {
+            "currency": "BGN",
             "transferId": "15ZMG5244NON23",
             "type": "transfer",
             "sourceAccount": {
                 "bank": "Първа инвестиционна банка",
-                "name": "Георги Петров"
+                "name": "Георги Петров",
+                "iban": "BG39CREX92605464548661"
             },
             "destinationAccount": 2,
             "reason": "Захранване сметка",
@@ -40,16 +44,20 @@
             "dateTime": "2017-08-04 10:30"
         },
         {
+            "currency": "BGN",
             "transferId": "INT15AC2456042",
             "type": "fee",
             "sourceAccount": 1,
+            "destinationAccount": 2,
             "reason": "Такса управление на сметка",
             "debit": 0.10,
             "credit": 0.00
         },
         {
+            "currency": "BGN",
             "transferId": "INT20PA5532456",
             "type": "interest",
+            "sourceAccount": 1,
             "destinationAccount": 2,
             "reason": "Лихва спестовна сметка",
             "debit": 0.00,
