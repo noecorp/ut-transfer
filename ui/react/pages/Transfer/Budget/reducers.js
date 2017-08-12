@@ -23,6 +23,10 @@ export default function transfersBudget(state = defaultStateImmutable, action) {
             return transferBudgetReducers.fetchCustomerData(state, action, options);
         case actionTypes.EDIT_TRANSFER_FIELD:
             return transferBudgetReducers.editTransferField(state, action, options);
+        case actionTypes.EDIT_CONFIRM_TRANSFER_POPUP_FIELD:
+            return transferBudgetReducers.editConfirmTransferPopupField(state, action, options);
+        case actionTypes.RESET_CONFIRM_TRANSFER_POPUP_STATE:
+            return transferBudgetReducers.resetConfirmTransferPopupState(state, action, options);
     }
     return state;
 };

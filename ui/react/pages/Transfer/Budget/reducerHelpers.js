@@ -1,5 +1,6 @@
 import immutable from 'immutable';
 import { bics, paymentTypes } from './staticData';
+import { confirmTransferPopupDefaultState } from './defaultState';
 
 const REQUESTED = 'requested';
 const FINISHED = 'finished';
@@ -52,6 +53,18 @@ export const fetchAccounts = (state, action, options) => {
             .setIn([activeTabMode, activeTabId, 'dropdownData', 'account'], immutable.fromJS(accountsForDropdown));
     }
     return state;
+};
+
+export const editConfirmTransferPopupField = (state, action, options) => {
+    const { activeTabMode, activeTabId } = options;
+    const { field, value } = action.params;
+    return state
+        .setIn([activeTabMode, activeTabId, 'confirmTransferPopup', 'inputs', field, 'value'], value);
+};
+
+export const resetConfirmTransferPopupState = (state, action, options) => {
+    const { activeTabMode, activeTabId } = options;
+    return state.setIn([activeTabMode, activeTabId, 'confirmTransferPopup'], immutable.fromJS(confirmTransferPopupDefaultState));
 };
 
 export const editTransferField = (state, action, options) => {

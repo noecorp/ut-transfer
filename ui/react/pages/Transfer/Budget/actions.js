@@ -10,6 +10,15 @@ export const setErrors = (errors) => ({
     params: { errors }
 });
 
+export const editConfirmTransferPopupField = ({ field, value }) => ({
+    type: actionTypes.EDIT_CONFIRM_TRANSFER_POPUP_FIELD,
+    params: { field, value }
+});
+
+export const resetConfirmTransferPopupState = () => ({
+    type: actionTypes.RESET_CONFIRM_TRANSFER_POPUP_STATE
+});
+
 export const getScreenConfiguration = (key) => ({
     type: actionTypes.GET_SCREEN_CONFIGURATION,
     method: 'user.screenConfiguration.get',

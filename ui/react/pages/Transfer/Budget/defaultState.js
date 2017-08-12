@@ -1,6 +1,19 @@
 import immutable from 'immutable';
 import { documentTypes } from './staticData';
 
+export const confirmTransferPopupDefaultState = {
+    inputs: {
+        password: {
+            value: '',
+            isValid: true
+        },
+        otp: {
+            value: '',
+            isValid: true
+        }
+    }
+};
+
 export const defaultState = {
     activeTabData: {
         mode: '',
@@ -14,7 +27,8 @@ export const defaultState = {
                 account: [],
                 documentType: documentTypes
             },
-            screenConfiguration: {}
+            screenConfiguration: {},
+            confirmTransferPopup: confirmTransferPopupDefaultState
         }
     },
     remote: {
