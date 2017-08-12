@@ -19,6 +19,11 @@ export const resetConfirmTransferPopupState = () => ({
     type: actionTypes.RESET_CONFIRM_TRANSFER_POPUP_STATE
 });
 
+export const setConfirmTransferPopupErrors = (errors) => ({
+    type: actionTypes.SET_CONRIFM_TRANSFER_POPUP_ERRORS,
+    params: { errors }
+});
+
 export const getScreenConfiguration = (key) => ({
     type: actionTypes.GET_SCREEN_CONFIGURATION,
     method: 'user.screenConfiguration.get',

@@ -2,7 +2,7 @@ import { validationTypes, textValidations, dropdownValidations } from 'ut-front-
 import React from 'react';
 import Text from 'ut-front-react/components/Text';
 
-export function getTransferBuddgetValidations() {
+export const getTransferBuddgetValidations = () => {
     return [
         validations.account,
         validations.destinationAccountName,
