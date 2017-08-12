@@ -10,7 +10,8 @@ import RadioInput from 'ut-front-react/components/Input/Radio';
 import Text from 'ut-front-react/components/Text';
 
 import { editTransferField } from '../../../pages/Transfer/Budget/actions';
-import { inputsConfig, validators } from './config';
+import { inputsConfig } from './config';
+import { validations } from './validations';
 import style from './style.css';
 
 class TransferBudgetCreate extends Component {
@@ -46,6 +47,7 @@ class TransferBudgetCreate extends Component {
     renderTextInput(input) {
         const { errors } = this.props;
         const value = this.getInputValue(input.key);
+        const validationRules = this.getValidationRules(input.key);
         let readonly = input.hasOwnProperty('readonly') ? input.readonly : false;
         return (
             <div className={style.inputWrap}>
@@ -58,7 +60,7 @@ class TransferBudgetCreate extends Component {
                   value={value}
                   isValid={!errors.get(input.key)}
                   errorMessage={errors.get(input.key)}
-                  validators={validators[input.key]}
+                  validators={validationRules}
                   readonly={readonly}
                   onChange={this.onInputChange}
                 />
@@ -67,6 +69,7 @@ class TransferBudgetCreate extends Component {
     }
 
     renderDropdown(input) {
+        const { errors } = this.props;
         const value = this.getInputValue(input.key);
         const dropdownData = input.data || this.getDropdownData(input.key) || [];
         return (
@@ -76,12 +79,20 @@ class TransferBudgetCreate extends Component {
                   key={input.key}
                   data={dropdownData}
                   keyProp={input.key}
+                  isValid={!errors.get(input.key)}
+                  errorMessage={errors.get(input.key)}
+                  validators={this.getValidationRules(input.key)}
                   defaultSelected={value || input.placeholder}
                   label={this.translate(input.label)}
                   onSelect={this.onDropdownChange}
                 />
             </div>
         );
+    }
+
+    getValidationRules(key) {
+        let validationRules = (validations[key] && validations[key].rules) || [];
+        return validationRules;
     }
 
     getInputValue(key) {

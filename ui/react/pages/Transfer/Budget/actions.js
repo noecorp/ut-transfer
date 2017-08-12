@@ -5,6 +5,11 @@ export const setActiveTab = ({ mode, id }) => ({
     params: { mode, id }
 });
 
+export const setErrors = (errors) => ({
+    type: actionTypes.SET_ERRORS,
+    params: { errors }
+});
+
 export const getScreenConfiguration = (key) => ({
     type: actionTypes.GET_SCREEN_CONFIGURATION,
     method: 'user.screenConfiguration.get',

@@ -19,10 +19,12 @@ import {prepareErrorsWithFullKeyPath} from './../../../../utils';
 import transferStyle from '../../style.css';
 
 class TransfersSWIFT extends Component {
+//
     constructor(props) {
         super(props);
         this.createSwift = this.createSwift.bind(this);
     }
+
     createSwift() {
         let createValidationRules = [...getSenderValidations(), ...getBankBeneficiaryValidations(), ...getBeneficiaryValidations(), ...getTransferValidations()];
         let validation = validateAll(this.props.store, createValidationRules);
@@ -33,22 +35,33 @@ class TransfersSWIFT extends Component {
         }
         // create
     }
-    getButtons() {
+
+    translate(key) {
+        return this.context.translate(key);
+    }
+
+    get actionButtons() {
         let buttons = [{text: 'Create Swift', onClick: this.createSwift, styleType: 'primaryLight'}];
         return buttons;
     }
+
     render() {
         return (
             <Page>
                 <AddTab pathname={getLink('ut-transfer:transfersSWIFT')} title={'SWIFT Transfers'} />
                 <div className={transferStyle.pageContainer}>
-                    <Header text={<Text>SWIFT Transfers</Text>} buttons={this.getButtons()} />
+                    <Header text={<Text>SWIFT Transfers</Text>} buttons={this.actionButtons} />
                     <Swift />
                 </div>
             </Page>
         );
     }
+//
 }
+
+TransfersSWIFT.contextTypes = {
+    translate: PropTypes.func
+};
 
 TransfersSWIFT.propTypes = {
     store: PropTypes.object.isRequired,

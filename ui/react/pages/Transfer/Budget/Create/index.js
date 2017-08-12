@@ -5,19 +5,28 @@ import { getLink } from 'ut-front/react/routerHelper';
 import Page from 'ut-front-react/components/PageLayout/Page';
 import { AddTab } from 'ut-front-react/containers/TabMenu';
 import Header from 'ut-front-react/components/PageLayout/Header';
+import { validateAll } from 'ut-front-react/utils/validator';
 
 import TransferBudgetContainer from '../../../../containers/Transfer/Budget';
 import {
     setActiveTab,
+    setErrors,
     getScreenConfiguration,
     fetchAccounts,
     fetchCustomerData
 } from '../actions';
+import { prepareErrorsWithFullKeyPath } from './../../../../utils';
+import { getTransferBUddgetValidations } from '../../../../containers/Transfer/Budget/validations';
 
 import transferStyle from '../../style.css';
 
 class TransferBudgetCreate extends Component {
 //
+    constructor(props) {
+        super(props);
+        this.createBudgetTransfer = this.createBudgetTransfer.bind(this);
+    }
+
     componentWillMount() {
         this.props.setActiveTab({ mode: 'create', id: 'create' });
         this.props.getScreenConfiguration({ key: 'transferBudgetCreate' });
@@ -31,10 +40,19 @@ class TransferBudgetCreate extends Component {
 
     get actionButtons() {
         return [
-            { text: this.translate('Create and Close'), performFullValidation: true, onClick: () => {}, styleType: 'primaryLight' },
-            { text: this.translate('Create'), performFullValidation: true, onClick: () => {} },
+            { text: this.translate('Create and Close'), onClick: this.createBudgetTransfer, styleType: 'primaryLight' },
+            { text: this.translate('Create'), onClick: this.createBudgetTransfer },
             { text: this.translate('Close'), onClick: () => {} }
         ];
+    }
+
+    createBudgetTransfer() {
+        let createValidationRules = getTransferBUddgetValidations();
+        let validation = validateAll(this.props.data, createValidationRules);
+        if (!validation.isValid) {
+            let errors = prepareErrorsWithFullKeyPath(validation.errors);
+            this.props.setErrors(errors);
+        }
     }
 
     render() {
@@ -60,15 +78,22 @@ TransferBudgetCreate.contextTypes = {
 };
 
 TransferBudgetCreate.propTypes = {
+    // State
+    data: PropTypes.object,
+    // ACtions
     getScreenConfiguration: PropTypes.func,
     fetchAccounts: PropTypes.func,
     fetchCustomerData: PropTypes.func,
-    setActiveTab: PropTypes.func
+    setActiveTab: PropTypes.func,
+    setErrors: PropTypes.func
 };
 
-const mapStateToProps = ({ transfersCommon, transfersBudget }, ownProps) => ({});
+const mapStateToProps = ({ transfersBudget }, ownProps) => ({
+    data: transfersBudget.getIn(['create', 'create', 'data'])
+});
 const mapDispatchToProps = {
     setActiveTab,
+    setErrors,
     getScreenConfiguration,
     fetchAccounts,
     fetchCustomerData

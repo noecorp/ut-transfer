@@ -1,5 +1,4 @@
 import immutable from 'immutable';
-import { Validator } from 'ut-front-react/utils/validator';
 import { bics, paymentTypes } from './staticData';
 
 const REQUESTED = 'requested';
@@ -15,6 +14,11 @@ export const setActiveTab = (state, action, options) => {
         mode: action.params.mode,
         id: action.params.id
     }));
+};
+
+export const setErrors = (state, action, options) => {
+    const { activeTabMode, activeTabId } = options;
+    return state.mergeDeepIn([activeTabMode, activeTabId, 'errors'], action.params.errors);
 };
 
 export const getScreenConfiguration = (state, action, options) => {
@@ -75,13 +79,10 @@ export const editTransferField = (state, action, options) => {
         let correspondingPaymentType = paymentTypes[paymentTypeIdentifier];
         var paymentTypesDropdownData = [];
         Object.keys(correspondingPaymentType.codes).forEach(key => {
-            paymentTypesDropdownData.push({
-                key, name: correspondingPaymentType.codes[key]
-            });
+            let name = `${key} - ${correspondingPaymentType.codes[key]}`;
+            paymentTypesDropdownData.push({ key, name });
         });
-        if (correspondingPaymentType) {
-            state = state.setIn([activeTabMode, activeTabId, 'dropdownData', 'paymentType'], immutable.fromJS(correspondingPaymentType));
-        }
+        state = state.setIn([activeTabMode, activeTabId, 'dropdownData', 'paymentType'], immutable.fromJS(paymentTypesDropdownData));
     }
     return state;
 };

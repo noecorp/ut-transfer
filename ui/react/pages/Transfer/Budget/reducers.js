@@ -13,6 +13,8 @@ export default function transfersBudget(state = defaultStateImmutable, action) {
     switch (action.type) {
         case actionTypes.SET_ACTIVE_TAB:
             return transferBudgetReducers.setActiveTab(state, action, options);
+        case actionTypes.SET_ERRORS:
+            return transferBudgetReducers.setErrors(state, action, options);
         case actionTypes.GET_SCREEN_CONFIGURATION:
             return transferBudgetReducers.getScreenConfiguration(state, action, options);
         case actionTypes.FETCH_ACCOUNTS:
