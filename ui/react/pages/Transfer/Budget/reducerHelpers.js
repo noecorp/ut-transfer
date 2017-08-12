@@ -1,6 +1,6 @@
 import immutable from 'immutable';
-import { Validator } from 'ut-front-react/utils/validator';
 import { bics, paymentTypes } from './staticData';
+import { confirmTransferPopupDefaultState } from './defaultState';
 
 const REQUESTED = 'requested';
 const FINISHED = 'finished';
@@ -15,6 +15,11 @@ export const setActiveTab = (state, action, options) => {
         mode: action.params.mode,
         id: action.params.id
     }));
+};
+
+export const setErrors = (state, action, options) => {
+    const { activeTabMode, activeTabId } = options;
+    return state.mergeDeepIn([activeTabMode, activeTabId, 'errors'], action.params.errors);
 };
 
 export const getScreenConfiguration = (state, action, options) => {
@@ -50,6 +55,18 @@ export const fetchAccounts = (state, action, options) => {
     return state;
 };
 
+export const editConfirmTransferPopupField = (state, action, options) => {
+    const { activeTabMode, activeTabId } = options;
+    const { field, value } = action.params;
+    return state
+        .setIn([activeTabMode, activeTabId, 'confirmTransferPopup', 'inputs', field, 'value'], value);
+};
+
+export const resetConfirmTransferPopupState = (state, action, options) => {
+    const { activeTabMode, activeTabId } = options;
+    return state.setIn([activeTabMode, activeTabId, 'confirmTransferPopup'], immutable.fromJS(confirmTransferPopupDefaultState));
+};
+
 export const editTransferField = (state, action, options) => {
     const { field, value, errorMessage } = action.params;
     const { activeTabMode, activeTabId } = options;
@@ -75,13 +92,10 @@ export const editTransferField = (state, action, options) => {
         let correspondingPaymentType = paymentTypes[paymentTypeIdentifier];
         var paymentTypesDropdownData = [];
         Object.keys(correspondingPaymentType.codes).forEach(key => {
-            paymentTypesDropdownData.push({
-                key, name: correspondingPaymentType.codes[key]
-            });
+            let name = `${key} - ${correspondingPaymentType.codes[key]}`;
+            paymentTypesDropdownData.push({ key, name });
         });
-        if (correspondingPaymentType) {
-            state = state.setIn([activeTabMode, activeTabId, 'dropdownData', 'paymentType'], immutable.fromJS(correspondingPaymentType));
-        }
+        state = state.setIn([activeTabMode, activeTabId, 'dropdownData', 'paymentType'], immutable.fromJS(paymentTypesDropdownData));
     }
     return state;
 };

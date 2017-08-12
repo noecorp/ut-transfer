@@ -1,5 +1,3 @@
-import { textValidations } from 'ut-front-react/validator/constants.js';
-
 export const inputsConfig = {
     left: {
         account: { key: 'account', type: 'dropdown', label: 'Select account', dropdownSource: 'accounts' },
@@ -20,10 +18,4 @@ export const inputsConfig = {
         documentNumber: { key: 'documentNumber', type: 'text' },
         documentDate: { key: 'documentDate', type: 'datePicker', label: 'Document date' }
     }
-};
-
-export const validators = {
-    iban: [
-        { type: textValidations.iban, errorMessage: 'IBAN must be valid' }
-    ]
 };
