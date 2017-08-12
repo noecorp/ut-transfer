@@ -33,7 +33,7 @@ class TransferBudgetCreate extends Component {
     constructor(props) {
         super(props);
         this.createBudgetTransfer = this.createBudgetTransfer.bind(this);
-        this.sendBudgetTransfer = this.sendBudgetTransfer.bind(this);
+        this.confirmAndSendBudgetTransfer = this.confirmAndSendBudgetTransfer.bind(this);
         this.closeConfirmTransferPopup = this.closeConfirmTransferPopup.bind(this);
         this.openPopup = this.openPopup.bind(this);
         this.closePopup = this.closePopup.bind(this);
@@ -75,24 +75,6 @@ class TransferBudgetCreate extends Component {
         ];
     }
 
-    get confirmTransferPopupActionButtons() {
-        return [
-            { label: this.translate('Confirm'), onClick: this.sendBudgetTransfer, styleType: 'primaryDialog' },
-            { label: this.translate('Cancel'), onClick: this.closeConfirmTransferPopup, styleType: 'secondaryDialog' }
-        ];
-    }
-
-    get confirmTransferPopupInputs() {
-        const inputs = this.props.confirmTransferPopup.get('inputs').toJS();
-        const onChange = (obj) => {
-            let { key, value } = obj;
-            this.props.editConfirmTransferPopupField({ field: key, value });
-        };
-        inputs.password.onChange = onChange;
-        inputs.otp.onChange = onChange;
-        return inputs;
-    }
-
     createBudgetTransfer() {
         let createValidationRules = getTransferBuddgetValidations();
         let validation = validateAll(this.props.data, createValidationRules);
@@ -104,9 +86,9 @@ class TransferBudgetCreate extends Component {
         this.openPopup(popups.confirmTransfer);
     }
 
-    sendBudgetTransfer() {
-        let password = this.props.confirmTransferPopup.getIn(['inputs', 'password', 'value']);
-        let otp = this.props.confirmTransferPopup.getIn(['inputs', 'password', 'otp']);
+    confirmAndSendBudgetTransfer() {
+        let password = this.props.confirmTransferPopup.getIn(['data', 'password']);
+        let otp = this.props.confirmTransferPopup.getIn(['data', 'password']);
         let data = prepareTransferBudgetToSend(this.props.data);
     }
 
@@ -130,7 +112,9 @@ class TransferBudgetCreate extends Component {
                 <ConfirmTransferPopup
                   inputs={this.confirmTransferPopupInputs}
                   isOpen={this.state.isPopupOpen[popups.confirmTransfer]}
-                  actionButtons={this.confirmTransferPopupActionButtons} />
+                  onConfirm={this.confirmAndSendBudgetTransfer}
+                  onCancel={this.closeConfirmTransferPopup}
+                />
             </Page>
         );
     }

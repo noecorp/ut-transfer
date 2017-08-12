@@ -2,16 +2,11 @@ import immutable from 'immutable';
 import { documentTypes } from './staticData';
 
 export const confirmTransferPopupDefaultState = {
-    inputs: {
-        password: {
-            value: '',
-            isValid: true
-        },
-        otp: {
-            value: '',
-            isValid: true
-        }
-    }
+    data: {
+        password: '',
+        otp: ''
+    },
+    errors: {}
 };
 
 export const defaultState = {

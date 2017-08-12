@@ -22,6 +22,11 @@ export const setErrors = (state, action, options) => {
     return state.mergeDeepIn([activeTabMode, activeTabId, 'errors'], action.params.errors);
 };
 
+export const setConfirmTransferPopupErrors = (state, action, options) => {
+    const { activeTabMode, activeTabId } = options;
+    return state.mergeDeepIn([activeTabMode, activeTabId, 'confirmTransferPopup', 'errors'], action.params.errors);
+};
+
 export const getScreenConfiguration = (state, action, options) => {
     const { activeTabMode, activeTabId } = options;
     if (action.methodRequestState === FINISHED && !action.error) {
@@ -59,7 +64,7 @@ export const editConfirmTransferPopupField = (state, action, options) => {
     const { activeTabMode, activeTabId } = options;
     const { field, value } = action.params;
     return state
-        .setIn([activeTabMode, activeTabId, 'confirmTransferPopup', 'inputs', field, 'value'], value);
+        .setIn([activeTabMode, activeTabId, 'confirmTransferPopup', 'data', field], value);
 };
 
 export const resetConfirmTransferPopupState = (state, action, options) => {
