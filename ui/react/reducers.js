@@ -12,6 +12,7 @@ import {transferPartnerCreate} from './containers/Partners/Popups/CreatePartner/
 import {transferPartnerDetails} from './containers/Partners/Popups/Details/reducer';
 
 import transfersBudget from './pages/Transfer/Budget/reducers';
+import transferSwift from './containers/Transfer/SWIFT/reducer';
 
 const defaultStateConfig = fromJS({
     partners: {
@@ -45,5 +46,6 @@ export default {
         return state;
     },
 
-    transfersBudget
+    transfersBudget,
+    transferSwift
 };
