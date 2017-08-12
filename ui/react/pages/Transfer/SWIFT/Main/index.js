@@ -43,7 +43,7 @@ class TransfersSWIFT extends Component {
                 <AddTab pathname={getLink('ut-transfer:transfersSWIFT')} title={'SWIFT Transfers'} />
                 <div className={transferStyle.pageContainer}>
                     <Header text={<Text>SWIFT Transfers</Text>} buttons={this.getButtons()} />
-                    <Swift />
+                    <div><Swift /></div>
                 </div>
             </Page>
         );

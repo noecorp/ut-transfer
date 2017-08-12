@@ -19,7 +19,8 @@ class Beneficiary extends Component {
     }
     render() {
         return (
-            <TitledContentBox title={<Text>Beneficiary</Text>}>
+            <div>
+                <TitledContentBox title='Beneficiary'>
                  <div className={style.row}>
                     <div className={classnames(style.halfWidth, style.rowPaddings, style.borderBottom)}>
                         <Dropdown
@@ -82,6 +83,7 @@ class Beneficiary extends Component {
                     </div>
                 </div>
             </TitledContentBox>
+            </div>
         );
     }
 }
