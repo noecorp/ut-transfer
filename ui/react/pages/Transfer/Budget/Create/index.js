@@ -16,7 +16,8 @@ import {
     fetchAccounts,
     fetchCustomerData,
     editConfirmTransferPopupField,
-    resetConfirmTransferPopupState
+    resetConfirmTransferPopupState,
+    createTransfer
 } from '../actions';
 import { prepareErrorsWithFullKeyPath } from './../../../../utils';
 import { getTransferBuddgetValidations } from '../../../../containers/Transfer/Budget/validations';
@@ -90,8 +91,8 @@ class TransferBudgetCreate extends Component {
     confirmAndSendBudgetTransfer() {
         let password = this.props.confirmTransferPopup.getIn(['data', 'password']);
         let otp = this.props.confirmTransferPopup.getIn(['data', 'otp']);
-        let data = prepareTransferBudgetToSend(this.props.data);
-        debugger;
+        let data = prepareTransferBudgetToSend(this.props.data, { password, otp });
+        this.props.createTransfer(data);
     }
 
     closeConfirmTransferPopup() {
@@ -138,7 +139,8 @@ TransferBudgetCreate.propTypes = {
     fetchAccounts: PropTypes.func,
     fetchCustomerData: PropTypes.func,
     setActiveTab: PropTypes.func,
-    setErrors: PropTypes.func
+    setErrors: PropTypes.func,
+    createTransfer: PropTypes.func
 };
 
 const mapStateToProps = ({ transfersBudget }, ownProps) => ({
@@ -153,7 +155,8 @@ const mapDispatchToProps = {
     fetchAccounts,
     fetchCustomerData,
     editConfirmTransferPopupField,
-    resetConfirmTransferPopupState
+    resetConfirmTransferPopupState,
+    createTransfer
 };
 
 export default connect(

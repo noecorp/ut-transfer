@@ -16,6 +16,14 @@ const DECLINED = {
 var errors = require('../../errors');
 var currency = require('../../currency');
 
+var pad = (number, size) => {
+    var result = number + '';
+    while (result.length < size) {
+        result = '0' + result;
+    }
+    return result;
+}
+
 var processReversal = (bus, log, $meta) => params => {
     var transferId;
 
@@ -518,10 +526,49 @@ module.exports = {
         };
     },
     'onlineBanking.transfer.create': function(msg, $meta) {
-        return {};
+        const data = msg.data;
+        const auth = msg.auth;
+        // Generate transfer id
+        const randomNumber1 = randomize('0', 4);
+        const randomString1 = randomize('A', 4);
+        const randomNumber2 = randomize('0', 6);
+        const transferId = `TX${randomNumber1}${randomString1}${randomNumber2}`;
+        // Format the date
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = pad(now.getMonth(), 2);
+        const date = pad(now.getDate(), 2);
+        const hours = pad(now.getHours(), 2);
+        const minutes = pad(now.getMinutes(), 2);
+        const transferDateTime = `${year}-${month}-${date} ${hours}:${minutes}`;
+        // Prepare obj
+        const budgetTransfer = {
+            currency: 'BGN',
+            transferId,
+            sourceAccount: data.account,
+            type: 'budgetTransfer',
+            destinationAccount: {
+                bank: data.bank,
+                iban: data.iban,
+                name: data.destinationName
+            },
+            reason: `${data.reason}`,
+            debit: Number(data.amount),
+            credit: 0,
+            dataTime: transferDateTime
+        };
+        // Persist data
+        const mockOnlineBankingTransfersFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'transfers.json');
+        const mockTransfersData = fs.readFileSync(mockOnlineBankingTransfersFilePath, 'UTF-8');
+        let transfersData = JSON.parse(mockTransfersData);
+        transfersData.transfers.push(budgetTransfer);
+        transfersData = JSON.stringify(transfersData);
+
+        fs.writeFileSync(mockOnlineBankingTransfersFilePath, transfersData, 'UTF-8');
+        return { success: true };
     },
     'onlineBanking.transferTemplate.create': function(msg, $meta) {
-
+        return {};
     },
     'onlineBanking.transferTemplate.get': function(msg, $meta) {
 

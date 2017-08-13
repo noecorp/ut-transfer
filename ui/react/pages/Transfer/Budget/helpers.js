@@ -1,7 +1,10 @@
 import { customValidations } from '../../../containers/Transfer/Budget/validations';
 
-export const prepareTransferBudgetToSend = (data) => {
-
+export const prepareTransferBudgetToSend = (data, auth) => {
+    return {
+        data: data.toJS(),
+        auth
+    };
 };
 
 export const performCustomValidations = (data, validationResult) => {
