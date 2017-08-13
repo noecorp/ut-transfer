@@ -1,23 +1,94 @@
-.row {
+.wrap {
+    
+}
+.formHeader {
+    margin-bottom: 20px;
+}
+.formWrap {
     display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+.formLeft {
+    flex-basis: 49%;
+}
+.formRight {
+    flex-basis: 49%;
+}
+.inputWrap {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 10px;
+}
+.inputWrap:last-child{
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+.inputWrapFlex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 10px;
+}
+.inputWrapFlex:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+.flexLabel {
+    flex-basis: 30%;
+    padding-right: 10px;
+}
+.flexInput {
+    flex-basis: 70%;
+    display: flex;
+    flex-direction: row;
     justify-content: space-between;
 }
-
-.halfWidth {
-    display: inline-block;
-    width: 49%;
+.additionalOptionsRadioWrap span{
+    display: block;
 }
 
-.rowPaddings {
-    padding-top: 10px;
-    padding-bottom: 10px;
+.amountCurrencyLabel {
+    display: flex;
+    flex: 3 1 0%;
+    justify-content: center;
+    flex-direction: column;
+    font-weight: bold;
 }
 
-.borderBottom {
-    border-bottom: 2px solid #E6E6E6;;
+.amountCurrencyFieldWrapper {
+    display: flex;
+    flex: 7 1 0%;
+}
+
+.amountCurrencyFieldWrapper > div {
+    display: flex;
+    flex: 1 1 0%;
+}
+
+.amountCurrencyFieldWrapper > div:first-child {
+   margin-right: 10px;
 }
 
 .contentBoxesWrapper {
-    width: 95%;
-    margin: 0px auto;
+    margin: 20px;
+}
+
+.contentBoxesWrapper > div {
+    margin-bottom: 20px;
+}
+
+.flexColumn {
+    display: flex;
+    flex-direction: column;
+}
+
+.errorMessage {
+    font-size: 12px;
+    color: #f33;
 }
