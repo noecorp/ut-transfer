@@ -19,7 +19,8 @@ import {
     editConfirmTransferPopupField,
     resetConfirmTransferPopupState,
     createTransfer,
-    resetTransferState
+    resetTransferState,
+    requestOTP
 } from '../actions';
 import { prepareErrorsWithFullKeyPath } from './../../../../utils';
 import { getTransferBuddgetValidations } from '../../../../containers/Transfer/Budget/validations';
@@ -103,6 +104,7 @@ class TransferBudgetCreate extends Component {
             return;
         }
         this.openPopup(popups.confirmTransfer);
+        this.props.requestOTP();
     }
 
     confirmAndSendBudgetTransfer() {
@@ -161,7 +163,8 @@ TransferBudgetCreate.propTypes = {
     setErrors: PropTypes.func,
     createTransfer: PropTypes.func,
     resetTransferState: PropTypes.func,
-    removeTab: PropTypes.func
+    removeTab: PropTypes.func,
+    requestOTP: PropTypes.func
 };
 
 const mapStateToProps = ({ transfersBudget, tabMenu }, ownProps) => ({
@@ -180,7 +183,8 @@ const mapDispatchToProps = {
     resetConfirmTransferPopupState,
     createTransfer,
     resetTransferState,
-    removeTab
+    removeTab,
+    requestOTP
 };
 
 export default connect(
