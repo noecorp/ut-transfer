@@ -1,9 +1,7 @@
 import immutable from 'immutable';
 import { bics, paymentTypes } from './staticData';
 import { confirmTransferPopupDefaultState } from './defaultState';
-
-const REQUESTED = 'requested';
-const FINISHED = 'finished';
+import { methodRequestState } from 'ut-front-react/constants';
 
 const editPropertyMapping = {
     'create': 'data',
@@ -29,7 +27,7 @@ export const setConfirmTransferPopupErrors = (state, action, options) => {
 
 export const getScreenConfiguration = (state, action, options) => {
     const { activeTabMode, activeTabId } = options;
-    if (action.methodRequestState === FINISHED && !action.error) {
+    if (action.methodRequestState === methodRequestState.FINISHED && !action.error) {
         return state.setIn([activeTabMode, activeTabId, 'screenConfiguration'], immutable.fromJS(action.result));
     }
     return state;
@@ -37,7 +35,7 @@ export const getScreenConfiguration = (state, action, options) => {
 
 export const fetchCustomerData = (state, action, options) => {
     const { activeTabMode, activeTabId } = options;
-    if (action.methodRequestState === FINISHED && !action.error) {
+    if (action.methodRequestState === methodRequestState.FINISHED && !action.error) {
         return state
             .setIn([activeTabMode, activeTabId, 'remote', 'customerData'], immutable.fromJS(action.result.customerData))
             .setIn([activeTabMode, activeTabId, 'remote', 'customerData', 'name'], `${action.result.customerData.firstName} ${action.result.customerData.lastName}`);
@@ -47,7 +45,7 @@ export const fetchCustomerData = (state, action, options) => {
 
 export const fetchAccounts = (state, action, options) => {
     const { activeTabMode, activeTabId } = options;
-    if (action.methodRequestState === FINISHED && !action.error) {
+    if (action.methodRequestState === methodRequestState.FINISHED && !action.error) {
         let { accounts } = action.result;
         let accountsForDropdown = accounts.map(account => ({
             key: account.accountNumber,
@@ -62,9 +60,14 @@ export const fetchAccounts = (state, action, options) => {
 
 export const editConfirmTransferPopupField = (state, action, options) => {
     const { activeTabMode, activeTabId } = options;
-    const { field, value } = action.params;
-    return state
-        .setIn([activeTabMode, activeTabId, 'confirmTransferPopup', 'data', field], value);
+    const { field, value, data } = action.params;
+    state = state.setIn([activeTabMode, activeTabId, 'confirmTransferPopup', 'data', field], value);
+    if (data && data.error && data.errorMessage) {
+        state = state.setIn([activeTabMode, activeTabId, 'confirmTransferPopup', 'errors', field], data.errorMessage);
+    } else {
+        state = state.deleteIn([activeTabMode, activeTabId, 'confirmTransferPopup', 'errors', field]);
+    }
+    return state;
 };
 
 export const resetConfirmTransferPopupState = (state, action, options) => {
@@ -73,11 +76,11 @@ export const resetConfirmTransferPopupState = (state, action, options) => {
 };
 
 export const editTransferField = (state, action, options) => {
-    const { field, value, errorMessage } = action.params;
+    const { field, value, data } = action.params;
     const { activeTabMode, activeTabId } = options;
     state = state.setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], field], value);
-    if (errorMessage) {
-        state = state.setIn([activeTabMode, activeTabId, 'errors', field], errorMessage);
+    if (data && data.error && data.errorMessage) {
+        state = state.setIn([activeTabMode, activeTabId, 'errors', field], data.errorMessage);
     } else {
         state = state.deleteIn([activeTabMode, activeTabId, 'errors', field]);
     }

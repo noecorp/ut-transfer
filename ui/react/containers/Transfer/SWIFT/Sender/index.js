@@ -21,6 +21,12 @@ import {
 } from './validations';
 
 class Orderer extends Component {
+    getInputValue(key) {
+        const { data, edited } = this.props;
+        let value = edited.has(key) ? edited.get(key) : data.get(key);
+        return value;
+    }
+
     handleInputChange(fieldName) {
         return (data) => {
             this.props.changeField(['sender', fieldName], data.value, data);
@@ -32,7 +38,7 @@ class Orderer extends Component {
             <div className={style.formLeft}>
                 <div className={style.inputWrap}>
                     <Dropdown
-                      defaultSelected={this.props.sourceAccount}
+                      defaultSelected={this.getInputValue('sourceAccount')}
                       label={<span><Text>Source Account</Text> *</span>}
                       boldLabel
                       keyProp='sourceAccount'
@@ -44,7 +50,7 @@ class Orderer extends Component {
                     />
                 </div>
                 <div className={style.inputWrap}>
-                    <Input value={this.props.name} label={<Text>Name</Text>}
+                    <Input value={this.getInputValue('name')} label={<Text>Name</Text>}
                       onChange={this.handleInputChange('name')}
                       keyProp='name'
                       boldLabel
@@ -54,7 +60,7 @@ class Orderer extends Component {
                     />
                 </div>
                 <div className={style.inputWrap}>
-                    <Input value={this.props.address} label={<Text>Address</Text>}
+                    <Input value={this.getInputValue('address')} label={<Text>Address</Text>}
                       onChange={this.handleInputChange('address')}
                       keyProp='address'
                       boldLabel
@@ -64,7 +70,7 @@ class Orderer extends Component {
                     />
                 </div>
                 <div className={style.inputWrap}>
-                    <Input value={this.props.city} label={<Text>City</Text>}
+                    <Input value={this.getInputValue('city')} label={<Text>City</Text>}
                       onChange={this.handleInputChange('city')}
                       keyProp='city'
                       boldLabel
@@ -75,7 +81,7 @@ class Orderer extends Component {
                 </div>
                 <div className={style.inputWrap}>
                     <Dropdown
-                      defaultSelected={this.props.country}
+                      defaultSelected={this.getInputValue('country')}
                       label={<span><Text>Country</Text> *</span>}
                       boldLabel
                       keyProp='country'
@@ -94,7 +100,7 @@ class Orderer extends Component {
         return (
             <div className={style.formRight}>
                 <div className={style.inputWrap}>
-                    <Input value={this.props.phone} label={<Text>Phone</Text>}
+                    <Input value={this.getInputValue('phone')} label={<Text>Phone</Text>}
                       onChange={this.handleInputChange('phone')}
                       keyProp='phone'
                       boldLabel
@@ -104,7 +110,7 @@ class Orderer extends Component {
                     />
                 </div>
                 <div className={style.inputWrap}>
-                    <Input value={this.props.ibanOrderer} label={<Text>Sender IBAN</Text>}
+                    <Input value={this.getInputValue('ibanOrderer')} label={<Text>Sender IBAN</Text>}
                       onChange={this.handleInputChange('ibanOrderer')}
                       keyProp='ibanOrderer'
                       boldLabel
@@ -118,7 +124,7 @@ class Orderer extends Component {
                         <div className={style.amountCurrencyLabel}>Amount / Currency</div>
                         <div className={style.amountCurrencyFieldWrapper} >
                             <div className={style.flexColumn}>
-                                <Input value={this.props.phone}
+                                <Input value={this.getInputValue('phone')}
                                   onChange={this.handleInputChange('sum')}
                                   keyProp='sum'
                                   boldLabel
@@ -129,7 +135,7 @@ class Orderer extends Component {
                             </div>
                             <div className={style.flexColumn}>
                                 <Dropdown
-                                  defaultSelected={this.props.currency}
+                                  defaultSelected={this.getInputValue('currency')}
                                   boldLabel
                                   keyProp='currency'
                                   isValid={this.props.errors.get('currency') === undefined}
@@ -144,7 +150,7 @@ class Orderer extends Component {
                 </div>
                 <div className={style.inputWrap}>
                     <Dropdown
-                      defaultSelected={this.props.transferDestination}
+                      defaultSelected={this.getInputValue('transferDestination')}
                       label={<span><Text>Source Account</Text> *</span>}
                       boldLabel
                       keyProp='transferDestination'
@@ -171,19 +177,13 @@ class Orderer extends Component {
 }
 
 Orderer.propTypes = {
+    mode: PropTypes.string,
+    id: PropTypes.string,
+    data: PropTypes.object,
+    edited: PropTypes.object,
     sourceAccounts: PropTypes.object.isRequired,
     transferDestinations: PropTypes.object.isRequired,
     countries: PropTypes.object.isRequired,
-    sourceAccount: PropTypes.string.isRequired,
-    phone: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    ibanOrderer: PropTypes.string.isRequired,
-    address: PropTypes.string.isRequired,
-    sum: PropTypes.string.isRequired,
-    currency: PropTypes.string.isRequired,
-    city: PropTypes.string.isRequired,
-    transferDestination: PropTypes.string.isRequired,
-    country: PropTypes.string.isRequired,
     errors: PropTypes.object.isRequired,
     currencies: PropTypes.arrayOf(PropTypes.shape({
         key: PropTypes.string,
@@ -197,25 +197,15 @@ Orderer.defaultProps = {
 };
 
 function mapStateToProps(state, ownProps) {
-    debugger;
+    const { mode, id } = ownProps;
     return {
-        sourceAccounts: state.transferSwift.get('sourceAccounts'),
-        transferDestinations: state.transferSwift.get('transferDestinations'),
-
-        sourceAccount: state.transferSwift.getIn(['sender', 'sourceAccount']),
-        phone: state.transferSwift.getIn(['sender', 'phone']),
-        name: state.transferSwift.getIn(['sender', 'name']),
-        ibanOrderer: state.transferSwift.getIn(['sender', 'ibanOrderer']),
-        address: state.transferSwift.getIn(['sender', 'address']),
-        sum: state.transferSwift.getIn(['sender', 'sum']),
-        currency: state.transferSwift.getIn(['sender', 'currency']),
-        city: state.transferSwift.getIn(['sender', 'city']),
-        transferDestination: state.transferSwift.getIn(['sender', 'transferDestination']),
-        country: state.transferSwift.getIn(['sender', 'country']),
-
-        errors: state.transferSwift.getIn(['errors', 'sender'], immutable.Map()),
-        countries: state.transferSwift.getIn(['nomenclatures', 'country']).toJS(),
-        currencies: state.transferSwift.getIn(['nomenclatures', 'currency']).toJS()
+        data: state.transferSwift.getIn([mode, id, 'data', 'sender']),
+        edited: state.transferSwift.getIn([mode, id, 'edited', 'sender'], immutable.Map()),
+        sourceAccounts: state.transferSwift.getIn([mode, id, 'sourceAccounts']),
+        transferDestinations: state.transferSwift.getIn([mode, id, 'transferDestinations']),
+        errors: state.transferSwift.getIn([mode, id, 'errors', 'sender'], immutable.Map()),
+        countries: state.transferSwift.getIn([mode, id, 'nomenclatures', 'country'], immutable.List()).toJS(),
+        currencies: state.transferSwift.getIn([mode, id, 'nomenclatures', 'currency'], immutable.List()).toJS()
     };
 }
 

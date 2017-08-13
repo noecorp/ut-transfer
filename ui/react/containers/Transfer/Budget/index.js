@@ -26,13 +26,14 @@ class TransferBudgetCreate extends Component {
         return this.props.dropdownData.get(key, immutable.List([])).toJS();
     }
 
-    onInputChange(obj) {
-        let { key, value } = obj;
+    onInputChange(data) {
+        let { key, value } = data;
         const { editTransferField } = this.props;
-        editTransferField({ field: key, value });
+        editTransferField({ field: key, value, data: data });
     }
 
-    onDropdownChange({ key, value }) {
+    onDropdownChange(data) {
+        let { key, value } = data;
         const { editTransferField } = this.props;
         editTransferField({ field: key, value });
     }

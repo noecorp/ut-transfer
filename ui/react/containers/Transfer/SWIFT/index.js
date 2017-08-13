@@ -14,6 +14,9 @@ import {
 } from '../../../pages/Transfer/SWIFT/actions';
 
 const propTypes = {
+    // mapStateToProps
+    mode: PropTypes.string,
+    id: PropTypes.string,
     // mapDispatchToProps
     fetchNomenclatures: PropTypes.func.isRequired,
     sendMessage: PropTypes.func.isRequired
@@ -25,12 +28,14 @@ class Swift extends Component {
         this.props.sendMessage();
     }
     render() {
+        const { mode, id } = this.props;
+        console.log(mode, id);
         return (
             <div className={style.contentBoxesWrapper}>
-                <Sender />
-                <BankBeneficiary />
-                <Beneficiary />
-                <Transfer />
+                <Sender mode={mode} id={id} />
+                <BankBeneficiary mode={mode} id={id} />
+                <Beneficiary mode={mode} id={id} />
+                <Transfer mode={mode} id={id} />
             </div>
         );
     }

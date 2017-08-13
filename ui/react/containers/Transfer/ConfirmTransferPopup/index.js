@@ -27,8 +27,9 @@ class ConfirmTransferPopup extends Component {
         ];
     }
 
-    onInputChange({ key, value }) {
-        this.props.editConfirmTransferPopupField({ field: key, value });
+    onInputChange(data) {
+        let { key, value } = data;
+        this.props.editConfirmTransferPopupField({ field: key, value, data });
     }
 
     onConfirmClick() {

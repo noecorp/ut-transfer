@@ -12,10 +12,17 @@ import {changeField} from '../../../../pages/Transfer/SWIFT/actions';
 import {addressValidation, accountNumberValidation, cityValidation} from './validations';
 
 class Beneficiary extends Component {
+//
     handleInputChange(fieldName) {
         return (data) => {
             this.props.changeField(['beneficiary', fieldName], data.value, data);
         };
+    }
+
+    getInputValue(key) {
+        const { data, edited } = this.props;
+        let value = edited.has(key) ? edited.get(key) : data.get(key);
+        return value;
     }
 
     renderLeftColumn() {
@@ -23,7 +30,7 @@ class Beneficiary extends Component {
             <div className={style.formLeft}>
                 <div className={style.inputWrap}>
                     <Dropdown
-                      defaultSelected={this.props.recipient}
+                      defaultSelected={this.getInputValue('recipient')}
                       label={<span><Text>Receiver Name</Text> *</span>}
                       boldLabel
                       keyProp='recipient'
@@ -34,7 +41,7 @@ class Beneficiary extends Component {
                     />
                 </div>
                 <div className={style.inputWrap}>
-                    <Input value={this.props.address} label={<Text>Address</Text>}
+                    <Input value={this.getInputValue('address')} label={<Text>Address</Text>}
                       onChange={this.handleInputChange('address')}
                       keyProp='address'
                       boldLabel
@@ -44,7 +51,7 @@ class Beneficiary extends Component {
                     />
                 </div>
                 <div className={style.inputWrap}>
-                    <Input value={this.props.city} label={<Text>City</Text>}
+                    <Input value={this.getInputValue('city')} label={<Text>City</Text>}
                       onChange={this.handleInputChange('city')}
                       keyProp='city'
                       boldLabel
@@ -62,7 +69,7 @@ class Beneficiary extends Component {
             <div className={style.formRight}>
                 <div className={style.inputWrap}>
                     <Dropdown
-                      defaultSelected={this.props.country}
+                      defaultSelected={this.getInputValue('country')}
                       label={<span><Text>Country</Text> *</span>}
                       boldLabel
                       keyProp='country'
@@ -74,7 +81,7 @@ class Beneficiary extends Component {
                     />
                 </div>
                 <div className={style.inputWrap}>
-                    <Input value={this.props.accountNumber} label={<Text>Account Number / IBAN</Text>}
+                    <Input value={this.getInputValue('accountNumber')} label={<Text>Account Number / IBAN</Text>}
                       onChange={this.handleInputChange('accountNumber')}
                       keyProp='accountNumber'
                       boldLabel
@@ -99,29 +106,26 @@ class Beneficiary extends Component {
 }
 
 Beneficiary.propTypes = {
+    mode: PropTypes.string,
+    id: PropTypes.string,
+    data: PropTypes.object,
+    edited: PropTypes.object,
+
     recipients: PropTypes.object.isRequired,
     countries: PropTypes.object.isRequired,
 
-    recipient: PropTypes.string.isRequired,
-    country: PropTypes.string.isRequired,
-    address: PropTypes.string.isRequired,
-    accountNumber: PropTypes.string.isRequired,
-    city: PropTypes.string.isRequired,
     errors: PropTypes.object.isRequired,
-
     changeField: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
+    const { mode, id } = ownProps;
     return {
-        recipients: state.transferSwift.get('recipients'),
-        recipient: state.transferSwift.getIn(['beneficiary', 'recipient']),
-        country: state.transferSwift.getIn(['beneficiary', 'country']),
-        address: state.transferSwift.getIn(['beneficiary', 'address']),
-        accountNumber: state.transferSwift.getIn(['beneficiary', 'accountNumber']),
-        city: state.transferSwift.getIn(['beneficiary', 'city']),
-        countries: state.transferSwift.getIn(['nomenclatures', 'country']).toJS(),
-        errors: state.transferSwift.getIn(['errors', 'beneficiary'], immutable.Map())
+        data: state.transferSwift.getIn([mode, id, 'data', 'bankBeneficiary']),
+        edited: state.transferSwift.getIn([mode, id, 'edited', 'bankBeneficiary'], immutable.Map()),
+        recipients: state.transferSwift.getIn([mode, id, 'recipients']),
+        countries: state.transferSwift.getIn([mode, id, 'nomenclatures', 'country']).toJS(),
+        errors: state.transferSwift.getIn([mode, id, 'errors', 'beneficiary'], immutable.Map())
     };
 }
 

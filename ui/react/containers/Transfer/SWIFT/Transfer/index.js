@@ -13,6 +13,13 @@ import {changeField} from '../../../../pages/Transfer/SWIFT/actions';
 import {reasonValidation, otherBankCostsValidation, commentsValidation} from './validations';
 
 class Transfer extends Component {
+//
+    getInputValue(key) {
+        const { data, edited } = this.props;
+        let value = edited.has(key) ? edited.get(key) : data.get(key);
+        return value;
+    }
+
     handleInputChange(fieldName) {
         return (data) => {
             this.props.changeField(['transfer', fieldName], data.value, data);
@@ -24,7 +31,7 @@ class Transfer extends Component {
              <div className={style.formRight}>
                 <div className={style.inputWrap}>
                     <Dropdown
-                      defaultSelected={this.props.priority}
+                      defaultSelected={this.getInputValue('priority')}
                       label={<span><Text>Priority Of Transfer</Text> *</span>}
                       boldLabel
                       keyProp='priority'
@@ -35,7 +42,7 @@ class Transfer extends Component {
                     />
                 </div>
                 <div className={style.inputWrap}>
-                    <Input value={this.props.otherBankCosts} label={<Text>Other Bank Costs</Text>}
+                    <Input value={this.getInputValue('otherBankCosts')} label={<Text>Other Bank Costs</Text>}
                       onChange={this.handleInputChange('otherBankCosts')}
                       keyProp='otherBankCosts'
                       boldLabel
@@ -52,7 +59,7 @@ class Transfer extends Component {
         return (
             <div className={style.formRight}>
                 <div className={style.inputWrap}>
-                    <Input value={this.props.reason} label={<Text>Transfer Reason</Text>}
+                    <Input value={this.getInputValue('reason')} label={<Text>Transfer Reason</Text>}
                       onChange={this.handleInputChange('reason')}
                       keyProp='reason'
                       boldLabel
@@ -62,7 +69,7 @@ class Transfer extends Component {
                     />
                 </div>
                 <div className={style.inputWrap}>
-                    <Input value={this.props.comments} label={<Text>More Info</Text>}
+                    <Input value={this.getInputValue('comments')} label={<Text>More Info</Text>}
                       onChange={this.handleInputChange('comments')}
                       keyProp='comments'
                       boldLabel
@@ -87,25 +94,23 @@ class Transfer extends Component {
 }
 
 Transfer.propTypes = {
+    mode: PropTypes.string,
+    id: PropTypes.string,
+    data: PropTypes.object,
+    edited: PropTypes.object,
     priorities: PropTypes.object.isRequired,
-    priority: PropTypes.string.isRequired,
-    reason: PropTypes.string.isRequired,
-    otherBankCosts: PropTypes.string.isRequired,
-    comments: PropTypes.string.isRequired,
     errors: PropTypes.object.isRequired,
 
     changeField: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
+    const { mode, id } = ownProps;
     return {
-        priorities: state.transferSwift.get('priorityData'),
-        priority: state.transferSwift.getIn(['transfer', 'priority']),
-        reason: state.transferSwift.getIn(['transfer', 'reason']),
-        otherBankCosts: state.transferSwift.getIn(['transfer', 'otherBankCosts']),
-        comments: state.transferSwift.getIn(['transfer', 'comments']),
-
-        errors: state.transferSwift.getIn(['errors', 'transfer'], immutable.Map())
+        data: state.transferSwift.getIn([mode, id, 'data', 'transfer']),
+        edited: state.transferSwift.getIn([mode, id, 'edited', 'transfer'], immutable.Map()),
+        priorities: state.transferSwift.getIn([mode, id, 'priorityData']),
+        errors: state.transferSwift.getIn([mode, id, 'errors', 'transfer'], immutable.Map())
     };
 }
 

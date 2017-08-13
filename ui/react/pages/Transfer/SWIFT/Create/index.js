@@ -14,7 +14,7 @@ import { getSenderValidations } from './../../../../containers/Transfer/SWIFT/Se
 import { getBeneficiaryValidations } from './../../../../containers/Transfer/SWIFT/Beneficiary/validations';
 import { getBankBeneficiaryValidations } from './../../../../containers/Transfer/SWIFT/BankBeneficiary/validations';
 import { prepareErrorsWithFullKeyPath } from './../../../../utils';
-import { setErrors } from '../actions';
+import { setActiveTab, setErrors } from '../actions';
 
 import transferStyle from '../../style.css';
 
@@ -25,13 +25,17 @@ class TransfersSWIFTCreate extends Component {
         this.createSwift = this.createSwift.bind(this);
     }
 
+    componentWillMount() {
+        this.props.setActiveTab({ mode: 'create', id: 'create' });
+    }
+
     createSwift() {
         let createValidationRules = [
             ...getSenderValidations(),
             ...getBankBeneficiaryValidations(),
             ...getBeneficiaryValidations(),
             ...getTransferValidations()];
-        let validation = validateAll(this.props.store, createValidationRules);
+        let validation = validateAll(this.props.data, createValidationRules);
         if (!validation.isValid) {
             let errors = prepareErrorsWithFullKeyPath(validation.errors);
             this.props.setErrors(errors);
@@ -55,7 +59,7 @@ class TransfersSWIFTCreate extends Component {
                 <AddTab pathname={getLink('ut-transfer:transfersSWIFT')} title={'SWIFT Transfers'} />
                 <div className={transferStyle.pageContainer}>
                     <Header text={<Text>SWIFT Transfers</Text>} buttons={this.actionButtons} />
-                    <Swift />
+                    <Swift mode='create' id='create' />
                 </div>
             </Page>
         );
@@ -68,17 +72,19 @@ TransfersSWIFTCreate.contextTypes = {
 };
 
 TransfersSWIFTCreate.propTypes = {
+    setActiveTab: PropTypes.func,
     store: PropTypes.object.isRequired,
     setErrors: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = ({ transferSwift }, ownProps) => {
     return {
-        store: state.transferSwift
+        data: transferSwift.getIn(['create', 'create', 'data'])
     };
 };
 
 const mapDispatchToProps = {
+    setActiveTab,
     setErrors
 };
 

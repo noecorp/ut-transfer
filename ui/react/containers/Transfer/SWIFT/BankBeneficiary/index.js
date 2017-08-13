@@ -5,13 +5,19 @@ import TitledContentBox from 'ut-front-react/components/TitledContentBox';
 import Dropdown from 'ut-front-react/components/Input/Dropdown';
 import Input from 'ut-front-react/components/Input';
 import Text from 'ut-front-react/components/Text';
-import classnames from 'classnames';
 import style from './../style.css';
 
 import {changeField} from '../../../../pages/Transfer/SWIFT/actions';
 import {swiftValidation, cityValidation, nameValidation, addressValidation} from './validations';
 
 class BankBeneficiary extends Component {
+//
+    getInputValue(key) {
+        const { data, edited } = this.props;
+        let value = edited.has(key) ? edited.get(key) : data.get(key);
+        return value;
+    }
+
     handleInputChange(fieldName) {
         return (data) => {
             this.props.changeField(['bankBeneficiary', fieldName], data.value, data);
@@ -22,7 +28,7 @@ class BankBeneficiary extends Component {
         return (
             <div className={style.formLeft}>
                 <div className={style.inputWrap}>
-                    <Input value={this.props.swift} label={<Text>SWIFT / BIC</Text>}
+                    <Input value={this.getInputValue('swift')} label={<Text>SWIFT / BIC</Text>}
                       onChange={this.handleInputChange('swift')}
                       keyProp='swift'
                       boldLabel
@@ -32,7 +38,7 @@ class BankBeneficiary extends Component {
                     />
                 </div>
                 <div className={style.inputWrap}>
-                    <Input value={this.props.name} label={<Text>Name</Text>}
+                    <Input value={this.getInputValue('name')} label={<Text>Name</Text>}
                       onChange={this.handleInputChange('name')}
                       keyProp='name'
                       boldLabel
@@ -42,7 +48,7 @@ class BankBeneficiary extends Component {
                     />
                 </div>
                 <div className={style.inputWrap}>
-                    <Input value={this.props.address} label={<Text>Address</Text>}
+                    <Input value={this.getInputValue('address')} label={<Text>Address</Text>}
                       onChange={this.handleInputChange('address')}
                       keyProp='address'
                       boldLabel
@@ -59,7 +65,7 @@ class BankBeneficiary extends Component {
         return (
             <div className={style.formRight}>
                 <div className={style.inputWrap}>
-                      <Input value={this.props.city} label={<Text>City</Text>}
+                      <Input value={this.getInputValue('city')} label={<Text>City</Text>}
                         onChange={this.handleInputChange('city')}
                         keyProp='city'
                         boldLabel
@@ -70,7 +76,7 @@ class BankBeneficiary extends Component {
                 </div>
                 <div className={style.inputWrap}>
                     <Dropdown
-                      defaultSelected={this.props.country}
+                      defaultSelected={this.getInputValue('country')}
                       label={<span><Text>Country</Text> *</span>}
                       boldLabel
                       keyProp='country'
@@ -84,6 +90,7 @@ class BankBeneficiary extends Component {
             </div>
         );
     }
+
     render() {
         return (
             <TitledContentBox title={<Text>Beneficiary Bank</Text>}>
@@ -97,30 +104,26 @@ class BankBeneficiary extends Component {
 }
 
 BankBeneficiary.propTypes = {
+    mode: PropTypes.string,
+    id: PropTypes.string,
     countries: PropTypes.arrayOf(PropTypes.shape({
         key: PropTypes.string,
         name: PropTypes.string
     })).isRequired,
-
-    swift: PropTypes.string.isRequired,
-    city: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    country: PropTypes.string.isRequired,
-    address: PropTypes.string.isRequired,
+    data: PropTypes.object,
+    edited: PropTypes.object,
     errors: PropTypes.object.isRequired,
 
     changeField: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
+    const { mode, id } = ownProps;
     return {
-        swift: state.transferSwift.getIn(['bankBeneficiary', 'swift']),
-        city: state.transferSwift.getIn(['bankBeneficiary', 'city']),
-        name: state.transferSwift.getIn(['bankBeneficiary', 'name']),
-        country: state.transferSwift.getIn(['bankBeneficiary', 'country']),
-        address: state.transferSwift.getIn(['bankBeneficiary', 'address']),
-        countries: state.transferSwift.getIn(['nomenclatures', 'country']).toJS(),
-        errors: state.transferSwift.getIn(['errors', 'bankBeneficiary'], immutable.Map())
+        data: state.transferSwift.getIn([mode, id, 'data', 'bankBeneficiary']),
+        edited: state.transferSwift.getIn([mode, id, 'edited', 'bankBeneficiary'], immutable.Map()),
+        countries: state.transferSwift.getIn([mode, id, 'nomenclatures', 'country']).toJS(),
+        errors: state.transferSwift.getIn([mode, id, 'errors', 'bankBeneficiary'], immutable.Map())
     };
 }
 

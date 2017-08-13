@@ -1,5 +1,10 @@
 import * as actionTypes from './actionTypes';
 
+export const setActiveTab = ({ mode, id }) => ({
+    type: actionTypes.SET_ACTIVE_TAB,
+    params: { mode, id }
+});
+
 export const setErrors = (params) => ({
     type: actionTypes.SET_ERRORS,
     params
