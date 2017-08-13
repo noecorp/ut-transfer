@@ -6,6 +6,7 @@ import Page from 'ut-front-react/components/PageLayout/Page';
 import { AddTab } from 'ut-front-react/containers/TabMenu';
 import Header from 'ut-front-react/components/PageLayout/Header';
 import { validateAll } from 'ut-front-react/utils/validator';
+import { removeTab } from 'ut-front-react/containers/TabMenu/actions';
 
 import ConfirmTransferPopup from '../../../../containers/Transfer/ConfirmTransferPopup';
 import TransferBudgetContainer from '../../../../containers/Transfer/Budget';
@@ -17,7 +18,9 @@ import {
     fetchCustomerData,
     editConfirmTransferPopupField,
     resetConfirmTransferPopupState,
-    createTransfer
+    createTransfer,
+    resetTransferState,
+    requestOTP
 } from '../actions';
 import { prepareErrorsWithFullKeyPath } from './../../../../utils';
 import { getTransferBuddgetValidations } from '../../../../containers/Transfer/Budget/validations';
@@ -69,9 +72,24 @@ class TransferBudgetCreate extends Component {
     }
 
     get actionButtons() {
+        const createAndClose = () => {
+            this.createBudgetTransfer();
+            this.onTransferSentHandler = () => {
+                this.closePopup(popups.confirmTransfer);
+                this.props.resetTransferState();
+                this.props.removeTab(this.props.activeTab.pathname);
+            };
+        };
+        const create = () => {
+            this.createBudgetTransfer();
+            this.onTransferSentHandler = () => {
+                this.closePopup(popups.confirmTransfer);
+                this.props.resetTransferState();
+            };
+        };
         return [
-            { text: this.translate('Create and Close'), onClick: this.createBudgetTransfer, styleType: 'primaryLight' },
-            { text: this.translate('Create'), onClick: this.createBudgetTransfer },
+            { text: this.translate('Create and Close'), onClick: createAndClose, styleType: 'primaryLight' },
+            { text: this.translate('Create'), onClick: create },
             { text: this.translate('Close'), onClick: () => {} }
         ];
     }
@@ -86,6 +104,7 @@ class TransferBudgetCreate extends Component {
             return;
         }
         this.openPopup(popups.confirmTransfer);
+        this.props.requestOTP();
     }
 
     confirmAndSendBudgetTransfer() {
@@ -93,6 +112,7 @@ class TransferBudgetCreate extends Component {
         let otp = this.props.confirmTransferPopup.getIn(['data', 'otp']);
         let data = prepareTransferBudgetToSend(this.props.data, { password, otp });
         this.props.createTransfer(data);
+        this.onTransferSentHandler();
     }
 
     closeConfirmTransferPopup() {
@@ -132,7 +152,8 @@ TransferBudgetCreate.propTypes = {
     // State
     data: PropTypes.object,
     confirmTransferPopup: PropTypes.object,
-    // ACtions
+    activeTab: PropTypes.object,
+    // Actions
     getScreenConfiguration: PropTypes.func,
     editConfirmTransferPopupField: PropTypes.func,
     resetConfirmTransferPopupState: PropTypes.func,
@@ -140,10 +161,14 @@ TransferBudgetCreate.propTypes = {
     fetchCustomerData: PropTypes.func,
     setActiveTab: PropTypes.func,
     setErrors: PropTypes.func,
-    createTransfer: PropTypes.func
+    createTransfer: PropTypes.func,
+    resetTransferState: PropTypes.func,
+    removeTab: PropTypes.func,
+    requestOTP: PropTypes.func
 };
 
-const mapStateToProps = ({ transfersBudget }, ownProps) => ({
+const mapStateToProps = ({ transfersBudget, tabMenu }, ownProps) => ({
+    activeTab: tabMenu.active,
     data: transfersBudget.getIn(['create', 'create', 'data']),
     confirmTransferPopup: transfersBudget.getIn(['create', 'create', 'confirmTransferPopup'])
 });
@@ -156,7 +181,10 @@ const mapDispatchToProps = {
     fetchCustomerData,
     editConfirmTransferPopupField,
     resetConfirmTransferPopupState,
-    createTransfer
+    createTransfer,
+    resetTransferState,
+    removeTab,
+    requestOTP
 };
 
 export default connect(

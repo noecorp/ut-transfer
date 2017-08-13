@@ -9,22 +9,24 @@ export const confirmTransferPopupDefaultState = {
     errors: {}
 };
 
+export const defaultTransferState = {
+    data: {},
+    errors: {},
+    dropdownData: {
+        account: [],
+        documentType: documentTypes
+    },
+    screenConfiguration: {},
+    confirmTransferPopup: confirmTransferPopupDefaultState
+};
+
 export const defaultState = {
     activeTabData: {
         mode: '',
         id: ''
     },
     create: {
-        create: {
-            data: {},
-            errors: {},
-            dropdownData: {
-                account: [],
-                documentType: documentTypes
-            },
-            screenConfiguration: {},
-            confirmTransferPopup: confirmTransferPopupDefaultState
-        }
+        create: defaultTransferState
     },
     remote: {
         accounts: [],

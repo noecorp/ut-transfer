@@ -5,6 +5,8 @@ import Sender from './Sender';
 import BankBeneficiary from './BankBeneficiary';
 import Beneficiary from './Beneficiary';
 import Transfer from './Transfer';
+import AMLDeclaration from './AMLDeclaration';
+
 import style from './style.css';
 
 import nomeclaturesConfiguration from '../../../configuration/nomenclatures';
@@ -29,13 +31,13 @@ class Swift extends Component {
     }
     render() {
         const { mode, id } = this.props;
-        console.log(mode, id);
         return (
             <div className={style.contentBoxesWrapper}>
                 <Sender mode={mode} id={id} />
                 <BankBeneficiary mode={mode} id={id} />
                 <Beneficiary mode={mode} id={id} />
                 <Transfer mode={mode} id={id} />
+                <AMLDeclaration mode={mode} id={id} />
             </div>
         );
     }
