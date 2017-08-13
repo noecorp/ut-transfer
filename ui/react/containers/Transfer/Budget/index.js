@@ -91,6 +91,23 @@ class TransferBudgetCreate extends Component {
         );
     }
 
+    renderDatePicker(input) {
+        const { errors } = this.props;
+        const errorMessage = errors.get(input.key);
+        return (
+            <div className={style.datepickerWrap}>
+                <div>
+                    <DatePicker
+                      isValid={!errors.get(input.key)}
+                      defaultValue={this.getInputValue(input.key)}
+                      onChange={this.onDatePickerChange(input.key)} />
+                </div>
+                {errorMessage &&
+                <div className={style.datepickerError}>{errorMessage}</div>}
+            </div>
+        );
+    }
+
     getValidationRules(key) {
         let validationRules = (validations[key] && validations[key].rules) || [];
         return validationRules;
@@ -110,6 +127,7 @@ class TransferBudgetCreate extends Component {
 
     renderMainInfo() {
         const { left, right } = inputsConfig;
+        const { errors } = this.props;
         return (
             <TitledContentBox title={this.translate('Sender')}>
                 <div className={style.formWrap}>
@@ -144,6 +162,9 @@ class TransferBudgetCreate extends Component {
                         <div className={style.inputWrap}>
                             {this.renderTextInput(left.bic)}
                         </div>
+                        <div className={style.inputWrap}>
+                            {this.renderTextInput(left.bank)}
+                        </div>
                     </div>
                     <div className={style.formRight}>
                         <div className={style.inputWrap}>
@@ -167,10 +188,7 @@ class TransferBudgetCreate extends Component {
                             </div>
                             <div className={style.flexInput}>
                                 <div style={{flex: 15}}>
-                                    <DatePicker
-                                      defaultValue={this.getInputValue('documentDate')}
-                                      disabled={false}
-                                      onChange={this.onDatePickerChange('documentDate')} />
+                                    {this.renderDatePicker({ key: 'documentDate' })}
                                 </div>
                                 <div style={{flex: 1}} />
                                 <div style={{flex: 15}}>
@@ -184,17 +202,11 @@ class TransferBudgetCreate extends Component {
                             </div>
                             <div className={style.flexInput}>
                                 <div style={{flex: 3}}>
-                                    <DatePicker
-                                      defaultValue={this.getInputValue('startDate')}
-                                      disabled={false}
-                                      onChange={this.onDatePickerChange('startDate')} />
+                                    {this.renderDatePicker({ key: 'startDate' })}
                                 </div>
                                 <div style={{flex: 1, textAlign: 'center'}}><Text>to</Text></div>
                                 <div style={{flex: 3}}>
-                                    <DatePicker
-                                      defaultValue={this.getInputValue('endDate')}
-                                      disabled={false}
-                                      onChange={this.onDatePickerChange('endDate')} />
+                                    {this.renderDatePicker({ key: 'endDate' })}
                                 </div>
                             </div>
                         </div>
@@ -205,11 +217,17 @@ class TransferBudgetCreate extends Component {
                             <div className={style.flexInput}>
                                 <div className={style.additionalOptionsRadioWrap} style={{ display: 'flex', flexBasis: '100%' }}>
                                     <RadioInput
+                                      defaultValue={this.getInputValue('paymentSystem')}
+                                      onChange={this.onInputChange}
                                       options={[
                                           { id: 1, label: this.translate('BISERA'), name: 'paymentSystem', value: 'bisera' },
                                           { id: 2, label: this.translate('RINGS'), name: 'paymentSystem', value: 'rings' }
                                       ]} />
-                                    </div>
+                                    {errors.get('paymentSystem') &&
+                                    <div style={{ flexBasis: '50%', fontSize: '12px', color: 'red', textAlign: 'right' }}>
+                                        {errors.get('paymentSystem')}
+                                    </div>}
+                                </div>
                             </div>
                         </div>
                     </div>

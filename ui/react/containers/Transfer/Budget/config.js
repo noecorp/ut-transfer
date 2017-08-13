@@ -7,7 +7,8 @@ export const inputsConfig = {
         bulstat: { key: 'bulstat', type: 'text', label: 'Sender bulstat' },
         destinationName: { key: 'destinationName', type: 'text', label: 'Beneficiary name' },
         iban: { key: 'iban', type: 'text', label: 'IBAN' },
-        bic: { key: 'bic', type: 'text', label: 'BIC', readonly: true }
+        bic: { key: 'bic', type: 'text', label: 'BIC', readonly: true },
+        bank: { key: 'bank', type: 'text', label: 'Bank', readonly: true }
     },
     right: {
         paymentType: { key: 'paymentType', type: 'dropdown', label: 'Payment type', dropdownSource: 'accounts' },

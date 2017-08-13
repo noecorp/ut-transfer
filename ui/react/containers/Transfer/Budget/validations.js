@@ -10,7 +10,8 @@ export const getTransferBuddgetValidations = () => {
         validations.paymentType,
         validations.amount,
         validations.reason,
-        validations.documentType
+        validations.documentType,
+        validations.documentNumber
     ];
 };
 
@@ -65,5 +66,55 @@ export const validations = {
         rules: [
             { type: dropdownValidations.isRequired, errorMessage: <Text>Document type is required</Text> }
         ]
+    },
+    documentNumber: {
+        key: ['documentNumber'],
+        type: validationTypes.text,
+        rules: [
+            { type: textValidations.isRequired, errorMessage: <Text>Document number is required</Text> }
+        ]
     }
 };
+
+export const customValidations = [
+    {
+        field: 'documentDate',
+        key: ['documentDate'],
+        rules: [
+            {
+                isRequired: true,
+                errorMessage: <Text>Document date is required</Text>
+            }
+        ]
+    },
+    {
+        field: 'startDate',
+        key: ['startDate'],
+        rules: [
+            {
+                isRequired: true,
+                errorMessage: <Text>Payment start date is required</Text>
+            }
+        ]
+    },
+    {
+        field: 'endDate',
+        key: ['endDate'],
+        rules: [
+            {
+                isRequired: true,
+                errorMessage: <Text>Payment end date is required</Text>
+            }
+        ]
+    },
+    {
+        field: 'paymentSystem',
+        key: ['paymentSystem'],
+        rules: [
+            {
+                isRequired: true,
+                errorMessage: <Text>Payment system is required</Text>
+            }
+        ]
+    }
+];

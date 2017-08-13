@@ -51,3 +51,11 @@
 .additionalOptionsRadioWrap span{
     display: block;
 }
+.datepickerWrap {
+    display: flex;
+    flex-direction: column;
+}
+.datepickerError {
+    color: red;
+    font-size: 12px;
+}

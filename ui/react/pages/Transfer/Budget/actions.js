@@ -42,7 +42,8 @@ export const fetchAccounts = () => ({
 
 export const createTransfer = (params) => ({
     type: actionTypes.CREATE_TRANSFER,
-    method: 'transfer.onlineBanking.transfer.create'
+    method: 'transfer.onlineBanking.transfer.create',
+    params: params
 });
 
 export const editTransferField = ({ field, value, data }) => ({
