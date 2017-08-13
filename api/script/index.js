@@ -6,7 +6,7 @@ const Nexmo = require('nexmo');
 var nexmo = new Nexmo({
     apiKey: '036be2be',
     apiSecret: '9970f46b95ae70c7'
-  });
+});
 
 const DECLINED = {
     ledger: ['transfer.insufficientFunds', 'transfer.invalidAccount', 'transfer.genericDecline', 'transfer.incorrectPin'],
@@ -530,19 +530,22 @@ module.exports = {
 
     },
     'onlineBanking.transfer.requestOTP': function(msg, $meta) {
-        // nexmo.message.sendSms('Tokuda Bank', '359876966554', 'Test Message', null);
-        // return new Promise((resolve, reject) => {
-        //     const callback = (error, result) => {
-        //         if (error) reject(error);
-        //         resolve(result);
-        //     };
-        //     nexmo.message.sendSms('Tokuda Bank', '359876966554', 'Test Message', callback);
-        // }).then(() => {
-        //     return {
-        //         success: true
-        //     };
-        // });
-        return { success: true };
+        const otp = randomize('0', 6);
+        const callback = (error, result) => {
+            if (error) return error;
+            const mockOTPPath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'otp.json');
+            let mockOTPData = JSON.parse(fs.readFileSync(mockOTPPath, 'UTF-8'));
+            result.messages[0].otp = otp;
+            mockOTPData.otps.push(result.messages[0]);
+            fs.writeFileSync(mockOTPPath, JSON.stringify(mockOTPData));
+            return result;
+        };
+        nexmo.message.sendSms(msg.bank, msg.recipient, otp, {
+            from: msg.bank
+        }, callback);
+        return {
+            success: true
+        };
     }
 
 };
