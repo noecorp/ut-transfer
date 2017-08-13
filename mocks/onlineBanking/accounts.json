@@ -8,21 +8,39 @@
         }
     },
     "accounts": [
-        {
+        {   
+            "customerData": {
+                "firstName": "Николай",
+                "lastName": "Клиента",
+                "civilIdentifier": {
+                    "type": "resident",
+                    "value": "9005054040"
+                }
+            },
             "accountNumber": 1,
             "name": "Разплащателна сметка",
             "type": "operational",
             "balance": 5232.50,
             "currency": "BGN",
-            "iban": "BG39CREX92603314548700"
+            "iban": "BG39CREX92603314548700",
+            "phone": "0876966554"
         },
         {
+            "customerData": {
+                "firstName": "Николай",
+                "lastName": "Клиента",
+                "civilIdentifier": {
+                    "type": "resident",
+                    "value": "9005054040"
+                }
+            },
             "accountNumber": 2,
             "name": "Спестовна сметка",
             "type": "savings",
             "balance": 8020.25,
             "currency": "BGN",
-            "iban": "BG39CREX92601016221000"
+            "iban": "BG39CREX92601016221000",
+            "phone": "0876966554"
         }
     ]
 }

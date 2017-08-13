@@ -35,7 +35,6 @@ class ConfirmTransferPopup extends Component {
     onConfirmClick() {
         let confirmTransferPopupValidations = getConfirmTransferPopupValidations();
         let validation = validateAll(this.props.data, confirmTransferPopupValidations);
-        debugger;
         if (!validation.isValid) {
             let errors = prepareErrorsWithFullKeyPath(validation.errors);
             this.props.setConfirmTransferPopupErrors(errors);

@@ -32,5 +32,10 @@ export const sendMessage = (bank, recipient) => {
         type: actionTypes.SEND_MESSAGE,
         method: 'transfer.onlineBanking.transfer.requestOTP',
         params: {bank, recipient}
-    }
-}
+    };
+};
+
+export const fetchAccounts = () => ({
+    type: actionTypes.FETCH_ACCOUNTS,
+    method: 'transfer.onlineBanking.account.fetch'
+});
