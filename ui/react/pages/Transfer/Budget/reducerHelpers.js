@@ -1,6 +1,6 @@
 import immutable from 'immutable';
 import { bics, paymentTypes } from './staticData';
-import { confirmTransferPopupDefaultState } from './defaultState';
+import { confirmTransferPopupDefaultState, defaultTransferState } from './defaultState';
 import { methodRequestState } from 'ut-front-react/constants';
 
 const editPropertyMapping = {
@@ -90,6 +90,9 @@ export const editTransferField = (state, action, options) => {
             .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'sourceName'], customerData.get('name'))
             .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'civilIdentifier'], customerData.getIn(['civilIdentifier', 'value']));
     }
+    if (field === 'transferExecution' && value === 'now') {
+        state = state.deleteIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'transferExecutionDate']);
+    }
     if (field === 'iban' && value.length === 22) {
         let bicIdentifier = value.substr(4, 4).toUpperCase();
         let correspondingBic = bics.find(bic => bic.identifier === bicIdentifier);
@@ -108,4 +111,9 @@ export const editTransferField = (state, action, options) => {
         state = state.setIn([activeTabMode, activeTabId, 'dropdownData', 'paymentType'], immutable.fromJS(paymentTypesDropdownData));
     }
     return state;
+};
+
+export const resetTransferState = (state, aciton, options) => {
+    const { activeTabMode, activeTabId } = options;
+    return state.setIn([activeTabMode, activeTabId], immutable.fromJS(defaultTransferState));
 };

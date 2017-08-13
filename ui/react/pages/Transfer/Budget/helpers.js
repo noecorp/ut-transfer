@@ -1,3 +1,5 @@
+import React from 'react';
+import Text from 'ut-front-react/components/Text';
 import { customValidations } from '../../../containers/Transfer/Budget/validations';
 
 export const prepareTransferBudgetToSend = (data, auth) => {
@@ -20,4 +22,11 @@ export const performCustomValidations = (data, validationResult) => {
             }
         });
     });
+    if (data.get('transferExecution') === 'future' && !data.get('transferExecutionDate')) {
+        validationResult.isValid = false;
+        validationResult.errors.push({
+            key: ['transferExecutionDate'],
+            errorMessage: <Text>Transfer execution date is required</Text>
+        });
+    }
 };

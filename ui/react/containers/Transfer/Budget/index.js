@@ -239,12 +239,36 @@ class TransferBudgetCreate extends Component {
     renderAdditionalOptions() {
         return (
             <TitledContentBox title={this.translate('Additional options')}>
-                <div className={style.additionalOptionsRadioWrap}>
-                <RadioInput
-                  options={[
-                      { id: 1, label: this.translate('Transfer now'), name: 'transferExecution', value: 'now' },
-                      { id: 2, label: this.translate('Transfer at a later pont'), name: 'transferExecution', value: 'future' }
-                  ]} />
+                <div className={style.formWrap}>
+                    <div className={style.formLeft}>
+                         <div className={style.inputWrapFlex}>
+                            <div className={style.flexLabel}>
+                                <Text>Payment System</Text>
+                            </div>
+                            <div className={style.flexInput}>
+                                <div className={style.additionalOptionsRadioWrap} style={{ display: 'flex', flexBasis: '100%' }}>
+                                    <RadioInput
+                                      defaultValue={this.getInputValue('transferExecution')}
+                                      onChange={this.onInputChange}
+                                      options={[
+                                          { id: 1, label: this.translate('Transfer now'), name: 'transferExecution', value: 'now' },
+                                          { id: 2, label: this.translate('Transfer at a later pont'), name: 'transferExecution', value: 'future' }
+                                      ]} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {this.getInputValue('transferExecution') === 'future' &&
+                    <div className={style.formRight}>
+                        <div className={style.inputWrapFlex}>
+                            <div className={style.flexLabel}>
+                                <Text>Deferred execution time</Text>
+                            </div>
+                            <div className={style.flexInput}>
+                                {this.renderDatePicker({ key: 'transferExecutionDate' })}
+                            </div>
+                        </div>
+                    </div>}
                 </div>
             </TitledContentBox>
         );

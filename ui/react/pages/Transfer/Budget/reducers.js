@@ -29,6 +29,8 @@ export default function transfersBudget(state = defaultStateImmutable, action) {
             return transferBudgetReducers.setConfirmTransferPopupErrors(state, action, options);
         case actionTypes.RESET_CONFIRM_TRANSFER_POPUP_STATE:
             return transferBudgetReducers.resetConfirmTransferPopupState(state, action, options);
+        case actionTypes.RESET_TRANSFER_STATE:
+            return transferBudgetReducers.resetTransferState(state, action, options);
     }
     return state;
 };

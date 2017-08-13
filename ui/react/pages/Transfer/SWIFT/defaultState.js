@@ -37,6 +37,9 @@ export const defaultState = {
                     reason: '',
                     otherBankCosts: '',
                     comments: ''
+                },
+                amlDeclaration: {
+                    fundsOrigin: ''
                 }
             },
             priorityData: [],
