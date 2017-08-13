@@ -7,7 +7,7 @@ import { AddTab } from 'ut-front-react/containers/TabMenu';
 import Header from 'ut-front-react/components/PageLayout/Header';
 import { validateAll } from 'ut-front-react/utils/validator';
 
-import ConfirmTransferPopup from '../../../../components/Transfer/ConfirmTransferPopup';
+import ConfirmTransferPopup from '../../../../containers/Transfer/ConfirmTransferPopup';
 import TransferBudgetContainer from '../../../../containers/Transfer/Budget';
 import {
     setActiveTab,

@@ -9,7 +9,7 @@ import Text from 'ut-front-react/components/Text';
 import classnames from 'classnames';
 import style from './../style.css';
 
-import {changeField} from './../actions';
+import {changeField} from '../../../../pages/Transfer/SWIFT/actions';
 import {reasonValidation, otherBankCostsValidation, commentsValidation} from './validations';
 
 class Transfer extends Component {

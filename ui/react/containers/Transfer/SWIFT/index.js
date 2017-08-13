@@ -7,7 +7,7 @@ import Beneficiary from './Beneficiary';
 import Transfer from './Transfer';
 import style from './style.css';
 
-import {changeField} from './actions';
+import {changeField} from '../../../pages/Transfer/SWIFT/actions';
 
 class Swift extends Component {
     componentWillMount() {

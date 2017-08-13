@@ -9,7 +9,7 @@ import Text from 'ut-front-react/components/Text';
 import style from './../style.css';
 import classnames from 'classnames';
 
-import {changeField} from './../actions';
+import {changeField} from '../../../../pages/Transfer/SWIFT/actions';
 import {phoneValidation, nameValidation, ibanOrdererValidation, addressValidation, cityValidation} from './validations';
 
 class Orderer extends Component {

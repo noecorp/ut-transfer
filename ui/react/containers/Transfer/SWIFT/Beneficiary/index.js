@@ -8,7 +8,7 @@ import Text from 'ut-front-react/components/Text';
 import classnames from 'classnames';
 import style from './../style.css';
 
-import {changeField} from './../actions';
+import {changeField} from '../../../../pages/Transfer/SWIFT/actions';
 import {addressValidation, accountNumberValidation, cityValidation} from './validations';
 
 class Beneficiary extends Component {

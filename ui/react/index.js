@@ -4,9 +4,9 @@ import { getRoute } from 'ut-front/react/routerHelper';
 import registerRoutes from './registerRoutes';
 import {
     Partner,
-    TransfersBudget,
+    // TransfersBudget, // TODO - use if needed
     TransferBudgetCreate,
-    TransfersSWIFT,
+    // TransfersSWIFT, // TODO - use if needed
     TransferSWIFTCreate
 } from './pages';
 
@@ -18,11 +18,11 @@ export const UtTransferRoutes = () => {
             <Route path={getRoute('ut-transfer:partners')} component={Partner} />
             <Route path={getRoute('ut-transfer:transfers')}>
                 <Route path={getRoute('ut-transfer:transfersBudget')} >
-                    <IndexRoute component={TransfersBudget} />
+                    <IndexRoute component={TransferBudgetCreate} />
                     <Route path={getRoute('ut-transfer:transfersBudgetCreate')} component={TransferBudgetCreate} />
                 </Route>
                 <Route path={getRoute('ut-transfer:transfersSWIFT')} >
-                    <IndexRoute component={TransfersSWIFT} />
+                    <IndexRoute component={TransferSWIFTCreate} />
                     <Route path={getRoute('ut-transfer:transfersSWIFTCreate')} component={TransferSWIFTCreate} />
                 </Route>
             </Route>
