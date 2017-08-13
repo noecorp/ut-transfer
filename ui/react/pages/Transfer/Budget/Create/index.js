@@ -20,7 +20,7 @@ import {
 } from '../actions';
 import { prepareErrorsWithFullKeyPath } from './../../../../utils';
 import { getTransferBuddgetValidations } from '../../../../containers/Transfer/Budget/validations';
-import { prepareTransferBudgetToSend } from '../helpers';
+import { prepareTransferBudgetToSend, performCustomValidations } from '../helpers';
 
 import transferStyle from '../../style.css';
 
@@ -39,7 +39,7 @@ class TransferBudgetCreate extends Component {
         this.closePopup = this.closePopup.bind(this);
         this.state = {
             isPopupOpen: {
-                confirmTransfer: true
+                confirmTransfer: false
             }
         };
     }
@@ -78,6 +78,7 @@ class TransferBudgetCreate extends Component {
     createBudgetTransfer() {
         let createValidationRules = getTransferBuddgetValidations();
         let validation = validateAll(this.props.data, createValidationRules);
+        performCustomValidations(this.props.data, validation);
         if (!validation.isValid) {
             let errors = prepareErrorsWithFullKeyPath(validation.errors);
             this.props.setErrors(errors);
@@ -88,8 +89,9 @@ class TransferBudgetCreate extends Component {
 
     confirmAndSendBudgetTransfer() {
         let password = this.props.confirmTransferPopup.getIn(['data', 'password']);
-        let otp = this.props.confirmTransferPopup.getIn(['data', 'password']);
+        let otp = this.props.confirmTransferPopup.getIn(['data', 'otp']);
         let data = prepareTransferBudgetToSend(this.props.data);
+        debugger;
     }
 
     closeConfirmTransferPopup() {

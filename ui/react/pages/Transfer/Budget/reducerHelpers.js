@@ -94,7 +94,9 @@ export const editTransferField = (state, action, options) => {
         let bicIdentifier = value.substr(4, 4).toUpperCase();
         let correspondingBic = bics.find(bic => bic.identifier === bicIdentifier);
         if (correspondingBic) {
-            state = state.setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'bic'], correspondingBic.bic);
+            state = state
+                .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'bic'], correspondingBic.bic)
+                .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'bank'], correspondingBic.bank);
         }
         let paymentTypeIdentifier = value.substr(12, 2);
         let correspondingPaymentType = paymentTypes[paymentTypeIdentifier];
