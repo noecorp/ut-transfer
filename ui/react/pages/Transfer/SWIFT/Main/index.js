@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -11,7 +9,6 @@ import Header from 'ut-front-react/components/PageLayout/Header';
 import trasnferStyle from '../../style.css';
 
 class TransferSWIFTMain extends Component {
-//
     render() {
         return (
             <Page>
@@ -22,7 +19,6 @@ class TransferSWIFTMain extends Component {
             </Page>
         );
     }
-//
 }
 
 const mapStateToProps = (state, ownProps) => ({});

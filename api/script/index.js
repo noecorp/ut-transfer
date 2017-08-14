@@ -22,7 +22,7 @@ var pad = (number, size) => {
         result = '0' + result;
     }
     return result;
-}
+};
 
 var processReversal = (bus, log, $meta) => params => {
     var transferId;

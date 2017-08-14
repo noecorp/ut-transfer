@@ -12,7 +12,10 @@ import {changeField} from '../../../../pages/Transfer/SWIFT/actions';
 import {addressValidation, accountNumberValidation, cityValidation} from './validations';
 
 class Beneficiary extends Component {
-//
+    translate(stringToTranslate) {
+        return this.context.translate(stringToTranslate);
+    }
+
     handleInputChange(fieldName) {
         return (data) => {
             this.props.changeField(['beneficiary', fieldName], data.value, data);
@@ -70,6 +73,7 @@ class Beneficiary extends Component {
                     <Dropdown
                       defaultSelected={this.getInputValue('country')}
                       label={<span><Text>Country</Text> *</span>}
+                      placeholder={this.translate('Select')}
                       boldLabel
                       keyProp='country'
                       isValid={this.props.errors.get('country') === undefined}
@@ -103,6 +107,10 @@ class Beneficiary extends Component {
         );
     }
 }
+
+Beneficiary.contextTypes = {
+    translate: PropTypes.func
+};
 
 Beneficiary.propTypes = {
     mode: PropTypes.string,

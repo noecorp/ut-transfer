@@ -7,6 +7,7 @@ import { AddTab } from 'ut-front-react/containers/TabMenu';
 import Header from 'ut-front-react/components/PageLayout/Header';
 import { validateAll } from 'ut-front-react/utils/validator';
 import { removeTab } from 'ut-front-react/containers/TabMenu/actions';
+import Text from 'ut-front-react/components/Text';
 
 import ConfirmTransferPopup from '../../../../containers/Transfer/ConfirmTransferPopup';
 import TransferBudgetContainer from '../../../../containers/Transfer/Budget';
@@ -33,7 +34,6 @@ const popups = {
 };
 
 class TransferBudgetCreate extends Component {
-//
     constructor(props) {
         super(props);
         this.createBudgetTransfer = this.createBudgetTransfer.bind(this);
@@ -129,7 +129,7 @@ class TransferBudgetCreate extends Component {
                 <AddTab pathname={getLink('ut-transfer:transfersBudgetCreate')} title={this.translate('Transfer to the Budget')} />
                 <div className={transferStyle.pageContainer}>
                     <Header
-                      text={this.translate('Payment slip (transfer to the Budget)')}
+                      text={<Text>Payment slip (Transfer to the Budget)</Text>}
                       buttons={this.actionButtons} />
                     <div className={transferStyle.transferContainer}>
                         <TransferBudgetContainer mode='create' id='create' />
@@ -143,7 +143,6 @@ class TransferBudgetCreate extends Component {
             </Page>
         );
     }
-//
 }
 
 TransferBudgetCreate.contextTypes = {

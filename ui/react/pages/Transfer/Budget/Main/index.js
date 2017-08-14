@@ -9,7 +9,6 @@ import Header from 'ut-front-react/components/PageLayout/Header';
 import trasnferStyle from '../../style.css';
 
 class TransfersBudget extends Component {
-//
     get headerButtons() {
         return [{
             text: 'Create Budget Transfer',
@@ -28,7 +27,6 @@ class TransfersBudget extends Component {
             </Page>
         );
     }
-//
 }
 
 const mapStateToProps = (state, ownProps) => ({});

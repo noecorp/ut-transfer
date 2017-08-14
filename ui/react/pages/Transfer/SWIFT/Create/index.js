@@ -16,11 +16,10 @@ import { getSenderValidations } from './../../../../containers/Transfer/SWIFT/Se
 import { getBeneficiaryValidations } from './../../../../containers/Transfer/SWIFT/Beneficiary/validations';
 import { getBankBeneficiaryValidations } from './../../../../containers/Transfer/SWIFT/BankBeneficiary/validations';
 import { prepareErrorsWithFullKeyPath } from './../../../../utils';
-import { setActiveTab, setErrors, fetchAccounts, requestOTP, resetConfirmTransferPopupState  } from '../actions';
+import { setActiveTab, setErrors, fetchAccounts, requestOTP, resetConfirmTransferPopupState, resetState } from '../actions';
 
 import { prepareTransferBudgetToSend, performCustomValidations } from '../helpers';
 import { removeTab } from 'ut-front-react/containers/TabMenu/actions';
-
 
 import transferStyle from '../../style.css';
 
@@ -29,7 +28,6 @@ const popups = {
 };
 
 class TransfersSWIFTCreate extends Component {
-//
     constructor(props) {
         super(props);
         this.createSwift = this.createSwift.bind(this);
@@ -73,7 +71,7 @@ class TransfersSWIFTCreate extends Component {
         if (!validation.isValid) {
             let errors = prepareErrorsWithFullKeyPath(validation.errors);
             this.props.setErrors(errors);
-            // return;
+            return;
         }
         this.openPopup(popups.confirmTransfer);
         this.props.requestOTP();
@@ -84,7 +82,7 @@ class TransfersSWIFTCreate extends Component {
             this.createSwift();
             this.onTransferSentHandler = () => {
                 this.closePopup(popups.confirmTransfer);
-                this.props.resetTransferState();
+                this.props.resetState();
                 this.props.removeTab(this.props.activeTab.pathname);
             };
         };
@@ -92,7 +90,7 @@ class TransfersSWIFTCreate extends Component {
             this.createSwift();
             this.onTransferSentHandler = () => {
                 this.closePopup(popups.confirmTransfer);
-                this.props.resetTransferState();
+                this.props.resetState();
             };
         };
         const close = () => {
@@ -100,7 +98,7 @@ class TransfersSWIFTCreate extends Component {
         };
         return [
             { text: this.translate('Create and Close'), onClick: createAndClose, styleType: 'primaryLight' },
-            { text: this.translate('Create'), onClick: this.createSwift },
+            { text: this.translate('Create'), onClick: create },
             { text: this.translate('Close'), onClick: close }
         ];
     }
@@ -135,7 +133,6 @@ class TransfersSWIFTCreate extends Component {
         return this.context.translate(key);
     }
 
-
     render() {
         return (
             <Page>
@@ -152,7 +149,6 @@ class TransfersSWIFTCreate extends Component {
             </Page>
         );
     }
-//
 }
 
 TransfersSWIFTCreate.contextTypes = {
@@ -161,12 +157,13 @@ TransfersSWIFTCreate.contextTypes = {
 
 TransfersSWIFTCreate.propTypes = {
     setActiveTab: PropTypes.func,
-    store: PropTypes.object.isRequired,
+    data: PropTypes.object.isRequired,
     setErrors: PropTypes.func.isRequired,
     fetchAccounts: PropTypes.func.isRequired,
     requestOTP: PropTypes.func,
     removeTab: PropTypes.func,
-    resetConfirmTransferPopupState: PropTypes.func
+    resetConfirmTransferPopupState: PropTypes.func.isRequired,
+    resetState: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ transferSwift }, ownProps) => {
@@ -180,7 +177,9 @@ const mapDispatchToProps = {
     setErrors,
     fetchAccounts,
     requestOTP,
-    removeTab, resetConfirmTransferPopupState 
+    removeTab,
+    resetConfirmTransferPopupState,
+    resetState
 };
 
 export default connect(

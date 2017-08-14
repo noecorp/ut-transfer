@@ -15,7 +15,6 @@ import { validations } from './validations';
 import style from './style.css';
 
 class TransferBudgetCreate extends Component {
-//
     constructor(props, context) {
         super(props, context);
         this.onInputChange = this.onInputChange.bind(this);
@@ -56,7 +55,7 @@ class TransferBudgetCreate extends Component {
                   key={input.key}
                   type='text'
                   keyProp={input.key}
-                  label={this.translate(input.label)}
+                  label={<Text>{input.label}</Text>}
                   placeholder={this.translate(input.label)}
                   value={value}
                   isValid={!errors.get(input.key)}
@@ -238,7 +237,7 @@ class TransferBudgetCreate extends Component {
 
     renderAdditionalOptions() {
         return (
-            <TitledContentBox title={this.translate('Additional options')}>
+            <TitledContentBox title={<Text>Additional Options</Text>}>
                 <div className={style.formWrap}>
                     <div className={style.formLeft}>
                          <div className={style.inputWrapFlex}>
@@ -252,7 +251,7 @@ class TransferBudgetCreate extends Component {
                                       onChange={this.onInputChange}
                                       options={[
                                           { id: 1, label: this.translate('Transfer now'), name: 'transferExecution', value: 'now' },
-                                          { id: 2, label: this.translate('Transfer at a later pont'), name: 'transferExecution', value: 'future' }
+                                          { id: 2, label: this.translate('Transfer at a later point'), name: 'transferExecution', value: 'future' }
                                       ]} />
                                 </div>
                             </div>
@@ -286,7 +285,6 @@ class TransferBudgetCreate extends Component {
             {this.renderAdditionalOptions()}
         </div>);
     }
-//
 }
 
 TransferBudgetCreate.contextTypes = {

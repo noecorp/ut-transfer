@@ -20,7 +20,11 @@ import {
     sumValidation
 } from './validations';
 
-class Orderer extends Component {
+class Sender extends Component {
+    translate(stringToTranslate) {
+        return this.context.translate(stringToTranslate);
+    }
+
     getInputValue(key) {
         const { data, edited } = this.props;
         let value = edited.has(key) ? edited.get(key) : data.get(key);
@@ -40,6 +44,7 @@ class Orderer extends Component {
                     <Dropdown
                       defaultSelected={this.getInputValue('sourceAccount')}
                       label={<span><Text>Source Account</Text> *</span>}
+                      placeholder={this.translate('Select')}
                       boldLabel
                       keyProp='sourceAccount'
                       isValid={this.props.errors.get('sourceAccount') === undefined}
@@ -84,6 +89,7 @@ class Orderer extends Component {
                     <Dropdown
                       defaultSelected={this.getInputValue('country')}
                       label={<span><Text>Country</Text> *</span>}
+                      placeholder={this.translate('Select')}
                       boldLabel
                       keyProp='country'
                       isValid={this.props.errors.get('country') === undefined}
@@ -124,7 +130,7 @@ class Orderer extends Component {
                 </div>
                 <div className={classnames(style.inputWrap)}>
                     <div style={{display: 'flex'}}>
-                        <div className={style.amountCurrencyLabel}>Amount / Currency</div>
+                        <div className={style.amountCurrencyLabel}><Text>Amount / Currency</Text></div>
                         <div className={style.amountCurrencyFieldWrapper} >
                             <div className={style.flexColumn}>
                                 <Input value={this.getInputValue('sum')}
@@ -139,6 +145,7 @@ class Orderer extends Component {
                             <div className={style.flexColumn}>
                                 <Dropdown
                                   defaultSelected={this.getInputValue('currency')}
+                                  placeholder={this.translate('Select')}
                                   boldLabel
                                   keyProp='currency'
                                   isValid={this.props.errors.get('currency') === undefined}
@@ -154,7 +161,8 @@ class Orderer extends Component {
                 <div className={style.inputWrap}>
                     <Dropdown
                       defaultSelected={this.getInputValue('transferDestination')}
-                      label={<span><Text>Direction</Text> *</span>}
+                      label={<span><Text>Transfer Direction</Text> *</span>}
+                      placeholder={this.translate('Select')}
                       boldLabel
                       keyProp='transferDestination'
                       isValid={this.props.errors.get('transferDestination') === undefined}
@@ -192,7 +200,11 @@ class Orderer extends Component {
     }
 }
 
-Orderer.propTypes = {
+Sender.contextTypes = {
+    translate: PropTypes.func
+};
+
+Sender.propTypes = {
     accounts: PropTypes.arrayOf(PropTypes.shape({
         key: PropTypes.string,
         name: PropTypes.string
@@ -212,7 +224,7 @@ Orderer.propTypes = {
     changeField: PropTypes.func.isRequired
 };
 
-Orderer.defaultProps = {
+Sender.defaultProps = {
     currencies: [],
     accounts: []
 };
@@ -232,4 +244,4 @@ function mapStateToProps(state, ownProps) {
 export default connect(
     mapStateToProps,
     {changeField}
-)(Orderer);
+)(Sender);

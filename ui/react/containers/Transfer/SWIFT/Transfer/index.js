@@ -6,14 +6,16 @@ import TitledContentBox from 'ut-front-react/components/TitledContentBox';
 import Dropdown from 'ut-front-react/components/Input/Dropdown';
 import Input from 'ut-front-react/components/Input';
 import Text from 'ut-front-react/components/Text';
-import classnames from 'classnames';
 import style from './../style.css';
 
 import {changeField} from '../../../../pages/Transfer/SWIFT/actions';
 import {reasonValidation, otherBankCostsValidation, commentsValidation} from './validations';
 
 class Transfer extends Component {
-//
+    translate(stringToTranslate) {
+        return this.context.translate(stringToTranslate);
+    }
+
     getInputValue(key) {
         const { data, edited } = this.props;
         let value = edited.has(key) ? edited.get(key) : data.get(key);
@@ -33,6 +35,7 @@ class Transfer extends Component {
                     <Dropdown
                       defaultSelected={this.getInputValue('priority')}
                       label={<span><Text>Priority Of Transfer</Text> *</span>}
+                      placeholder={this.translate('Select')}
                       boldLabel
                       keyProp='priority'
                       isValid={this.props.errors.get('priority') === undefined}
@@ -101,6 +104,10 @@ class Transfer extends Component {
         );
     }
 }
+
+Transfer.contextTypes = {
+    translate: PropTypes.func
+};
 
 Transfer.propTypes = {
     mode: PropTypes.string,
