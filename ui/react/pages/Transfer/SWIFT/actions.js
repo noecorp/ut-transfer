@@ -27,10 +27,15 @@ export const fetchNomenclatures = (params) => {
     };
 };
 
-export const sendMessage = () => {
+export const sendMessage = (bank, recipient) => {
     return {
         type: actionTypes.SEND_MESSAGE,
         method: 'transfer.onlineBanking.transfer.requestOTP',
-        params: null
-    }
-}
+        params: {bank, recipient}
+    };
+};
+
+export const fetchAccounts = () => ({
+    type: actionTypes.FETCH_ACCOUNTS,
+    method: 'transfer.onlineBanking.account.fetch'
+});

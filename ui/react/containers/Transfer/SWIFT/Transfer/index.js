@@ -38,7 +38,16 @@ class Transfer extends Component {
                       isValid={this.props.errors.get('priority') === undefined}
                       errorMessage={this.props.errors.get('priority')}
                       onSelect={this.handleInputChange('priority')}
-                      data={this.props.priorities.toJS()}
+                      data={[
+                          {
+                              key: 'standard',
+                              name: 'Standard'
+                          },
+                          {
+                              key: 'urgent',
+                              name: 'Urgent'
+                          }
+                      ]}
                     />
                 </div>
                 <div className={style.inputWrap}>
@@ -109,7 +118,6 @@ function mapStateToProps(state, ownProps) {
     return {
         data: state.transferSwift.getIn([mode, id, 'data', 'transfer']),
         edited: state.transferSwift.getIn([mode, id, 'edited', 'transfer'], immutable.Map()),
-        priorities: state.transferSwift.getIn([mode, id, 'priorityData']),
         errors: state.transferSwift.getIn([mode, id, 'errors', 'transfer'], immutable.Map())
     };
 }

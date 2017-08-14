@@ -14,7 +14,7 @@ import { getSenderValidations } from './../../../../containers/Transfer/SWIFT/Se
 import { getBeneficiaryValidations } from './../../../../containers/Transfer/SWIFT/Beneficiary/validations';
 import { getBankBeneficiaryValidations } from './../../../../containers/Transfer/SWIFT/BankBeneficiary/validations';
 import { prepareErrorsWithFullKeyPath } from './../../../../utils';
-import { setActiveTab, setErrors } from '../actions';
+import { setActiveTab, setErrors, fetchAccounts } from '../actions';
 
 import transferStyle from '../../style.css';
 
@@ -27,6 +27,10 @@ class TransfersSWIFTCreate extends Component {
 
     componentWillMount() {
         this.props.setActiveTab({ mode: 'create', id: 'create' });
+    }
+
+    componentDidMount() {
+        this.props.fetchAccounts();
     }
 
     createSwift() {
@@ -74,7 +78,8 @@ TransfersSWIFTCreate.contextTypes = {
 TransfersSWIFTCreate.propTypes = {
     setActiveTab: PropTypes.func,
     store: PropTypes.object.isRequired,
-    setErrors: PropTypes.func.isRequired
+    setErrors: PropTypes.func.isRequired,
+    fetchAccounts: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ transferSwift }, ownProps) => {
@@ -85,7 +90,8 @@ const mapStateToProps = ({ transferSwift }, ownProps) => {
 
 const mapDispatchToProps = {
     setActiveTab,
-    setErrors
+    setErrors,
+    fetchAccounts
 };
 
 export default connect(

@@ -80,6 +80,7 @@ class BankBeneficiary extends Component {
                       label={<span><Text>Country</Text> *</span>}
                       boldLabel
                       keyProp='country'
+                      disabled={!this.props.isCountryDisabled}
                       isValid={this.props.errors.get('country') === undefined}
                       errorMessage={this.props.errors.get('country')}
                       onSelect={this.handleInputChange('country')}
@@ -121,6 +122,7 @@ function mapStateToProps(state, ownProps) {
     const { mode, id } = ownProps;
     return {
         data: state.transferSwift.getIn([mode, id, 'data', 'bankBeneficiary']),
+        isCountryDisabled: state.transferSwift.getIn([mode, id, 'data', 'sender', 'transferDestination']) === 'abroad',
         edited: state.transferSwift.getIn([mode, id, 'edited', 'bankBeneficiary'], immutable.Map()),
         countries: state.transferSwift.getIn([mode, id, 'nomenclatures', 'country']).toJS(),
         errors: state.transferSwift.getIn([mode, id, 'errors', 'bankBeneficiary'], immutable.Map())

@@ -45,7 +45,7 @@ class Orderer extends Component {
                       isValid={this.props.errors.get('sourceAccount') === undefined}
                       errorMessage={this.props.errors.get('sourceAccount')}
                       onSelect={this.handleInputChange('sourceAccount')}
-                      data={this.props.sourceAccounts.toJS()}
+                      data={this.props.accounts}
                       className={style.rowPaddings}
                     />
                 </div>
@@ -54,6 +54,7 @@ class Orderer extends Component {
                       onChange={this.handleInputChange('name')}
                       keyProp='name'
                       boldLabel
+                      readonly
                       validators={nameValidation.rules}
                       isValid={this.props.errors.get('name') === undefined}
                       errorMessage={this.props.errors.get('name')}
@@ -104,19 +105,21 @@ class Orderer extends Component {
                       onChange={this.handleInputChange('phone')}
                       keyProp='phone'
                       boldLabel
+                      readonly
                       validators={phoneValidation.rules}
                       isValid={this.props.errors.get('phone') === undefined}
                       errorMessage={this.props.errors.get('phone')}
                     />
                 </div>
                 <div className={style.inputWrap}>
-                    <Input value={this.getInputValue('ibanOrderer')} label={<Text>Sender IBAN</Text>}
-                      onChange={this.handleInputChange('ibanOrderer')}
+                    <Input value={this.getInputValue('iban')} label={<Text>Sender IBAN</Text>}
+                      onChange={this.handleInputChange('iban')}
                       keyProp='ibanOrderer'
                       boldLabel
+                      readonly
                       validators={ibanOrdererValidation.rules}
-                      isValid={this.props.errors.get('ibanOrderer') === undefined}
-                      errorMessage={this.props.errors.get('ibanOrderer')}
+                      isValid={this.props.errors.get('iban') === undefined}
+                      errorMessage={this.props.errors.get('iban')}
                     />
                 </div>
                 <div className={classnames(style.inputWrap)}>
@@ -124,7 +127,7 @@ class Orderer extends Component {
                         <div className={style.amountCurrencyLabel}>Amount / Currency</div>
                         <div className={style.amountCurrencyFieldWrapper} >
                             <div className={style.flexColumn}>
-                                <Input value={this.getInputValue('phone')}
+                                <Input value={this.getInputValue('sum')}
                                   onChange={this.handleInputChange('sum')}
                                   keyProp='sum'
                                   boldLabel
@@ -151,13 +154,26 @@ class Orderer extends Component {
                 <div className={style.inputWrap}>
                     <Dropdown
                       defaultSelected={this.getInputValue('transferDestination')}
-                      label={<span><Text>Source Account</Text> *</span>}
+                      label={<span><Text>Direction</Text> *</span>}
                       boldLabel
                       keyProp='transferDestination'
                       isValid={this.props.errors.get('transferDestination') === undefined}
                       errorMessage={this.props.errors.get('transferDestination')}
                       onSelect={this.handleInputChange('transferDestination')}
-                      data={this.props.transferDestinations.toJS()}
+                      data={[
+                          {
+                              key: 'abroad',
+                              name: 'Abroad'
+                          },
+                          {
+                              key: 'domesticLocal',
+                              name: 'Domestic for local party'
+                          },
+                          {
+                              key: 'domestivForeign',
+                              name: 'Domestic for foreign party'
+                          }
+                      ]}
                       className={style.rowPaddings}
                     />
                 </div>
@@ -177,6 +193,10 @@ class Orderer extends Component {
 }
 
 Orderer.propTypes = {
+    accounts: PropTypes.arrayOf(PropTypes.shape({
+        key: PropTypes.string,
+        name: PropTypes.string
+    })),
     mode: PropTypes.string,
     id: PropTypes.string,
     data: PropTypes.object,
@@ -193,16 +213,16 @@ Orderer.propTypes = {
 };
 
 Orderer.defaultProps = {
-    currencies: []
+    currencies: [],
+    accounts: []
 };
 
 function mapStateToProps(state, ownProps) {
     const { mode, id } = ownProps;
     return {
+        accounts: state.transferSwift.getIn(['create', 'create', 'dropdownData', 'account']).toJS(),
         data: state.transferSwift.getIn([mode, id, 'data', 'sender']),
         edited: state.transferSwift.getIn([mode, id, 'edited', 'sender'], immutable.Map()),
-        sourceAccounts: state.transferSwift.getIn([mode, id, 'sourceAccounts']),
-        transferDestinations: state.transferSwift.getIn([mode, id, 'transferDestinations']),
         errors: state.transferSwift.getIn([mode, id, 'errors', 'sender'], immutable.Map()),
         countries: state.transferSwift.getIn([mode, id, 'nomenclatures', 'country'], immutable.List()).toJS(),
         currencies: state.transferSwift.getIn([mode, id, 'nomenclatures', 'currency'], immutable.List()).toJS()

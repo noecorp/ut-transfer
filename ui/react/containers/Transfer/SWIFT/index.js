@@ -27,7 +27,7 @@ const propTypes = {
 class Swift extends Component {
     componentDidMount() {
         this.props.fetchNomenclatures(nomeclaturesConfiguration);
-        this.props.sendMessage();
+        // this.props.sendMessage('Tokuda Bank', '359876966554');
     }
     render() {
         const { mode, id } = this.props;

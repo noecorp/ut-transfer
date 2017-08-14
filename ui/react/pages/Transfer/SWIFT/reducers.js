@@ -19,6 +19,8 @@ export default function transferSwift(state = defaultStateImmutable, action) {
             return transferSwiftReducers.setErrors(state, action, options);
         case actionTypes.FETCH_NOMENCLATURES:
             return transferSwiftReducers.fetchNomenclatures(state, action, options);
+        case actionTypes.FETCH_ACCOUNTS:
+            return transferSwiftReducers.fetchAccounts(state, action, options);
     }
     return state;
 }

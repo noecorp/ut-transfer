@@ -15,14 +15,32 @@ export const setActiveTab = (state, action, options) => {
 };
 
 export const editTransferField = (state, action, options) => {
+    const { key: field } = action.data;
     const { activeTabMode, activeTabId } = options;
-    let newState = state;
-    if (action.data && action.data.errorMessage) {
-        newState = newState.setIn([activeTabMode, activeTabId, 'errors', ...action.key], action.data.errorMessage);
-    } else {
-        newState = newState.deleteIn([activeTabMode, activeTabId, 'errors', ...action.key]);
+
+    if (field === 'sourceAccount') {
+        let selectedAccount = state.getIn([activeTabMode, activeTabId, 'remote', 'accounts'])
+            .filter(acc => acc.get('accountNumber') === action.value).first().toJS();
+        let { customerData } = selectedAccount;
+        let name = `${customerData.firstName} ${customerData.lastName}`;
+        let iban = selectedAccount.iban;
+        let phone = selectedAccount.phone || 'todo!';
+        state = state
+            .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'sender', 'name'], name)
+            .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'sender', 'iban'], iban)
+            .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'sender', 'phone'], phone);
     }
-    return newState.setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], ...action.key], action.value);
+    if (field === 'transferDestination' && action.data.value !== 'abroad') {
+        debugger;
+        state = state
+            .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'bankBeneficiary', 'country'], '353')
+    }
+    if (action.data && action.data.errorMessage) {
+        state = state.setIn([activeTabMode, activeTabId, 'errors', ...action.key], action.data.errorMessage);
+    } else {
+        state = state.deleteIn([activeTabMode, activeTabId, 'errors', ...action.key]);
+    }
+    return state.setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], ...action.key], action.value);
 };
 
 export const setErrors = (state, action, options) => {
@@ -34,6 +52,21 @@ export const fetchNomenclatures = (state, action, options) => {
     const { activeTabMode, activeTabId } = options;
     if (action.methodRequestState === methodRequestState.FINISHED) {
         return state.setIn([activeTabMode, activeTabId, 'nomenclatures'], immutable.fromJS(formatRuleItems(action.result.items)));
+    }
+    return state;
+};
+
+export const fetchAccounts = (state, action, options) => {
+    const { activeTabMode, activeTabId } = options;
+    if (action.methodRequestState === methodRequestState.FINISHED && !action.error) {
+        let { accounts } = action.result;
+        let accountsForDropdown = accounts.map(account => ({
+            key: account.accountNumber,
+            name: `${account.accountNumber} ${account.name} (${account.balance} ${account.currency})`
+        }));
+        return state
+            .setIn([activeTabMode, activeTabId, 'remote', 'accounts'], immutable.fromJS(accounts))
+            .setIn([activeTabMode, activeTabId, 'dropdownData', 'account'], immutable.fromJS(accountsForDropdown));
     }
     return state;
 };

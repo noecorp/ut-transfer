@@ -5,6 +5,12 @@ export const defaultState = {
     },
     create: {
         create: {
+            remote: {
+
+            },
+            dropdownData: {
+                account: []
+            },
             data: {
                 sender: {
                     sourceAccount: '',
@@ -42,11 +48,6 @@ export const defaultState = {
                     fundsOrigin: ''
                 }
             },
-            priorityData: [],
-            countries: [],
-            recipients: [],
-            sourceAccounts: [],
-            transferDestinations: [],
             nomenclatures: {
                 currency: [],
                 country: []

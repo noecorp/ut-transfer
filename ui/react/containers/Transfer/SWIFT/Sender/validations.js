@@ -42,7 +42,7 @@ export const nameValidation = {
 };
 
 export const ibanOrdererValidation = {
-    key: ['sender', 'ibanOrderer'],
+    key: ['sender', 'iban'],
     type: validationTypes.text,
     rules: [
         {type: textValidations.isRequired, errorMessage: <Text>IBAN is required</Text>}
@@ -93,6 +93,7 @@ export const sumValidation = {
     key: ['sender', 'sum'],
     type: validationTypes.text,
     rules: [
-        {type: textValidations.isRequired, errorMessage: <Text>Amount is required</Text>}
+        {type: textValidations.isRequired, errorMessage: <Text>Amount is required</Text>},
+        {type: textValidations.regex, value: /^\s*-?[1-9]\d*(\.\d{1,2})?\s*$/g, errorMessage: <Text>Amount must be valid</Text>}
     ]
 };
