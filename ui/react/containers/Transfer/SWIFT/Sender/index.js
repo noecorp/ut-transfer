@@ -60,9 +60,6 @@ class Sender extends Component {
                       keyProp='name'
                       boldLabel
                       readonly
-                      validators={nameValidation.rules}
-                      isValid={this.props.errors.get('name') === undefined}
-                      errorMessage={this.props.errors.get('name')}
                     />
                 </div>
                 <div className={style.inputWrap}>
@@ -112,9 +109,6 @@ class Sender extends Component {
                       keyProp='phone'
                       boldLabel
                       readonly
-                      validators={phoneValidation.rules}
-                      isValid={this.props.errors.get('phone') === undefined}
-                      errorMessage={this.props.errors.get('phone')}
                     />
                 </div>
                 <div className={style.inputWrap}>
@@ -123,14 +117,11 @@ class Sender extends Component {
                       keyProp='ibanOrderer'
                       boldLabel
                       readonly
-                      validators={ibanOrdererValidation.rules}
-                      isValid={this.props.errors.get('iban') === undefined}
-                      errorMessage={this.props.errors.get('iban')}
                     />
                 </div>
                 <div className={classnames(style.inputWrap)}>
                     <div style={{display: 'flex'}}>
-                        <div className={style.amountCurrencyLabel}><Text>Amount / Currency</Text></div>
+                        <div className={style.amountCurrencyLabel}><span><Text>Amount / Currency</Text> * </span></div>
                         <div className={style.amountCurrencyFieldWrapper} >
                             <div className={style.flexColumn}>
                                 <Input value={this.getInputValue('sum')}

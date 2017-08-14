@@ -15,6 +15,7 @@ import { getTransferValidations } from './../../../../containers/Transfer/SWIFT/
 import { getSenderValidations } from './../../../../containers/Transfer/SWIFT/Sender/validations';
 import { getBeneficiaryValidations } from './../../../../containers/Transfer/SWIFT/Beneficiary/validations';
 import { getBankBeneficiaryValidations } from './../../../../containers/Transfer/SWIFT/BankBeneficiary/validations';
+import { getAMLValidations } from './../../../../containers/Transfer/SWIFT/AMLDeclaration/validations';
 import { prepareErrorsWithFullKeyPath } from './../../../../utils';
 import { setActiveTab, setErrors, fetchAccounts, requestOTP, resetConfirmTransferPopupState, resetState } from '../actions';
 
@@ -66,7 +67,9 @@ class TransfersSWIFTCreate extends Component {
             ...getSenderValidations(),
             ...getBankBeneficiaryValidations(),
             ...getBeneficiaryValidations(),
-            ...getTransferValidations()];
+            ...getTransferValidations(),
+            ...getAMLValidations()
+        ];
         let validation = validateAll(this.props.data, createValidationRules);
         if (!validation.isValid) {
             let errors = prepareErrorsWithFullKeyPath(validation.errors);
