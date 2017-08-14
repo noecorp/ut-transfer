@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import immutable from 'immutable';
+import classnames from 'classnames';
 
 import TitledContentBox from 'ut-customer/ui/react/components/TitledContentBox';
 import Dropdown from 'ut-front-react/components/Input/Dropdown';
@@ -13,6 +14,7 @@ import { editTransferField } from '../../../pages/Transfer/Budget/actions';
 import { inputsConfig } from './config';
 import { validations } from './validations';
 import style from './style.css';
+import { amlDeclaration } from '../../../pages/Transfer/SWIFT/staticData';
 
 class TransferBudgetCreate extends Component {
     constructor(props, context) {
@@ -53,9 +55,10 @@ class TransferBudgetCreate extends Component {
             <div className={style.inputWrap}>
                 <Input
                   key={input.key}
+                  boldLabel
                   type='text'
                   keyProp={input.key}
-                  label={<Text>{input.label}</Text>}
+                  label={input.label && <Text>{input.label}</Text>}
                   placeholder={this.translate(input.label)}
                   value={value}
                   isValid={!errors.get(input.key)}
@@ -75,6 +78,7 @@ class TransferBudgetCreate extends Component {
         return (
             <div className={style.inputWrap}>
                 <Dropdown
+                  boldLabel
                   placeholder={this.translate('Select')}
                   key={input.key}
                   data={dropdownData}
@@ -132,16 +136,24 @@ class TransferBudgetCreate extends Component {
                             {this.renderTextInput(left.sourceName)}
                         </div>
                         <div className={style.inputWrapFlex}>
-                            <div className={style.flexLabel}><Text>Personal civil identifier or foreign resident identifier of sender</Text></div>
+                            <div className={classnames(style.flexLabel, style.bold)}>
+                                <Text>Personal civil identifier or foreign resident identifier of sender</Text>
+                            </div>
                             <div className={style.flexInput}>
                                 <div style={{flex: 8}}>
                                     {this.renderTextInput(left.civilIdentifier)}
                                 </div>
-                                <div style={{flex: 1, textAlign: 'center'}}><Text>or</Text></div>
+                                <div style={{flex: 2, textAlign: 'center'}}><Text>or</Text></div>
                                 <div style={{flex: 8}}>
                                     {this.renderTextInput(left.foreignResidentIdentifier)}
                                 </div>
                             </div>
+                        </div>
+                        <div className={style.inputWrap}>
+                            {this.renderTextInput(left.sourceIban)}
+                        </div>
+                        <div className={style.inputWrap}>
+                            {this.renderTextInput(left.sourceBank)}
                         </div>
                         <div className={style.inputWrap}>
                             {this.renderTextInput(left.bulstat)}
@@ -176,7 +188,7 @@ class TransferBudgetCreate extends Component {
                             {this.renderDropdown(right.documentType)}
                         </div>
                         <div className={style.inputWrapFlex}>
-                            <div className={style.flexLabel}>
+                            <div className={classnames(style.flexLabel, style.bold)}>
                                 <Text>Number and date of the document, that the payment is based on</Text>
                             </div>
                             <div className={style.flexInput}>
@@ -185,12 +197,12 @@ class TransferBudgetCreate extends Component {
                                 </div>
                                 <div style={{flex: 1}} />
                                 <div style={{flex: 15}}>
-                                    {this.renderTextInput(right.documentNumber)}
+                                    {this.renderTextInput(right.documentNumber, false)}
                                 </div>
                             </div>
                         </div>
                         <div className={style.inputWrapFlex}>
-                            <div className={style.flexLabel}>
+                            <div className={classnames(style.flexLabel, style.bold)}>
                                 <Text>Period covered by the payment</Text>
                             </div>
                             <div className={style.flexInput}>
@@ -204,7 +216,7 @@ class TransferBudgetCreate extends Component {
                             </div>
                         </div>
                         <div className={style.inputWrapFlex}>
-                            <div className={style.flexLabel}>
+                            <div className={classnames(style.flexLabel, style.bold)}>
                                 <Text>Payment System</Text>
                             </div>
                             <div className={style.flexInput}>
@@ -229,14 +241,39 @@ class TransferBudgetCreate extends Component {
         );
     }
 
+    renderAMLDeclaration() {
+        return (
+            <TitledContentBox title={<span className={style.bold}><Text>Declaration under art.4, para.7 and art.6, para.5, item.3 of the Law on Measures against Money Laundering</Text></span>}>
+                <div className={style.formWrap}>
+                    <div className={style.formLeft}>
+                        <div className={style.inputWrap}>
+                            <Dropdown
+                              defaultSelected={this.getInputValue('fundsOrigin')}
+                              label={<Text>Funds Origin</Text>}
+                              placeholder={this.translate('Select')}
+                              boldLabel
+                              keyProp='fundsOrigin'
+                              isValid={this.props.errors.get('fundsOrigin') === undefined}
+                              errorMessage={this.props.errors.get('fundsOrigin')}
+                              onSelect={this.onDropdownChange}
+                              data={amlDeclaration}
+                              className={style.rowPaddings}
+                            />
+                        </div>
+                    </div>
+                </div>
+            </TitledContentBox>
+        );
+    }
+
     renderAdditionalOptions() {
         return (
-            <TitledContentBox title={<Text>Additional Options</Text>}>
+            <TitledContentBox title={this.translate('Additional Options')}>
                 <div className={style.formWrap}>
                     <div className={style.formLeft}>
                          <div className={style.inputWrapFlex}>
-                            <div className={style.flexLabel}>
-                                <Text>Payment System</Text>
+                            <div className={classnames(style.flexLabel, style.bold)}>
+                                <Text>Execution Date</Text>
                             </div>
                             <div className={style.flexInput}>
                                 <div className={style.additionalOptionsRadioWrap} style={{ display: 'flex', flexBasis: '100%' }}>
@@ -251,17 +288,16 @@ class TransferBudgetCreate extends Component {
                             </div>
                         </div>
                     </div>
-                    {this.getInputValue('transferExecution') === 'future' &&
                     <div className={style.formRight}>
                         <div className={style.inputWrapFlex}>
                             <div className={style.flexLabel}>
-                                <Text>Deferred execution time</Text>
+                                <Text>Execution date</Text>
                             </div>
                             <div className={style.flexInput}>
                                 {this.renderDatePicker({ key: 'transferExecutionDate' })}
                             </div>
                         </div>
-                    </div>}
+                    </div>
                 </div>
             </TitledContentBox>
         );
@@ -274,9 +310,9 @@ class TransferBudgetCreate extends Component {
     render() {
         return (
         <div className={style.wrap}>
-            
             {this.renderMainInfo()}
             {this.renderAdditionalOptions()}
+            {this.renderAMLDeclaration()}
         </div>);
     }
 }

@@ -105,13 +105,32 @@ export const editTransferField = (state, action, options) => {
         state = state.deleteIn([activeTabMode, activeTabId, 'errors', field]);
     }
     if (field === 'account') {
-        let customerData = state.getIn([activeTabMode, activeTabId, 'remote', 'customerData']);
+        let selectedAccount = state
+            .getIn([activeTabMode, activeTabId, 'remote', 'accounts'])
+            .filter(acc => acc.get('accountNumber') === action.params.value).first().toJS();
+        let { customerData } = selectedAccount;
+        let name = `${customerData.firstName} ${customerData.lastName}`;
+        let sourceIban = selectedAccount.iban;
+        let sourceBank = selectedAccount.bank;
+        let { civilIdentifier } = customerData;
+        var sourcePersonIdentifier;
+        if (civilIdentifier.type === 'resident') {
+            sourcePersonIdentifier = 'civilIdentifier';
+        } else {
+            sourcePersonIdentifier = 'foreignResidentIdentifier';
+        }
         state = state
-            .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'sourceName'], customerData.get('name').toUpperCase())
-            .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'civilIdentifier'], customerData.getIn(['civilIdentifier', 'value']));
+            .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'sourceIban'], sourceIban.toUpperCase())
+            .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'sourceBank'], sourceBank.toUpperCase())
+            .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'sourceName'], name.toUpperCase())
+            .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], sourcePersonIdentifier], civilIdentifier.value);
     }
-    if (field === 'transferExecution' && value === 'now') {
-        state = state.deleteIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'transferExecutionDate']);
+    if (field === 'transferExecution') {
+        if (value === 'now') {
+            state = state.setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'transferExecutionDate'], new Date().toLocaleDateString());
+        } else {
+            state = state.deleteIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'transferExecutionDate']);
+        }
     }
     if (field === 'iban' && value.length === 22) {
         let bicIdentifier = value.substr(4, 4).toUpperCase();

@@ -23,13 +23,13 @@ class AMLDeclaration extends Component {
 
     handleInputChange(fieldName) {
         return (data) => {
-            this.props.changeField(['bankBeneficiary', fieldName], data.value, data);
+            this.props.changeField(['amlDeclaration', fieldName], data.value, data);
         };
     }
 
     render() {
         return (
-            <TitledContentBox title={<Text>Declaration required by paragraph 4, subparagraph 7 and paragraph 6, subparagraph 5 of the Prevention of Money Laundering Law</Text>}>
+            <TitledContentBox title={<Text>Declaration under art.4, para.7 and art.6, para.5, item.3 of the Law on Measures against Money Laundering</Text>}>
                 <div className={style.formWrap}>
                     <div className={style.formLeft}>
                         <div className={style.inputWrap}>

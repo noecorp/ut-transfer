@@ -30,11 +30,7 @@ export const defaultState = {
     },
     templates: [],
     remote: {
-        accounts: [],
-        customerData: {
-            firstName: null,
-            lastName: null
-        }
+        accounts: []
     }
 };
 

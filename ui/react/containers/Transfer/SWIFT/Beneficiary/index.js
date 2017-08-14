@@ -5,7 +5,6 @@ import TitledContentBox from 'ut-front-react/components/TitledContentBox';
 import Dropdown from 'ut-front-react/components/Input/Dropdown';
 import Input from 'ut-front-react/components/Input';
 import Text from 'ut-front-react/components/Text';
-import classnames from 'classnames';
 import style from './../style.css';
 
 import {changeField} from '../../../../pages/Transfer/SWIFT/actions';
@@ -98,7 +97,7 @@ class Beneficiary extends Component {
     }
     render() {
         return (
-            <TitledContentBox title='Beneficiary'>
+            <TitledContentBox title={<Text>Beneficiary</Text>}>
                 <div className={style.formWrap}>
                     {this.renderLeftColumn()}
                     {this.renderRightColumn()}

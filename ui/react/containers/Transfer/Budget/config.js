@@ -2,8 +2,10 @@ export const inputsConfig = {
     left: {
         account: { key: 'account', type: 'dropdown', label: 'Source Account', dropdownSource: 'accounts' },
         sourceName: { key: 'sourceName', type: 'text', label: 'Sender Name', readonly: true },
-        civilIdentifier: { key: 'civilIdentifier', type: 'text', readonly: true },
-        foreignResidentIdentifier: { key: 'foreignResidentIdentifier', type: 'text', readonly: true },
+        sourceBank: { key: 'sourceBank', type: 'text', label: 'Sender Bank', readonly: true },
+        sourceIban: { key: 'sourceIban', type: 'text', label: 'Sender IBAN', readonly: true },
+        civilIdentifier: { key: 'civilIdentifier', placeholder: 'Civil Identifier', type: 'text', readonly: true },
+        foreignResidentIdentifier: { key: 'foreignResidentIdentifier', placeholder: 'Foreign Resident Identifier', type: 'text', readonly: true },
         bulstat: { key: 'bulstat', type: 'text', label: 'Sender Bulstat' },
         destinationName: { key: 'destinationName', type: 'text', label: 'Beneficiary Name' },
         iban: { key: 'iban', type: 'text', label: 'IBAN' },

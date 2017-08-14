@@ -66,7 +66,7 @@ class TransferBudgetCreate extends Component {
     componentWillMount() {
         this.props.setActiveTab({ mode: 'create', id: 'create' });
         // this.props.getScreenConfiguration({ key: 'transferBudgetCreate' });
-        this.props.fetchCustomerData();
+        // this.props.fetchCustomerData();
         this.props.fetchAccounts();
         this.props.fetchTemplates();
     }
@@ -142,7 +142,7 @@ class TransferBudgetCreate extends Component {
     // Template handling
 
     loadTemplate(selectedTemplateKey) {
-        this.props.applyTemplate(selectedTemplateKey);  
+        this.props.applyTemplate(selectedTemplateKey);
         this.closePopup(popups.templates);
     }
 
@@ -192,6 +192,9 @@ class TransferBudgetCreate extends Component {
                     {this.renderTemplatesSection()}
                     <div className={transferStyle.transferContainer}>
                         <TransferBudgetContainer mode='create' id='create' />
+                    </div>
+                    <div className={transferStyle.transferBottomContainer}>
+                        <Text>I am aware that I bear criminal liability under article 313 of the Criminal Code when declaring wrong facts.</Text>
                     </div>
                 </div>
                 <ConfirmTransferPopup

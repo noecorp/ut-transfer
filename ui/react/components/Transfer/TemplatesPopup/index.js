@@ -7,7 +7,6 @@ import Text from 'ut-front-react/components/Text';
 import style from './style.css';
 
 class TemplatesPopup extends Component {
-//
     constructor(props) {
         super(props);
         this.onTemplateSelect = this.onTemplateSelect.bind(this);
@@ -63,7 +62,6 @@ class TemplatesPopup extends Component {
             </Popup>
         );
     }
-//
 }
 
 TemplatesPopup.propTypes = {

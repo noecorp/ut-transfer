@@ -40,7 +40,8 @@ export const accountNumberValidation = {
     key: ['beneficiary', 'accountNumber'],
     type: validationTypes.text,
     rules: [
-        {type: textValidations.isRequired, errorMessage: <Text>Account Number is required</Text>}
+        {type: textValidations.isRequired, errorMessage: <Text>Account Number is required</Text>},
+        {type: textValidations.length, minVal: 1, maxVal: 34, errorMessage: <Text>Account Number is too long</Text>}
     ]
 };
 
