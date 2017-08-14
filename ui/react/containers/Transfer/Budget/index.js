@@ -14,7 +14,7 @@ import { editTransferField } from '../../../pages/Transfer/Budget/actions';
 import { inputsConfig } from './config';
 import { validations } from './validations';
 import style from './style.css';
-import { amlDeclaration } from '../../../pages/Transfer/SWIFT/staticData';
+import { amlDeclaration } from '../../../pages/Transfer/commonStaticData';
 
 class TransferBudgetCreate extends Component {
     constructor(props, context) {

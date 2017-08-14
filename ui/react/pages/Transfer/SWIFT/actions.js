@@ -5,9 +5,9 @@ export const setActiveTab = ({ mode, id }) => ({
     params: { mode, id }
 });
 
-export const setErrors = (params) => ({
+export const setErrors = (errors) => ({
     type: actionTypes.SET_ERRORS,
-    params
+    params: { errors }
 });
 
 export const changeField = (key, value, data) => {
@@ -51,4 +51,10 @@ export const requestOTP = () => ({
 
 export const resetState = () => ({
     type: actionTypes.RESET_STATE
+});
+
+export const createTransfer = (params) => ({
+    type: actionTypes.CREATE_TRANSFER,
+    method: 'transfer.onlineBanking.transfer.create',
+    params: { ...params, transferType: 'SWIFTTransfer' }
 });

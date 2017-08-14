@@ -6,3 +6,4 @@ export const SEND_MESSAGE = Symbol('SEND_MESSAGE');
 export const FETCH_ACCOUNTS = Symbol('FETCH_ACCOUNTS');
 export const REQUEST_OTP = Symbol('REQUEST_OTP');
 export const RESET_STATE = Symbol('RESET_STATE');
+export const CREATE_TRANSFER = Symbol('CREATE_TRANSFER');

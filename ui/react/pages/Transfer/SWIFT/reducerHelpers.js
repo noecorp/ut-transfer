@@ -1,18 +1,12 @@
 import immutable from 'immutable';
-import { formatRuleItems } from './helpers';
+import { formatRuleItems, transformValue } from './helpers';
 import { methodRequestState } from 'ut-front-react/constants';
 import { defaultState } from './defaultState';
+import { transformFields } from '../../../containers/Transfer/SWIFT/config';
 
 const editPropertyMapping = {
     'create': 'data',
     'edit': 'edited'
-};
-
-export const setActiveTab = (state, action, options) => {
-    return state.set('activeTabData', immutable.Map({
-        mode: action.params.mode,
-        id: action.params.id
-    }));
 };
 
 export const editTransferField = (state, action, options) => {
@@ -40,12 +34,10 @@ export const editTransferField = (state, action, options) => {
     } else {
         state = state.deleteIn([activeTabMode, activeTabId, 'errors', ...action.key]);
     }
+    if (transformFields.indexOf(action.key.toString()) >= 0) {
+        action.value = transformValue(action.value);
+    }
     return state.setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], ...action.key], action.value);
-};
-
-export const setErrors = (state, action, options) => {
-    const { activeTabMode, activeTabId } = options;
-    return state.mergeDeepIn([activeTabMode, activeTabId, 'errors'], action.params);
 };
 
 export const fetchNomenclatures = (state, action, options) => {
@@ -56,26 +48,6 @@ export const fetchNomenclatures = (state, action, options) => {
     return state;
 };
 
-export const fetchAccounts = (state, action, options) => {
-    const { activeTabMode, activeTabId } = options;
-    if (action.methodRequestState === methodRequestState.FINISHED && !action.error) {
-        let { accounts } = action.result;
-        let accountsForDropdown = accounts.map(account => ({
-            key: account.accountNumber,
-            name: `${account.accountNumber} ${account.name} (${account.balance} ${account.currency})`
-        }));
-        return state
-            .setIn([activeTabMode, activeTabId, 'remote', 'accounts'], immutable.fromJS(accounts))
-            .setIn([activeTabMode, activeTabId, 'dropdownData', 'account'], immutable.fromJS(accountsForDropdown));
-    }
-    return state;
-};
-
-export const resetConfirmTransferPopupState = (state, action, options) => {
-    const { activeTabMode, activeTabId } = options;
-    return state.setIn([activeTabMode, activeTabId, 'confirmTransferPopup'], immutable.fromJS(confirmTransferPopupDefaultState));
-};
-
 export const resetState = (state, action, options) => {
-    return defaultState;
+    return immutable.fromJS(defaultState);
 };

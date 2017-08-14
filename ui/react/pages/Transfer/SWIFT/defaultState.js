@@ -1,10 +1,4 @@
-export const confirmTransferPopupDefaultState = {
-    data: {
-        password: '',
-        otp: ''
-    },
-    errors: {}
-};
+// import { confirmTransferPopupDefaultState } from '../../../containers/Transfer/ConfirmTransferPopup/defaultState';
 
 export const defaultState = {
     activeTabData: {
@@ -19,7 +13,7 @@ export const defaultState = {
             dropdownData: {
                 account: []
             },
-            confirmTransferPopup: confirmTransferPopupDefaultState,
+            // confirmTransferPopup: confirmTransferPopupDefaultState,
             data: {
                 sender: {
                     sourceAccount: '',

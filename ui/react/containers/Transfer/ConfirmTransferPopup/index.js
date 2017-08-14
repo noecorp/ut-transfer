@@ -6,7 +6,7 @@ import Input from 'ut-front-react/components/Input';
 import Text from 'ut-front-react/components/Text';
 import { validateAll } from 'ut-front-react/utils/validator';
 
-import { editConfirmTransferPopupField, setConfirmTransferPopupErrors } from '../../../pages/Transfer/Budget/actions';
+import { editConfirmTransferPopupField, setConfirmTransferPopupErrors } from './actions';
 
 import style from './style.css';
 import { getConfirmTransferPopupValidations, validations } from './validations';
@@ -88,6 +88,7 @@ class ConfirmTransferPopup extends Component {
 }
 
 ConfirmTransferPopup.propTypes = {
+    transferType: PropTypes.string, // used to map to the proper sub-state
     data: PropTypes.object,
     errors: PropTypes.object,
     isOpen: PropTypes.bool,
@@ -107,10 +108,12 @@ ConfirmTransferPopup.defaultProps = {
     onCancel: () => {}
 };
 
-const mapStateToProps = ({ transfersBudget }, ownProps) => ({
-    data: transfersBudget.getIn(['create', 'create', 'confirmTransferPopup', 'data']),
-    errors: transfersBudget.getIn(['create', 'create', 'confirmTransferPopup', 'errors'])
-});
+const mapStateToProps = ({ transferConfirmPopup }, ownProps) => {
+    return {
+        data: transferConfirmPopup.get('data'),
+        errors: transferConfirmPopup.get('errors')
+    };
+};
 
 const mapDispatchToProps = {
     editConfirmTransferPopupField,

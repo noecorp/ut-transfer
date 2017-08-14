@@ -11,15 +11,18 @@ import { validateAll } from 'ut-front-react/utils/validator';
 import ConfirmTransferPopup from '../../../../containers/Transfer/ConfirmTransferPopup';
 import Swift from './../../../../containers/Transfer/SWIFT';
 
-import { getTransferValidations } from './../../../../containers/Transfer/SWIFT/Transfer/validations';
-import { getSenderValidations } from './../../../../containers/Transfer/SWIFT/Sender/validations';
-import { getBeneficiaryValidations } from './../../../../containers/Transfer/SWIFT/Beneficiary/validations';
-import { getBankBeneficiaryValidations } from './../../../../containers/Transfer/SWIFT/BankBeneficiary/validations';
-import { getAMLValidations } from './../../../../containers/Transfer/SWIFT/AMLDeclaration/validations';
+import { getTransferSWIFTValidations } from '../../../../containers/Transfer/SWIFT/validations';
 import { prepareErrorsWithFullKeyPath } from './../../../../utils';
-import { setActiveTab, setErrors, fetchAccounts, requestOTP, resetConfirmTransferPopupState, resetState } from '../actions';
-
-import { prepareTransferBudgetToSend, performCustomValidations } from '../helpers';
+import {
+    setActiveTab,
+    setErrors,
+    fetchAccounts,
+    requestOTP,
+    resetState,
+    createTransfer
+} from '../actions';
+import { resetConfirmTransferPopupState } from './../../../../containers/Transfer/ConfirmTransferPopup/actions';
+import { prepareTransferSwiftToSend } from '../helpers';
 import { removeTab } from 'ut-front-react/containers/TabMenu/actions';
 
 import transferStyle from '../../style.css';
@@ -35,6 +38,7 @@ class TransfersSWIFTCreate extends Component {
         this.openPopup = this.openPopup.bind(this);
         this.closePopup = this.closePopup.bind(this);
         this.closeConfirmTransferPopup = this.closeConfirmTransferPopup.bind(this);
+        this.confirmAndSendSWIFTTransfer = this.confirmAndSendSWIFTTransfer.bind(this);
         this.state = {
             isPopupOpen: {
                 confirmTransfer: false
@@ -63,13 +67,7 @@ class TransfersSWIFTCreate extends Component {
     }
 
     createSwift() {
-        let createValidationRules = [
-            ...getSenderValidations(),
-            ...getBankBeneficiaryValidations(),
-            ...getBeneficiaryValidations(),
-            ...getTransferValidations(),
-            ...getAMLValidations()
-        ];
+        let createValidationRules = getTransferSWIFTValidations();
         let validation = validateAll(this.props.data, createValidationRules);
         if (!validation.isValid) {
             let errors = prepareErrorsWithFullKeyPath(validation.errors);
@@ -86,6 +84,7 @@ class TransfersSWIFTCreate extends Component {
             this.onTransferSentHandler = () => {
                 this.closePopup(popups.confirmTransfer);
                 this.props.resetState();
+                this.props.resetConfirmTransferPopupState();
                 this.props.removeTab(this.props.activeTab.pathname);
             };
         };
@@ -94,9 +93,11 @@ class TransfersSWIFTCreate extends Component {
             this.onTransferSentHandler = () => {
                 this.closePopup(popups.confirmTransfer);
                 this.props.resetState();
+                this.props.resetConfirmTransferPopupState();
             };
         };
         const close = () => {
+            this.props.resetConfirmTransferPopupState();
             this.props.removeTab(this.props.activeTab.pathname);
         };
         return [
@@ -106,23 +107,10 @@ class TransfersSWIFTCreate extends Component {
         ];
     }
 
-    createBudgetTransfer() {
-        let createValidationRules = getTransferBuddgetValidations();
-        let validation = validateAll(this.props.data, createValidationRules);
-        performCustomValidations(this.props.data, validation);
-        if (!validation.isValid) {
-            let errors = prepareErrorsWithFullKeyPath(validation.errors);
-            this.props.setErrors(errors);
-            return;
-        }
-        this.openPopup(popups.confirmTransfer);
-        this.props.requestOTP();
-    }
-
-    confirmAndSendBudgetTransfer() {
+    confirmAndSendSWIFTTransfer() {
         let password = this.props.confirmTransferPopup.getIn(['data', 'password']);
         let otp = this.props.confirmTransferPopup.getIn(['data', 'otp']);
-        let data = prepareTransferBudgetToSend(this.props.data, { password, otp });
+        let data = prepareTransferSwiftToSend(this.props.data, { password, otp });
         this.props.createTransfer(data);
         this.onTransferSentHandler();
     }
@@ -146,7 +134,7 @@ class TransfersSWIFTCreate extends Component {
                 </div>
                 <ConfirmTransferPopup
                   isOpen={this.state.isPopupOpen[popups.confirmTransfer]}
-                  onConfirm={this.confirmAndSendBudgetTransfer}
+                  onConfirm={this.confirmAndSendSWIFTTransfer}
                   onCancel={this.closeConfirmTransferPopup}
                 />
             </Page>
@@ -159,18 +147,25 @@ TransfersSWIFTCreate.contextTypes = {
 };
 
 TransfersSWIFTCreate.propTypes = {
-    setActiveTab: PropTypes.func,
+    // state
+    activeTab: PropTypes.object,
     data: PropTypes.object.isRequired,
+    confirmTransferPopup: PropTypes.object,
+    // actions
+    setActiveTab: PropTypes.func,
     setErrors: PropTypes.func.isRequired,
     fetchAccounts: PropTypes.func.isRequired,
     requestOTP: PropTypes.func,
     removeTab: PropTypes.func,
     resetConfirmTransferPopupState: PropTypes.func.isRequired,
-    resetState: PropTypes.func.isRequired
+    resetState: PropTypes.func.isRequired,
+    createTransfer: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({ transferSwift }, ownProps) => {
+const mapStateToProps = ({ transferSwift, tabMenu, transferConfirmPopup }, ownProps) => {
     return {
+        confirmTransferPopup: transferConfirmPopup,
+        activeTab: tabMenu.active,
         data: transferSwift.getIn(['create', 'create', 'data'])
     };
 };
@@ -182,7 +177,8 @@ const mapDispatchToProps = {
     requestOTP,
     removeTab,
     resetConfirmTransferPopupState,
-    resetState
+    resetState,
+    createTransfer
 };
 
 export default connect(

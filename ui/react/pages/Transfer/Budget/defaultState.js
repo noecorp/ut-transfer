@@ -1,13 +1,6 @@
 import immutable from 'immutable';
 import { documentTypes } from './staticData';
-
-export const confirmTransferPopupDefaultState = {
-    data: {
-        password: '',
-        otp: ''
-    },
-    errors: {}
-};
+// import { confirmTransferPopupDefaultState } from '../../../containers/Transfer/ConfirmTransferPopup/defaultState';
 
 export const defaultTransferState = {
     data: {},
@@ -17,7 +10,7 @@ export const defaultTransferState = {
         documentType: documentTypes
     },
     screenConfiguration: {},
-    confirmTransferPopup: confirmTransferPopupDefaultState
+    // confirmTransferPopup: confirmTransferPopupDefaultState
 };
 
 export const defaultState = {
