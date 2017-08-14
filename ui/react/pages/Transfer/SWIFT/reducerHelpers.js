@@ -1,6 +1,7 @@
 import immutable from 'immutable';
 import { formatRuleItems } from './helpers';
 import { methodRequestState } from 'ut-front-react/constants';
+import { defaultState } from './defaultState';
 
 const editPropertyMapping = {
     'create': 'data',
@@ -31,9 +32,8 @@ export const editTransferField = (state, action, options) => {
             .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'sender', 'phone'], phone);
     }
     if (field === 'transferDestination' && action.data.value !== 'abroad') {
-        debugger;
         state = state
-            .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'bankBeneficiary', 'country'], '353')
+            .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'bankBeneficiary', 'country'], '353');
     }
     if (action.data && action.data.errorMessage) {
         state = state.setIn([activeTabMode, activeTabId, 'errors', ...action.key], action.data.errorMessage);
@@ -74,4 +74,8 @@ export const fetchAccounts = (state, action, options) => {
 export const resetConfirmTransferPopupState = (state, action, options) => {
     const { activeTabMode, activeTabId } = options;
     return state.setIn([activeTabMode, activeTabId, 'confirmTransferPopup'], immutable.fromJS(confirmTransferPopupDefaultState));
+};
+
+export const resetState = (state, action, options) => {
+    return defaultState;
 };

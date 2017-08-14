@@ -28,6 +28,7 @@ export const defaultState = {
     create: {
         create: defaultTransferState
     },
+    templates: [],
     remote: {
         accounts: [],
         customerData: {

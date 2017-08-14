@@ -31,6 +31,12 @@ export default function transfersBudget(state = defaultStateImmutable, action) {
             return transferBudgetReducers.resetConfirmTransferPopupState(state, action, options);
         case actionTypes.RESET_TRANSFER_STATE:
             return transferBudgetReducers.resetTransferState(state, action, options);
+        case actionTypes.FETCH_TEMPLATES:
+            return transferBudgetReducers.fetchTemplates(state, action, options);
+        case actionTypes.CREATE_TEMPLATE:
+            return transferBudgetReducers.createTemplate(state, action, options);
+        case actionTypes.APPLY_TEMPLATE:
+            return transferBudgetReducers.applyTemplate(state, action, options);
     }
     return state;
 };

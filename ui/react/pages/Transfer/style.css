@@ -1,7 +1,28 @@
 .transferContainer {
-    margin: 20px;
+    margin: 10px 20px 20px 20px;
 }
 .popupButton{
     height: 30px;
     margin-left: 15px;
+}
+.formHeader {
+    margin-bottom: 20px;
+}
+.templatesSection {
+    margin: 20px 20px 10px 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+.templatesButton > button {
+    background: #f4f4f4;
+    color: #333;
+    border: 1px solid #ccc;
+    margin-left: 10px;
+}
+.templatesButton:hover > button{
+    background: #f4f4f4;
+    color: #333;
+    border: 1px solid #999;
 }

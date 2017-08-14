@@ -1,9 +1,7 @@
 .wrap {
     
 }
-.formHeader {
-    margin-bottom: 20px;
-}
+
 .formWrap {
     display: flex;
     flex-direction: row;

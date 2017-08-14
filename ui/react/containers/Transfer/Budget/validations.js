@@ -27,7 +27,7 @@ export const validations = {
         key: ['destinationName'],
         type: validationTypes.text,
         rules: [
-            { type: textValidations.isRequired, errorMessage: <Text>Beneficiary name is required</Text> }
+            { type: textValidations.isRequired, errorMessage: <Text>Beneficiary Name is required</Text> }
         ]
     },
     iban: {
@@ -42,14 +42,14 @@ export const validations = {
         key: ['paymentType'],
         type: validationTypes.dropdown,
         rules: [
-            { type: dropdownValidations.isRequired, errorMessage: <Text>Payment type is required</Text> }
+            { type: dropdownValidations.isRequired, errorMessage: <Text>Payment Type is required</Text> }
         ]
     },
     amount: {
         key: ['amount'],
         type: validationTypes.text,
         rules: [
-            { type: textValidations.isRequired, errorMessage: <Text>Payment amount is required</Text> },
+            { type: textValidations.isRequired, errorMessage: <Text>Amount is required</Text> },
             { type: textValidations.regex, value: /^\s*-?[1-9]\d*(\.\d{1,2})?\s*$/g, errorMessage: <Text>Amount must be valid</Text> }
         ]
     },
@@ -71,7 +71,7 @@ export const validations = {
         key: ['documentNumber'],
         type: validationTypes.text,
         rules: [
-            { type: textValidations.isRequired, errorMessage: <Text>Document number is required</Text> }
+            { type: textValidations.isRequired, errorMessage: <Text>Document Number is required</Text> }
         ]
     }
 };
@@ -83,7 +83,7 @@ export const customValidations = [
         rules: [
             {
                 isRequired: true,
-                errorMessage: <Text>Document date is required</Text>
+                errorMessage: <Text>Document Date is required</Text>
             }
         ]
     },
@@ -93,7 +93,7 @@ export const customValidations = [
         rules: [
             {
                 isRequired: true,
-                errorMessage: <Text>Payment start date is required</Text>
+                errorMessage: <Text>Payment Start Date is required</Text>
             }
         ]
     },
@@ -103,7 +103,7 @@ export const customValidations = [
         rules: [
             {
                 isRequired: true,
-                errorMessage: <Text>Payment end date is required</Text>
+                errorMessage: <Text>Payment End Date is required</Text>
             }
         ]
     },
@@ -113,7 +113,7 @@ export const customValidations = [
         rules: [
             {
                 isRequired: true,
-                errorMessage: <Text>Payment system is required</Text>
+                errorMessage: <Text>Payment System is required</Text>
             }
         ]
     }

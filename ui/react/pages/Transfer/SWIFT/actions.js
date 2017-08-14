@@ -39,7 +39,6 @@ export const resetConfirmTransferPopupState = () => ({
     type: actionTypes.RESET_CONFIRM_TRANSFER_POPUP_STATE
 });
 
-
 export const fetchAccounts = () => ({
     type: actionTypes.FETCH_ACCOUNTS,
     method: 'transfer.onlineBanking.account.fetch'
@@ -48,4 +47,8 @@ export const fetchAccounts = () => ({
 export const requestOTP = () => ({
     type: actionTypes.REQUEST_OTP,
     method: 'transfer.onlineBanking.transfer.requestOTP'
+});
+
+export const resetState = () => ({
+    type: actionTypes.RESET_STATE
 });
