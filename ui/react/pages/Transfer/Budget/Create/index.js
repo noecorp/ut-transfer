@@ -7,29 +7,41 @@ import { AddTab } from 'ut-front-react/containers/TabMenu';
 import Header from 'ut-front-react/components/PageLayout/Header';
 import { validateAll } from 'ut-front-react/utils/validator';
 import { removeTab } from 'ut-front-react/containers/TabMenu/actions';
+import Button from 'ut-front-react/components/Button';
 
 import ConfirmTransferPopup from '../../../../containers/Transfer/ConfirmTransferPopup';
+import TemplatesPopup from '../../../../components/Transfer/TemplatesPopup';
+import SaveTemplatePopup from '../../../../components/Transfer/SaveTemplatePopup';
 import TransferBudgetContainer from '../../../../containers/Transfer/Budget';
 import {
     setActiveTab,
     setErrors,
     getScreenConfiguration,
     fetchAccounts,
+    fetchTemplates,
     fetchCustomerData,
     editConfirmTransferPopupField,
     resetConfirmTransferPopupState,
     createTransfer,
     resetTransferState,
-    requestOTP
+    requestOTP,
+    applyTemplate,
+    createTemplate
 } from '../actions';
 import { prepareErrorsWithFullKeyPath } from './../../../../utils';
 import { getTransferBuddgetValidations } from '../../../../containers/Transfer/Budget/validations';
-import { prepareTransferBudgetToSend, performCustomValidations } from '../helpers';
+import {
+    prepareTransferBudgetToSend,
+    prepareTemplateToCreate,
+    performCustomValidations
+} from '../helpers';
 
 import transferStyle from '../../style.css';
 
 const popups = {
-    confirmTransfer: 'confirmTransfer'
+    confirmTransfer: 'confirmTransfer',
+    templates: 'templates',
+    saveTemplate: 'saveTemplate'
 };
 
 class TransferBudgetCreate extends Component {
@@ -39,20 +51,24 @@ class TransferBudgetCreate extends Component {
         this.createBudgetTransfer = this.createBudgetTransfer.bind(this);
         this.confirmAndSendBudgetTransfer = this.confirmAndSendBudgetTransfer.bind(this);
         this.closeConfirmTransferPopup = this.closeConfirmTransferPopup.bind(this);
+        this.loadTemplate = this.loadTemplate.bind(this);
         this.openPopup = this.openPopup.bind(this);
         this.closePopup = this.closePopup.bind(this);
+        this.saveTemplate = this.saveTemplate.bind(this);
         this.state = {
             isPopupOpen: {
-                confirmTransfer: false
+                confirmTransfer: false,
+                templates: false
             }
         };
     }
 
     componentWillMount() {
         this.props.setActiveTab({ mode: 'create', id: 'create' });
-        this.props.getScreenConfiguration({ key: 'transferBudgetCreate' });
+        // this.props.getScreenConfiguration({ key: 'transferBudgetCreate' });
         this.props.fetchCustomerData();
         this.props.fetchAccounts();
+        this.props.fetchTemplates();
     }
 
     openPopup(which) {
@@ -123,6 +139,48 @@ class TransferBudgetCreate extends Component {
         this.closePopup(popups.confirmTransfer);
     }
 
+    // Template handling
+
+    loadTemplate(selectedTemplateKey) {
+        this.props.applyTemplate(selectedTemplateKey);  
+        this.closePopup(popups.templates);
+    }
+
+    saveTemplate(name) {
+        let templateData = prepareTemplateToCreate(this.props.data);
+        this.props.createTemplate({ name, data: templateData }).then(_ => {
+            this.props.fetchTemplates();
+            return true;
+        }).catch();
+        this.closePopup(popups.saveTemplate);
+    }
+
+    renderHeader() {
+        return (
+            <div className={transferStyle.formHeader}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi in diam ultricies, aliquam ligula eget, lobortis mauris. Duis ultricies euismod gravida. Etiam posuere leo sit amet turpis malesuada, eget vehicula nisi semper. Pellentesque quis semper dolor. Integer dolor mauris, volutpat eget consequat vitae, imperdiet in nunc. </div>
+        );
+    }
+
+    renderTemplatesSection() {
+        const buttonStyles = {};
+        const onTemplateSelectClick = () => {
+            this.openPopup(popups.templates);
+        };
+        const onSaveTemplateClick = () => {
+            this.openPopup(popups.saveTemplate);
+        };
+        return (
+            <div className={transferStyle.templatesSection}>
+                <div className={transferStyle.templatesButton}>
+                    <Button sizeType='small' style={buttonStyles} onClick={onTemplateSelectClick} >Select a template</Button>
+                </div>
+                <div className={transferStyle.templatesButton}>
+                    <Button sizeType='small' onClick={onSaveTemplateClick} >Save as a template</Button>
+                </div>
+            </div>
+        );
+    }
+
     render() {
         return (
             <Page>
@@ -131,6 +189,7 @@ class TransferBudgetCreate extends Component {
                     <Header
                       text={this.translate('Payment slip (transfer to the Budget)')}
                       buttons={this.actionButtons} />
+                    {this.renderTemplatesSection()}
                     <div className={transferStyle.transferContainer}>
                         <TransferBudgetContainer mode='create' id='create' />
                     </div>
@@ -140,6 +199,17 @@ class TransferBudgetCreate extends Component {
                   isOpen={this.state.isPopupOpen[popups.confirmTransfer]}
                   onConfirm={this.confirmAndSendBudgetTransfer}
                   onCancel={this.closeConfirmTransferPopup}
+                />
+                <TemplatesPopup
+                  isOpen={this.state.isPopupOpen[popups.templates]}
+                  onLoad={this.loadTemplate}
+                  onCancel={() => { this.closePopup(popups.templates); }}
+                  templates={this.props.templates}
+                />
+                <SaveTemplatePopup
+                  isOpen={this.state.isPopupOpen[popups.saveTemplate]}
+                  onSave={this.saveTemplate}
+                  onCancel={() => { this.closePopup(popups.saveTemplate); }}
                 />
             </Page>
         );
@@ -156,24 +226,29 @@ TransferBudgetCreate.propTypes = {
     data: PropTypes.object,
     confirmTransferPopup: PropTypes.object,
     activeTab: PropTypes.object,
+    templates: PropTypes.array,
     // Actions
     getScreenConfiguration: PropTypes.func,
     editConfirmTransferPopupField: PropTypes.func,
     resetConfirmTransferPopupState: PropTypes.func,
     fetchAccounts: PropTypes.func,
+    fetchTemplates: PropTypes.func,
     fetchCustomerData: PropTypes.func,
     setActiveTab: PropTypes.func,
     setErrors: PropTypes.func,
     createTransfer: PropTypes.func,
     resetTransferState: PropTypes.func,
     removeTab: PropTypes.func,
-    requestOTP: PropTypes.func
+    requestOTP: PropTypes.func,
+    applyTemplate: PropTypes.func,
+    createTemplate: PropTypes.func
 };
 
 const mapStateToProps = ({ transfersBudget, tabMenu }, ownProps) => ({
     activeTab: tabMenu.active,
     data: transfersBudget.getIn(['create', 'create', 'data']),
-    confirmTransferPopup: transfersBudget.getIn(['create', 'create', 'confirmTransferPopup'])
+    confirmTransferPopup: transfersBudget.getIn(['create', 'create', 'confirmTransferPopup']),
+    templates: transfersBudget.getIn(['templates']).toJS()
 });
 
 const mapDispatchToProps = {
@@ -181,13 +256,16 @@ const mapDispatchToProps = {
     setErrors,
     getScreenConfiguration,
     fetchAccounts,
+    fetchTemplates,
     fetchCustomerData,
     editConfirmTransferPopupField,
     resetConfirmTransferPopupState,
     createTransfer,
     resetTransferState,
     removeTab,
-    requestOTP
+    requestOTP,
+    applyTemplate,
+    createTemplate
 };
 
 export default connect(

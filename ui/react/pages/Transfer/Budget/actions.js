@@ -59,3 +59,20 @@ export const editTransferField = ({ field, value, data }) => ({
 export const resetTransferState = () => ({
     type: actionTypes.RESET_TRANSFER_STATE
 });
+
+export const fetchTemplates = () => ({
+    type: actionTypes.FETCH_TEMPLATES,
+    method: 'transfer.onlineBanking.transferTemplate.fetch',
+    params: { type: 'budget' }
+});
+
+export const createTemplate = ({ name, data }) => ({
+    type: actionTypes.CREATE_TEMPLATE,
+    method: 'transfer.onlineBanking.transferTemplate.create',
+    params: { type: 'budget', name, data }
+});
+
+export const applyTemplate = (templateIndex) => ({
+    type: actionTypes.APPLY_TEMPLATE,
+    params: { templateIndex }
+});

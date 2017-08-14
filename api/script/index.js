@@ -22,7 +22,7 @@ var pad = (number, size) => {
         result = '0' + result;
     }
     return result;
-}
+};
 
 var processReversal = (bus, log, $meta) => params => {
     var transferId;
@@ -568,13 +568,40 @@ module.exports = {
         return { success: true };
     },
     'onlineBanking.transferTemplate.create': function(msg, $meta) {
-        return {};
+        const { name, type, data } = msg;
+        const mockOnlineBankingTemplatesFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'templates.json');
+        const mockTemplatesData = fs.readFileSync(mockOnlineBankingTemplatesFilePath, 'UTF-8');
+        let templateData = JSON.parse(mockTemplatesData);
+        const existingTemplate = templateData.templates[type].find(template => template.name === name);
+        if (existingTemplate) {
+            existingTemplate.data = data;
+        } else {
+            let newTemplate = { name, data };
+            templateData.templates[type].push(newTemplate);
+        }
+        templateData = JSON.stringify(templateData);
+        fs.writeFileSync(mockOnlineBankingTemplatesFilePath, templateData, 'UTF-8');
+        return { success: true };
     },
     'onlineBanking.transferTemplate.get': function(msg, $meta) {
-
+        const { type, name } = msg;
+        const mockOnlineBankingTemplatesFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'templates.json');
+        const mockTemplatesData = fs.readFileSync(mockOnlineBankingTemplatesFilePath, 'UTF-8');
+        const templateData = JSON.parse(mockTemplatesData);
+        const existingTemplate = templateData.templates[type].find(template => template.name === name);
+        if (existingTemplate) {
+            return { template: existingTemplate };
+        } else {
+            throw new Error('Template not found');
+        }
     },
     'onlineBanking.transferTemplate.fetch': function(msg, $meta) {
-
+        const { type } = msg;
+        const mockOnlineBankingTemplatesFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'templates.json');
+        const mockTemplatesData = fs.readFileSync(mockOnlineBankingTemplatesFilePath, 'UTF-8');
+        const templateData = JSON.parse(mockTemplatesData);
+        const templates = templateData.templates[type];
+        return { templates };
     },
     'onlineBanking.transfer.requestOTP': function(msg, $meta) {
         const otp = randomize('0', 6);

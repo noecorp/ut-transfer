@@ -9,6 +9,12 @@ export const prepareTransferBudgetToSend = (data, auth) => {
     };
 };
 
+export const prepareTemplateToCreate = (data) => {
+    return {
+        data: data.toJS()
+    };
+};
+
 export const performCustomValidations = (data, validationResult) => {
     customValidations.forEach(validation => {
         let rules = validation.rules;

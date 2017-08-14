@@ -9,6 +9,21 @@ const editPropertyMapping = {
     'edit': 'edited'
 };
 
+// PRIVATE HELPERS
+
+const getPaymentTypesDropdownData = (iban) => {
+    let paymentTypeIdentifier = iban.substr(12, 2);
+    let correspondingPaymentType = paymentTypes[paymentTypeIdentifier];
+    var paymentTypesDropdownData = [];
+    Object.keys(correspondingPaymentType.codes).forEach(key => {
+        let name = `${key} - ${correspondingPaymentType.codes[key]}`;
+        paymentTypesDropdownData.push({ key, name });
+    });
+    return paymentTypesDropdownData;
+};
+
+// EXPORTED REDUCERS
+
 export const setActiveTab = (state, action, options) => {
     return state.set('activeTabData', immutable.Map({
         mode: action.params.mode,
@@ -106,13 +121,7 @@ export const editTransferField = (state, action, options) => {
                 .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'bic'], correspondingBic.bic)
                 .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'bank'], correspondingBic.bank.toUpperCase());
         }
-        let paymentTypeIdentifier = value.substr(12, 2);
-        let correspondingPaymentType = paymentTypes[paymentTypeIdentifier];
-        var paymentTypesDropdownData = [];
-        Object.keys(correspondingPaymentType.codes).forEach(key => {
-            let name = `${key} - ${correspondingPaymentType.codes[key]}`;
-            paymentTypesDropdownData.push({ key, name });
-        });
+        let paymentTypesDropdownData = getPaymentTypesDropdownData(value);
         state = state.setIn([activeTabMode, activeTabId, 'dropdownData', 'paymentType'], immutable.fromJS(paymentTypesDropdownData));
     }
     return state;
@@ -121,4 +130,33 @@ export const editTransferField = (state, action, options) => {
 export const resetTransferState = (state, aciton, options) => {
     const { activeTabMode, activeTabId } = options;
     return state.setIn([activeTabMode, activeTabId], immutable.fromJS(defaultTransferState));
+};
+
+export const fetchTemplates = (state, action, options) => {
+    if (action.methodRequestState === methodRequestState.FINISHED && !action.error) {
+        return state.set('templates', immutable.fromJS(action.result.templates));
+    }
+    return state;
+};
+
+export const createTemplate = (state, action, options) => {
+    return state;
+};
+
+export const applyTemplate = (state, action, options) => {
+    const { activeTabMode, activeTabId } = options;
+    let templateIndex = action.params.templateIndex;
+    if (typeof templateIndex !== 'number') {
+        return state;
+    }
+    let template = state.getIn(['templates', templateIndex, 'data']);
+    let templateData = template.get('data');
+    if (templateData.has('iban') && templateData.get('iban').length === 22) {
+        let paymentTypesDropdownData = getPaymentTypesDropdownData(templateData.get('iban'));
+        state = state.deleteIn([activeTabMode, activeTabId, 'dropdownData', 'paymentType'], immutable.List()); // Reset the dropdown
+        template = template.setIn(['dropdownData', 'paymentType'], immutable.List(paymentTypesDropdownData));
+        // state = state.setIn([activeTabMode, activeTabId, 'dropdownData', 'paymentType'], immutable.fromJS(paymentTypesDropdownData));
+    }
+    state = state.mergeDeepIn([activeTabMode, activeTabId], template);
+    return state;
 };

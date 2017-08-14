@@ -119,12 +119,6 @@ class TransferBudgetCreate extends Component {
         return value;
     }
 
-    renderHeader() {
-        return (
-            <div className={style.formHeader}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi in diam ultricies, aliquam ligula eget, lobortis mauris. Duis ultricies euismod gravida. Etiam posuere leo sit amet turpis malesuada, eget vehicula nisi semper. Pellentesque quis semper dolor. Integer dolor mauris, volutpat eget consequat vitae, imperdiet in nunc. </div>
-        );
-    }
-
     renderMainInfo() {
         const { left, right } = inputsConfig;
         const { errors } = this.props;
@@ -281,7 +275,7 @@ class TransferBudgetCreate extends Component {
     render() {
         return (
         <div className={style.wrap}>
-            {this.renderHeader()}
+            
             {this.renderMainInfo()}
             {this.renderAdditionalOptions()}
         </div>);
