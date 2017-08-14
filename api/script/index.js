@@ -529,6 +529,13 @@ module.exports = {
         const data = msg.data;
         const auth = msg.auth;
         // Generate transfer id
+        const {otp: reqOtp} = msg.auth;
+        const mockOTPPath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'otp.json');
+        let mockOTPData = JSON.parse(fs.readFileSync(mockOTPPath, 'UTF-8'));
+        const isOTPValid = mockOTPData.otps.filter(otp => otp.otp === reqOtp);
+        if (isOTPValid.length === 0) {
+            throw errors.incorrectOTP();
+        }
         const randomNumber1 = randomize('0', 4);
         const randomString1 = randomize('A', 4);
         const randomNumber2 = randomize('0', 6);
@@ -626,7 +633,6 @@ module.exports = {
         const mockOTPPath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'otp.json');
         let mockOTPData = JSON.parse(fs.readFileSync(mockOTPPath, 'UTF-8'));
         const isOTPValid = mockOTPData.otps.filter(otp => otp.otp === reqOtp);
-        debugger;
         if (isOTPValid.length !== 0) {
             return {
                 success: true

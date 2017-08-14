@@ -18,7 +18,7 @@ import { getBankBeneficiaryValidations } from './../../../../containers/Transfer
 import { getAMLValidations } from './../../../../containers/Transfer/SWIFT/AMLDeclaration/validations';
 import { prepareErrorsWithFullKeyPath } from './../../../../utils';
 
-import { validateOTP, setActiveTab, setErrors, fetchAccounts, requestOTP, resetConfirmTransferPopupState, resetState } from '../actions';
+import { setActiveTab, setErrors, fetchAccounts, requestOTP, resetConfirmTransferPopupState, resetState } from '../actions';
 
 import { prepareTransferBudgetToSend, performCustomValidations } from '../helpers';
 import { removeTab } from 'ut-front-react/containers/TabMenu/actions';
@@ -61,7 +61,6 @@ class TransfersSWIFTCreate extends Component {
 
     componentDidMount() {
         this.props.fetchAccounts();
-        this.props.validateOTP('418962');
     }
 
     createSwift() {
@@ -182,13 +181,9 @@ const mapDispatchToProps = {
     setErrors,
     fetchAccounts,
     requestOTP,
-<<<<<<< Updated upstream
     removeTab,
     resetConfirmTransferPopupState,
     resetState
-=======
-    removeTab, resetConfirmTransferPopupState, validateOTP
->>>>>>> Stashed changes
 };
 
 export default connect(

@@ -101,6 +101,7 @@ class TransferBudgetCreate extends Component {
             this.onTransferSentHandler = () => {
                 this.closePopup(popups.confirmTransfer);
                 this.props.resetTransferState();
+                this.props.fetchAccounts();
             };
         };
         const close = () => {
@@ -123,7 +124,7 @@ class TransferBudgetCreate extends Component {
             return;
         }
         this.openPopup(popups.confirmTransfer);
-        this.props.requestOTP();
+        this.props.requestOTP(this.props.data.get('sourceBank'), this.props.data.get('phone'));
     }
 
     confirmAndSendBudgetTransfer() {
@@ -136,6 +137,8 @@ class TransferBudgetCreate extends Component {
 
     closeConfirmTransferPopup() {
         this.props.resetConfirmTransferPopupState();
+        this.props.fetchAccounts();
+        this.props.fetchTemplates();
         this.closePopup(popups.confirmTransfer);
     }
 

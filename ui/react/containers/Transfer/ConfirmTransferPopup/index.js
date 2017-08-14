@@ -32,7 +32,7 @@ class ConfirmTransferPopup extends Component {
         this.props.editConfirmTransferPopupField({ field: key, value, data });
     }
 
-    onConfirmClick() {
+    async onConfirmClick() {
         let confirmTransferPopupValidations = getConfirmTransferPopupValidations();
         let validation = validateAll(this.props.data, confirmTransferPopupValidations);
         if (!validation.isValid) {

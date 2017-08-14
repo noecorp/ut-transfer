@@ -13,3 +13,4 @@ export const SET_CONRIFM_TRANSFER_POPUP_ERRORS = Symbol('SET_CONFIRM_TRANSFER_PO
 export const SET_ERRORS = Symbol('SET_ERRORS');
 export const REQUEST_OTP = Symbol('REQUEST_OTP');
 export const APPLY_TEMPLATE = Symbol('APPLY_TEMPLATE');
+export const VALIDATE_OTP = Symbol('VALIDATE_OTP');

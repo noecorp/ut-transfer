@@ -11,6 +11,7 @@ module.exports = {
     transferIdAlreadyExists: create('idAlreadyExists', Transfer, 'Transfer ID already exists'),
     invalidAccount: create('invalidAccount', Transfer, 'Invalid account'),
     genericDecline: create('genericDecline', Transfer, 'Transfer declined'),
+    incorrectOTP: create('incorrectPin', Transfer, 'Incorrect OTP'),
     incorrectPin: create('incorrectPin', Transfer, 'Incorrect PIN'),
     notFound: create('notFound', Transfer, 'Transfer not found'),
     unknown: create('unknown', Transfer, 'Unknown error'),

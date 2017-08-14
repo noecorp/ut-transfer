@@ -105,6 +105,7 @@ export const editTransferField = (state, action, options) => {
         state = state.deleteIn([activeTabMode, activeTabId, 'errors', field]);
     }
     if (field === 'account') {
+        
         let selectedAccount = state
             .getIn([activeTabMode, activeTabId, 'remote', 'accounts'])
             .filter(acc => acc.get('accountNumber') === action.params.value).first().toJS();
@@ -123,6 +124,7 @@ export const editTransferField = (state, action, options) => {
             .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'sourceIban'], sourceIban.toUpperCase())
             .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'sourceBank'], sourceBank.toUpperCase())
             .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'sourceName'], name.toUpperCase())
+            .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'phone'], selectedAccount.phone)
             .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], sourcePersonIdentifier], civilIdentifier.value);
     }
     if (field === 'transferExecution') {
