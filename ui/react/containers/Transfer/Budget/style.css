@@ -1,7 +1,9 @@
 .wrap {
     
 }
-
+.bold{
+    font-weight: bold;
+}
 .formWrap {
     display: flex;
     flex-direction: row;
