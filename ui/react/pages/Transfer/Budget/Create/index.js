@@ -20,15 +20,14 @@ import {
     getScreenConfiguration,
     fetchAccounts,
     fetchTemplates,
-    fetchCustomerData,
-    editConfirmTransferPopupField,
-    resetConfirmTransferPopupState,
+    fetchCustomerData,    
     createTransfer,
     resetTransferState,
     requestOTP,
     applyTemplate,
     createTemplate
 } from '../actions';
+import { resetConfirmTransferPopupState } from './../../../../containers/Transfer/ConfirmTransferPopup/actions';
 import { prepareErrorsWithFullKeyPath } from './../../../../utils';
 import { getTransferBuddgetValidations } from '../../../../containers/Transfer/Budget/validations';
 import {
@@ -58,7 +57,8 @@ class TransferBudgetCreate extends Component {
         this.state = {
             isPopupOpen: {
                 confirmTransfer: false,
-                templates: false
+                templates: false,
+                saveTemplate: false
             }
         };
     }
@@ -93,6 +93,7 @@ class TransferBudgetCreate extends Component {
             this.onTransferSentHandler = () => {
                 this.closePopup(popups.confirmTransfer);
                 this.props.resetTransferState();
+                this.props.resetConfirmTransferPopupState();
                 this.props.removeTab(this.props.activeTab.pathname);
             };
         };
@@ -101,10 +102,15 @@ class TransferBudgetCreate extends Component {
             this.onTransferSentHandler = () => {
                 this.closePopup(popups.confirmTransfer);
                 this.props.resetTransferState();
+<<<<<<< HEAD
                 this.props.fetchAccounts();
+=======
+                this.props.resetConfirmTransferPopupState();
+>>>>>>> feat-screenConf
             };
         };
         const close = () => {
+            this.props.resetConfirmTransferPopupState();
             this.props.removeTab(this.props.activeTab.pathname);
         };
         return [
@@ -232,8 +238,7 @@ TransferBudgetCreate.propTypes = {
     activeTab: PropTypes.object,
     templates: PropTypes.array,
     // Actions
-    getScreenConfiguration: PropTypes.func,
-    editConfirmTransferPopupField: PropTypes.func,
+    getScreenConfiguration: PropTypes.func,    
     resetConfirmTransferPopupState: PropTypes.func,
     fetchAccounts: PropTypes.func,
     fetchTemplates: PropTypes.func,
@@ -248,10 +253,10 @@ TransferBudgetCreate.propTypes = {
     createTemplate: PropTypes.func
 };
 
-const mapStateToProps = ({ transfersBudget, tabMenu }, ownProps) => ({
+const mapStateToProps = ({ transfersBudget, tabMenu, transferConfirmPopup }, ownProps) => ({
+    confirmTransferPopup: transferConfirmPopup,
     activeTab: tabMenu.active,
     data: transfersBudget.getIn(['create', 'create', 'data']),
-    confirmTransferPopup: transfersBudget.getIn(['create', 'create', 'confirmTransferPopup']),
     templates: transfersBudget.getIn(['templates']).toJS()
 });
 
@@ -262,7 +267,6 @@ const mapDispatchToProps = {
     fetchAccounts,
     fetchTemplates,
     fetchCustomerData,
-    editConfirmTransferPopupField,
     resetConfirmTransferPopupState,
     createTransfer,
     resetTransferState,

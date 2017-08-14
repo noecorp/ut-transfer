@@ -6,7 +6,7 @@ import TitledContentBox from 'ut-front-react/components/TitledContentBox';
 import Dropdown from 'ut-front-react/components/Input/Dropdown';
 import Text from 'ut-front-react/components/Text';
 
-import { amlDeclaration } from '../../../../pages/Transfer/SWIFT/staticData';
+import { amlDeclaration } from '../../../../pages/Transfer/commonStaticData';
 import { changeField } from '../../../../pages/Transfer/SWIFT/actions';
 
 import style from './../style.css';

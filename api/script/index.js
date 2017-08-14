@@ -2,6 +2,12 @@ const path = require('path');
 const fs = require('fs');
 const randomize = require('randomatic');
 const Nexmo = require('nexmo');
+const {
+    generateTransferId,
+    generateTransferDateTime,
+    createBudgetTransfer,
+    createSWIFTTransfer
+} = require('./onlineBankingHelpers');
 
 var nexmo = new Nexmo({
     apiKey: '036be2be',
@@ -529,46 +535,27 @@ module.exports = {
         const data = msg.data;
         const auth = msg.auth;
         // Generate transfer id
-        const {otp: reqOtp} = msg.auth;
+        const {otp: reqOtp} = auth;
         const mockOTPPath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'otp.json');
         let mockOTPData = JSON.parse(fs.readFileSync(mockOTPPath, 'UTF-8'));
         const isOTPValid = mockOTPData.otps.filter(otp => otp.otp === reqOtp);
         if (isOTPValid.length === 0) {
             throw errors.incorrectOTP();
         }
-        const randomNumber1 = randomize('0', 4);
-        const randomString1 = randomize('A', 4);
-        const randomNumber2 = randomize('0', 6);
-        const transferId = `TX${randomNumber1}${randomString1}${randomNumber2}`;
-        // Format the date
-        const now = new Date();
-        const year = now.getFullYear();
-        const month = pad(now.getMonth(), 2);
-        const date = pad(now.getDate(), 2);
-        const hours = pad(now.getHours(), 2);
-        const minutes = pad(now.getMinutes(), 2);
-        const transferDateTime = `${year}-${month}-${date} ${hours}:${minutes}`;
-        // Prepare obj
-        const budgetTransfer = {
-            currency: 'BGN',
-            transferId,
-            sourceAccount: data.account,
-            type: 'budgetTransfer',
-            destinationAccount: {
-                bank: data.bank,
-                iban: data.iban,
-                name: data.destinationName
-            },
-            reason: `${data.reason}`,
-            debit: Number(data.amount),
-            credit: 0,
-            dataTime: transferDateTime
-        };
+        const transferId = generateTransferId();
+        const transferDateTime = generateTransferDateTime();
+        var transfer;
+        if (msg.transferType === 'budgetTransfer') {
+            transfer = createBudgetTransfer({ data, transferId, transferDateTime });
+        }
+        if (msg.transferType === 'SWIFTTransfer') {
+            transfer = createSWIFTTransfer({ data, transferId, transferDateTime });
+        }
         // Persist data
         const mockOnlineBankingTransfersFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'transfers.json');
         const mockTransfersData = fs.readFileSync(mockOnlineBankingTransfersFilePath, 'UTF-8');
         let transfersData = JSON.parse(mockTransfersData);
-        transfersData.transfers.push(budgetTransfer);
+        transfersData.transfers.push(transfer);
         transfersData = JSON.stringify(transfersData);
 
         fs.writeFileSync(mockOnlineBankingTransfersFilePath, transfersData, 'UTF-8');

@@ -8,3 +8,4 @@ export const REQUEST_OTP = Symbol('REQUEST_OTP');
 export const RESET_CONFIRM_TRANSFER_POPUP_STATE = Symbol('RESET_CONFIRM_TRANSFER_POPUP_STATE');
 export const VALIDATE_OTP = Symbol('VALIDATE_OTP');
 export const RESET_STATE = Symbol('RESET_STATE');
+export const CREATE_TRANSFER = Symbol('CREATE_TRANSFER');
