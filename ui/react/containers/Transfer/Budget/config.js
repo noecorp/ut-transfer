@@ -20,3 +20,8 @@ export const inputsConfig = {
         documentDate: { key: 'documentDate', type: 'datePicker', label: 'Document date' }
     }
 };
+
+export const uppercasedInputs = [
+    'sourceName', 'civilIdentifier', 'foreignResidentIdentifier', 'bulstat', 'destinationName', 'iban', 'bic', 'bank',
+    'amount', 'reason', 'moreReason', 'documentNumber'
+];

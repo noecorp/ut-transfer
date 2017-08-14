@@ -87,10 +87,13 @@ class TransferBudgetCreate extends Component {
                 this.props.resetTransferState();
             };
         };
+        const close = () => {
+            this.props.removeTab(this.props.activeTab.pathname);
+        };
         return [
             { text: this.translate('Create and Close'), onClick: createAndClose, styleType: 'primaryLight' },
             { text: this.translate('Create'), onClick: create },
-            { text: this.translate('Close'), onClick: () => {} }
+            { text: this.translate('Close'), onClick: close }
         ];
     }
 

@@ -2,6 +2,7 @@ import immutable from 'immutable';
 import { bics, paymentTypes } from './staticData';
 import { confirmTransferPopupDefaultState, defaultTransferState } from './defaultState';
 import { methodRequestState } from 'ut-front-react/constants';
+import { uppercasedInputs } from '../../../containers/Transfer/Budget/config';
 
 const editPropertyMapping = {
     'create': 'data',
@@ -76,8 +77,12 @@ export const resetConfirmTransferPopupState = (state, action, options) => {
 };
 
 export const editTransferField = (state, action, options) => {
-    const { field, value, data } = action.params;
+    const { field, data } = action.params;
+    var { value } = action.params;
     const { activeTabMode, activeTabId } = options;
+    if (uppercasedInputs.indexOf(field) >= 0) {
+        value = value.toUpperCase();
+    }
     state = state.setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], field], value);
     if (data && data.error && data.errorMessage) {
         state = state.setIn([activeTabMode, activeTabId, 'errors', field], data.errorMessage);
@@ -87,7 +92,7 @@ export const editTransferField = (state, action, options) => {
     if (field === 'account') {
         let customerData = state.getIn([activeTabMode, activeTabId, 'remote', 'customerData']);
         state = state
-            .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'sourceName'], customerData.get('name'))
+            .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'sourceName'], customerData.get('name').toUpperCase())
             .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'civilIdentifier'], customerData.getIn(['civilIdentifier', 'value']));
     }
     if (field === 'transferExecution' && value === 'now') {
@@ -99,7 +104,7 @@ export const editTransferField = (state, action, options) => {
         if (correspondingBic) {
             state = state
                 .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'bic'], correspondingBic.bic)
-                .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'bank'], correspondingBic.bank);
+                .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'bank'], correspondingBic.bank.toUpperCase());
         }
         let paymentTypeIdentifier = value.substr(12, 2);
         let correspondingPaymentType = paymentTypes[paymentTypeIdentifier];
