@@ -593,6 +593,22 @@ module.exports = {
         return {
             success: true
         };
+    },
+    'onlineBanking.transfer.validateOTP': function(msg, $meta) {
+        const {otp: reqOtp} = msg;
+        const mockOTPPath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'otp.json');
+        let mockOTPData = JSON.parse(fs.readFileSync(mockOTPPath, 'UTF-8'));
+        const isOTPValid = mockOTPData.otps.filter(otp => otp.otp === reqOtp);
+        debugger;
+        if (isOTPValid.length !== 0) {
+            return {
+                success: true
+            };
+        } else {
+            return {
+                success: false
+            };
+        }
     }
 
 };
