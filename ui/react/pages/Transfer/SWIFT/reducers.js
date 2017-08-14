@@ -21,6 +21,10 @@ export default function transferSwift(state = defaultStateImmutable, action) {
             return transferSwiftReducers.fetchNomenclatures(state, action, options);
         case actionTypes.FETCH_ACCOUNTS:
             return transferSwiftReducers.fetchAccounts(state, action, options);
+        case actionTypes.RESET_CONFIRM_TRANSFER_POPUP_STATE:
+            return transferSwiftReducers.resetConfirmTransferPopupState(state, action, options);
+        case actionTypes.RESET_STATE:
+            return transferSwiftReducers.resetState(state, action, options);
     }
     return state;
 }

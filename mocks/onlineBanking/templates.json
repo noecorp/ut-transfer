@@ -1,6 +1,1 @@
-{
-    "templates": {
-        "budget": [],
-        "swift": []
-    }
-}
+{"templates":{"budget":[{"name":"Test","data":{"data":{"paymentType":"442300","documentNumber":"123","reason":"TEST","sourceName":"НИКОЛАЙ КЛИЕНТА","iban":"BG53IORT73758402020000","endDate":"2017-08-14","documentDate":"2017-08-14","bulstat":"12345678","account":1,"startDate":"2017-08-14","documentType":"4","paymentSystem":"bisera","amount":"50","moreReason":"TEST","destinationName":"STOYAN KOLEV","bic":"IORTBGSF","bank":"ИНВЕСТБАНК","civilIdentifier":"9005054040"}}},{"name":"Another Test","data":{"data":{"paymentType":"442300","documentNumber":"123","reason":"TEST","sourceName":"НИКОЛАЙ КЛИЕНТА","iban":"BG53IORT73758402020000","endDate":"2017-08-14","documentDate":"2017-08-14","bulstat":"12345678","account":1,"startDate":"2017-08-14","documentType":"4","paymentSystem":"bisera","amount":"100","moreReason":"TEST","destinationName":"STOYAN KOLEV","bic":"IORTBGSF","bank":"ИНВЕСТБАНК","civilIdentifier":"9005054040"}}},{"name":"Cool Test","data":{"data":{"paymentType":"442300","documentNumber":"123","reason":"DANI","sourceName":"НИКОЛАЙ КЛИЕНТА","iban":"BG53IORT73758402020000","endDate":"2017-08-14","documentDate":"2017-08-14","bulstat":"12345678","account":1,"startDate":"2017-08-14","documentType":"6","paymentSystem":"bisera","amount":"100","moreReason":"DANI","destinationName":"DANIEL IVANOV","bic":"IORTBGSF","bank":"ИНВЕСТБАНК","civilIdentifier":"9005054040"}}}],"swift":[]}}

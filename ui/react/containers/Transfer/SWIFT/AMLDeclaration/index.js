@@ -12,7 +12,9 @@ import { changeField } from '../../../../pages/Transfer/SWIFT/actions';
 import style from './../style.css';
 
 class AMLDeclaration extends Component {
-//
+    translate(stringToTranslate) {
+        return this.context.translate(stringToTranslate);
+    }
     getInputValue(key) {
         const { data, edited } = this.props;
         let value = edited.has(key) ? edited.get(key) : data.get(key);
@@ -33,7 +35,8 @@ class AMLDeclaration extends Component {
                         <div className={style.inputWrap}>
                             <Dropdown
                               defaultSelected={this.getInputValue('fundsOrigin')}
-                              label={<span><Text>Funds origin</Text> *</span>}
+                              label={<span><Text>Funds Origin</Text> *</span>}
+                              placeholder={this.translate('Select')}
                               boldLabel
                               keyProp='fundsOrigin'
                               isValid={this.props.errors.get('fundsOrigin') === undefined}
@@ -48,8 +51,11 @@ class AMLDeclaration extends Component {
             </TitledContentBox>
         );
     }
-//
 }
+
+AMLDeclaration.contextTypes = {
+    translate: PropTypes.func
+};
 
 AMLDeclaration.propTypes = {
     changeField: PropTypes.func.isRequired,

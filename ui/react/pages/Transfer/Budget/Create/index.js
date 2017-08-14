@@ -8,6 +8,7 @@ import Header from 'ut-front-react/components/PageLayout/Header';
 import { validateAll } from 'ut-front-react/utils/validator';
 import { removeTab } from 'ut-front-react/containers/TabMenu/actions';
 import Button from 'ut-front-react/components/Button';
+import Text from 'ut-front-react/components/Text';
 
 import ConfirmTransferPopup from '../../../../containers/Transfer/ConfirmTransferPopup';
 import TemplatesPopup from '../../../../components/Transfer/TemplatesPopup';
@@ -45,7 +46,6 @@ const popups = {
 };
 
 class TransferBudgetCreate extends Component {
-//
     constructor(props) {
         super(props);
         this.createBudgetTransfer = this.createBudgetTransfer.bind(this);
@@ -187,7 +187,7 @@ class TransferBudgetCreate extends Component {
                 <AddTab pathname={getLink('ut-transfer:transfersBudgetCreate')} title={this.translate('Transfer to the Budget')} />
                 <div className={transferStyle.pageContainer}>
                     <Header
-                      text={this.translate('Payment slip (transfer to the Budget)')}
+                      text={<Text>Payment slip (Transfer to the Budget)</Text>}
                       buttons={this.actionButtons} />
                     {this.renderTemplatesSection()}
                     <div className={transferStyle.transferContainer}>
@@ -195,7 +195,6 @@ class TransferBudgetCreate extends Component {
                     </div>
                 </div>
                 <ConfirmTransferPopup
-                  inputs={this.confirmTransferPopupInputs}
                   isOpen={this.state.isPopupOpen[popups.confirmTransfer]}
                   onConfirm={this.confirmAndSendBudgetTransfer}
                   onCancel={this.closeConfirmTransferPopup}
@@ -214,7 +213,6 @@ class TransferBudgetCreate extends Component {
             </Page>
         );
     }
-//
 }
 
 TransferBudgetCreate.contextTypes = {
