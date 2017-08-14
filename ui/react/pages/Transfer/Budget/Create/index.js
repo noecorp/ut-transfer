@@ -142,7 +142,7 @@ class TransferBudgetCreate extends Component {
     // Template handling
 
     loadTemplate(selectedTemplateKey) {
-        this.props.applyTemplate(selectedTemplateKey);  
+        this.props.applyTemplate(selectedTemplateKey);
         this.closePopup(popups.templates);
     }
 
