@@ -172,10 +172,10 @@ class TransferBudgetCreate extends Component {
         return (
             <div className={transferStyle.templatesSection}>
                 <div className={transferStyle.templatesButton}>
-                    <Button sizeType='small' style={buttonStyles} onClick={onTemplateSelectClick} >Select a template</Button>
+                    <Button sizeType='small' style={buttonStyles} onClick={onTemplateSelectClick} >{this.translate('Select a template')}</Button>
                 </div>
                 <div className={transferStyle.templatesButton}>
-                    <Button sizeType='small' onClick={onSaveTemplateClick} >Save as a template</Button>
+                    <Button sizeType='small' onClick={onSaveTemplateClick} >{this.translate('Save as a template')}</Button>
                 </div>
             </div>
         );

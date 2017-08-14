@@ -39,7 +39,7 @@ class SaveTemplatePopup extends Component {
               footer={{actionButtons: this.actionButtons}}>
                 <div className={style.popupWrap}>
                     <div className={style.infoRow}>
-                        <Text>Select one of your previously saved templates</Text>
+                        <Text>Template name</Text>
                     </div>
                     <div className={style.row}>
                         <Input
