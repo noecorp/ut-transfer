@@ -14,5 +14,6 @@ module.exports = {
     'onlineBanking.transferTemplate.fetch': require('./onlineBanking.transferTemplate.fetch'),
     'onlineBanking.transferTemplate.create': require('./onlineBanking.transferTemplate.create'),
     'onlineBanking.transferTemplate.get': require('./onlineBanking.transferTemplate.get'),
-    'onlineBanking.transfer.requestOTP': require('./onlineBanking.transfer.requestOTP')
+    'onlineBanking.transfer.requestOTP': require('./onlineBanking.transfer.requestOTP'),
+    'onlineBanking.transfer.validateOTP': require('./onlineBanking.transfer.validateOTP')
 };
