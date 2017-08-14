@@ -23,7 +23,7 @@ class AMLDeclaration extends Component {
 
     handleInputChange(fieldName) {
         return (data) => {
-            this.props.changeField(['bankBeneficiary', fieldName], data.value, data);
+            this.props.changeField(['amlDeclaration', fieldName], data.value, data);
         };
     }
 
