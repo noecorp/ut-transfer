@@ -80,7 +80,7 @@ BEGIN TRY
                     20 > ISNULL(t.expireCount, 0) AND
                     GETDATE() >= t.expireTime AND
                     t.transferDateTime > DATEADD(DAY, -1, GETDATE()) AND
-                    t.channelType IN ('ATM')
+                    t.channelType IN ('ATM', 'web')
                 ORDER
                     BY t.expireTime, t.transferId
             )
@@ -133,6 +133,8 @@ BEGIN TRY
         SELECT 0 result WHERE 1 = 2
     END ELSE
     BEGIN
+        SELECT 'transferInfo' AS resultSetName
+
         SELECT TOP 1
             @mtid mti,
             @opcode operation,
@@ -152,10 +154,14 @@ BEGIN TRY
             e.udfDetails udfAcquirer,
             t.transferId,
             t.transferIdAcquirer,
+            t.transferIdIssuer,
             t.sourceAccount,
-            t.destinationAccount
+            t.destinationAccount,
+            cin.itemCode
         FROM
             [transfer].[transfer] t
+        JOIN
+            core.itemName cin ON cin.itemNameId = t.transferTypeId
         LEFT JOIN
             [transfer].[event] e ON e.transferId = t.transferId AND e.source = 'acquirer' AND e.type = 'transfer.push'
         LEFT JOIN
@@ -164,6 +170,29 @@ BEGIN TRY
             t.transferId = @txid
         ORDER BY
             e.eventDateTime, e.eventId
+
+        SELECT 'split' AS resultSetName
+
+        SELECT
+            splitId,
+            transferId,
+            conditionId,
+            splitNameId,
+            debit,
+            credit,
+            amount,
+            [description],
+            tag,
+            debitActorId,
+            creditActorId,
+            debitItemId,
+            creditItemId,
+            [state],
+            transferIdPayment
+        FROM
+            [transfer].[split]
+        WHERE
+            transferId = @txid
     END
 
     EXEC core.auditCall @procid = @@PROCID, @params = @callParams

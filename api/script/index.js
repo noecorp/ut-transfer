@@ -11,7 +11,7 @@ var processReversal = (bus, log, $meta) => params => {
 
     var portReversal = (port, reversal) => {
         if (port && reversal.transferType && reversal.operation) {
-            var $postReversalMeta = Object.assign($meta, {method: `${port}.${reversal.transferType}.${reversal.operation}`});
+            var $postReversalMeta = Object.assign($meta, {method: `${port}.${reversal.transferType}.${reversal.operation}`}, { method: 'portReverse.push.reverse' });
             return bus.importMethod($postReversalMeta.method)(reversal, $postReversalMeta);
         } else {
             return Promise.resolve(reversal);
