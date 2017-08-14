@@ -231,7 +231,7 @@ class TransferBudgetCreate extends Component {
 
     renderAdditionalOptions() {
         return (
-            <TitledContentBox title={<Text>Additional Options</Text>}>
+            <TitledContentBox title={this.translate('Additional Options')}>
                 <div className={style.formWrap}>
                     <div className={style.formLeft}>
                          <div className={style.inputWrapFlex}>
