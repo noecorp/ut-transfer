@@ -274,7 +274,6 @@ class TransferBudgetCreate extends Component {
     render() {
         return (
         <div className={style.wrap}>
-            
             {this.renderMainInfo()}
             {this.renderAdditionalOptions()}
         </div>);

@@ -142,7 +142,7 @@ class TransferBudgetCreate extends Component {
     // Template handling
 
     loadTemplate(selectedTemplateKey) {
-        this.props.applyTemplate(selectedTemplateKey);  
+        this.props.applyTemplate(selectedTemplateKey);
         this.closePopup(popups.templates);
     }
 
@@ -172,10 +172,10 @@ class TransferBudgetCreate extends Component {
         return (
             <div className={transferStyle.templatesSection}>
                 <div className={transferStyle.templatesButton}>
-                    <Button sizeType='small' style={buttonStyles} onClick={onTemplateSelectClick} >Select a template</Button>
+                    <Button sizeType='small' style={buttonStyles} onClick={onTemplateSelectClick}><Text>Select a template</Text></Button>
                 </div>
                 <div className={transferStyle.templatesButton}>
-                    <Button sizeType='small' onClick={onSaveTemplateClick} >Save as a template</Button>
+                    <Button sizeType='small' onClick={onSaveTemplateClick} ><Text>Save as a template</Text></Button>
                 </div>
             </div>
         );
