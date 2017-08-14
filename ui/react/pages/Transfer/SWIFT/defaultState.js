@@ -1,3 +1,11 @@
+export const confirmTransferPopupDefaultState = {
+    data: {
+        password: '',
+        otp: ''
+    },
+    errors: {}
+};
+
 export const defaultState = {
     activeTabData: {
         mode: '',
@@ -11,6 +19,7 @@ export const defaultState = {
             dropdownData: {
                 account: []
             },
+            confirmTransferPopup: confirmTransferPopupDefaultState,
             data: {
                 sender: {
                     sourceAccount: '',

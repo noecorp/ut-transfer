@@ -117,8 +117,3 @@ export const editTransferField = (state, action, options) => {
     }
     return state;
 };
-
-export const resetTransferState = (state, aciton, options) => {
-    const { activeTabMode, activeTabId } = options;
-    return state.setIn([activeTabMode, activeTabId], immutable.fromJS(defaultTransferState));
-};

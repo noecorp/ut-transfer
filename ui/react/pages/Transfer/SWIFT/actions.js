@@ -35,7 +35,17 @@ export const sendMessage = (bank, recipient) => {
     };
 };
 
+export const resetConfirmTransferPopupState = () => ({
+    type: actionTypes.RESET_CONFIRM_TRANSFER_POPUP_STATE
+});
+
+
 export const fetchAccounts = () => ({
     type: actionTypes.FETCH_ACCOUNTS,
     method: 'transfer.onlineBanking.account.fetch'
+});
+
+export const requestOTP = () => ({
+    type: actionTypes.REQUEST_OTP,
+    method: 'transfer.onlineBanking.transfer.requestOTP'
 });

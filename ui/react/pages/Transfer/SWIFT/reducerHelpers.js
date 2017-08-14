@@ -70,3 +70,8 @@ export const fetchAccounts = (state, action, options) => {
     }
     return state;
 };
+
+export const resetConfirmTransferPopupState = (state, action, options) => {
+    const { activeTabMode, activeTabId } = options;
+    return state.setIn([activeTabMode, activeTabId, 'confirmTransferPopup'], immutable.fromJS(confirmTransferPopupDefaultState));
+};

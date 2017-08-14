@@ -136,7 +136,6 @@ class TransferBudgetCreate extends Component {
                     </div>
                 </div>
                 <ConfirmTransferPopup
-                  inputs={this.confirmTransferPopupInputs}
                   isOpen={this.state.isPopupOpen[popups.confirmTransfer]}
                   onConfirm={this.confirmAndSendBudgetTransfer}
                   onCancel={this.closeConfirmTransferPopup}
