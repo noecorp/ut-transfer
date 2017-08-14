@@ -52,3 +52,9 @@ export const requestOTP = () => ({
 export const resetState = () => ({
     type: actionTypes.RESET_STATE
 });
+
+export const validateOTP = (otp) => ({
+    type: actionTypes.VALIDATE_OTP,
+    method: 'transfer.onlineBanking.transfer.validateOTP',
+    params: {otp}
+});
