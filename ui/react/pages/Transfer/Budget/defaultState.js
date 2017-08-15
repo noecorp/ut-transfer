@@ -3,7 +3,9 @@ import { documentTypes } from './staticData';
 // import { confirmTransferPopupDefaultState } from '../../../containers/Transfer/ConfirmTransferPopup/defaultState';
 
 export const defaultTransferState = {
-    data: {},
+    data: {
+        documentType: '9'
+    },
     errors: {},
     dropdownData: {
         account: [],

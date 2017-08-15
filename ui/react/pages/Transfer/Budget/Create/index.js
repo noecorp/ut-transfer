@@ -20,7 +20,7 @@ import {
     getScreenConfiguration,
     fetchAccounts,
     fetchTemplates,
-    fetchCustomerData,    
+    fetchCustomerData,
     createTransfer,
     resetTransferState,
     requestOTP,
@@ -134,8 +134,15 @@ class TransferBudgetCreate extends Component {
         let password = this.props.confirmTransferPopup.getIn(['data', 'password']);
         let otp = this.props.confirmTransferPopup.getIn(['data', 'otp']);
         let data = prepareTransferBudgetToSend(this.props.data, { password, otp });
-        this.props.createTransfer(data);
-        this.onTransferSentHandler();
+        this.props.createTransfer(data).then(result => {
+            if (result.error) {
+                throw result.error;
+            }
+            this.onTransferSentHandler();
+            return true;
+        }).catch(_ => {
+            this.closeConfirmTransferPopup();
+        });
     }
 
     closeConfirmTransferPopup() {

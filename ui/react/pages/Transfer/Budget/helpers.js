@@ -35,4 +35,15 @@ export const performCustomValidations = (data, validationResult) => {
             errorMessage: <Text>Transfer execution date is required</Text>
         });
     }
+    if (data.get('startDate') && data.get('endDate')) {
+        let startDate = new Date(data.get('startDate'));
+        let endDate = new Date(data.get('endDate'));
+        if (startDate > endDate) {
+            validationResult.isValid = false;
+            validationResult.errors.push({
+                key: ['endDate'],
+                errorMessage: <Text>End date is before start date</Text>
+            });
+        }
+    }
 };

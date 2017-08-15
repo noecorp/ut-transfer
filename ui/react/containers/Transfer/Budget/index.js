@@ -222,6 +222,7 @@ class TransferBudgetCreate extends Component {
                                 <Text>Liable Entity Type</Text>
                             </div>
                             <div className={style.flexInput}>
+                                <div className={style.additionalOptionsRadioWrap} style={{ display: 'flex', flexBasis: '100%' }}>
                                 <RadioInput
                                   defaultValue={this.getInputValue('liableEntityType')}
                                   onChange={this.onInputChange}
@@ -230,6 +231,7 @@ class TransferBudgetCreate extends Component {
                                       { id: 2, label: this.translate('Legal Entity'), name: 'liableEntityType', value: 'legalEntity' },
                                       { id: 3, label: this.translate('Foreign resident'), name: 'liableEntityType', value: 'foreignResident' }
                                   ]} />
+                                </div>
                             </div>
                         </div>
                         {this.renderLiableEntityInfo()}
@@ -362,8 +364,8 @@ class TransferBudgetCreate extends Component {
                     </div>
                     <div className={style.formRight}>
                         <div className={style.inputWrapFlex}>
-                            <div className={style.flexLabel}>
-                                <Text>Execution date</Text>
+                            <div className={classnames(style.flexLabel, style.bold)}>
+                                <Text>Execution Date</Text>
                             </div>
                             <div className={style.flexInput}>
                                 {this.renderDatePicker({ key: 'transferExecutionDate' })}
