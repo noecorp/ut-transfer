@@ -14,6 +14,7 @@ import ConfirmTransferPopup from '../../../../containers/Transfer/ConfirmTransfe
 import TemplatesPopup from '../../../../components/Transfer/TemplatesPopup';
 import SaveTemplatePopup from '../../../../components/Transfer/SaveTemplatePopup';
 import TransferBudgetContainer from '../../../../containers/Transfer/Budget';
+import TransferSuccessPopup from '../../../../components/Transfer/TransferSuccessPopup';
 import {
     setActiveTab,
     setErrors,
@@ -40,6 +41,7 @@ import transferStyle from '../../style.css';
 
 const popups = {
     confirmTransfer: 'confirmTransfer',
+    transferSuccess: 'transferSuccess',
     templates: 'templates',
     saveTemplate: 'saveTemplate'
 };
@@ -58,7 +60,8 @@ class TransferBudgetCreate extends Component {
             isPopupOpen: {
                 confirmTransfer: false,
                 templates: false,
-                saveTemplate: false
+                saveTemplate: false,
+                transferSuccess: false
             }
         };
     }
@@ -135,9 +138,7 @@ class TransferBudgetCreate extends Component {
         let otp = this.props.confirmTransferPopup.getIn(['data', 'otp']);
         let data = prepareTransferBudgetToSend(this.props.data, { password, otp });
         this.props.createTransfer(data).then(result => {
-            if (result.error) {
-                throw result.error;
-            }
+            if (result.error) throw result.error;
             this.onTransferSentHandler();
             return true;
         }).catch(_ => {
@@ -226,6 +227,10 @@ class TransferBudgetCreate extends Component {
                   onSave={this.saveTemplate}
                   onCancel={() => { this.closePopup(popups.saveTemplate); }}
                 />
+                <TransferSuccessPopup
+                  isOpen={this.state.isPopupOpen[popups.transferSuccess]}
+                  onOk={() => { this.closePopup(popups.transferSuccess); }}
+                />
             </Page>
         );
     }
@@ -242,7 +247,7 @@ TransferBudgetCreate.propTypes = {
     activeTab: PropTypes.object,
     templates: PropTypes.array,
     // Actions
-    getScreenConfiguration: PropTypes.func,    
+    getScreenConfiguration: PropTypes.func,
     resetConfirmTransferPopupState: PropTypes.func,
     fetchAccounts: PropTypes.func,
     fetchTemplates: PropTypes.func,

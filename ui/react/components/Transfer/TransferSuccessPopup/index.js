@@ -2,14 +2,11 @@ import React, { Component, PropTypes } from 'react';
 
 import Popup from 'ut-front-react/components/Popup';
 import Text from 'ut-front-react/components/Text';
+import Icon from 'ut-front-react/components/Icon';
 import style from './style.css';
 
 class TransferSuccessPopup extends Component {
 //
-    constructor(props) {
-        super(props);
-    }
-
     get actionButtons() {
         const onOk = () => {};
         return [
@@ -24,7 +21,12 @@ class TransferSuccessPopup extends Component {
               header={{text: this.context.translate('Success')}}
               footer={{actionButtons: this.actionButtons}}>
                 <div className={style.popupWrap}>
-                    <Text>Transfer executed successfully</Text>
+                    <div className={style.iconRow}>
+                        <Icon icon='success' />
+                    </div>
+                    <div className={style.infoRow}>
+                        <Text>Transfer executed successfully</Text>
+                    </div>
                 </div>
             </Popup>
         );

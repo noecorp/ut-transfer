@@ -1,6 +1,7 @@
 .infoRow {
-    margin-bottom: 10px;
+    text-align: center;
 }
-.row {
-    margin-bottom: 5px;
+.iconRow{
+    margin-bottom: 10px;
+    text-align: center;
 }
