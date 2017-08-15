@@ -9,6 +9,7 @@ import Text from 'ut-front-react/components/Text';
 import { validateAll } from 'ut-front-react/utils/validator';
 
 import ConfirmTransferPopup from '../../../../containers/Transfer/ConfirmTransferPopup';
+import TransferSuccessPopup from '../../../../components/Transfer/TransferSuccessPopup';
 import Swift from './../../../../containers/Transfer/SWIFT';
 
 import { getTransferSWIFTValidations } from '../../../../containers/Transfer/SWIFT/validations';
@@ -28,7 +29,8 @@ import { removeTab } from 'ut-front-react/containers/TabMenu/actions';
 import transferStyle from '../../style.css';
 
 const popups = {
-    confirmTransfer: 'confirmTransfer'
+    confirmTransfer: 'confirmTransfer',
+    transferSuccess: 'transferSuccess'
 };
 
 class TransfersSWIFTCreate extends Component {
@@ -38,10 +40,12 @@ class TransfersSWIFTCreate extends Component {
         this.openPopup = this.openPopup.bind(this);
         this.closePopup = this.closePopup.bind(this);
         this.closeConfirmTransferPopup = this.closeConfirmTransferPopup.bind(this);
+        this.closeTransferSuccessPopup = this.closeTransferSuccessPopup.bind(this);
         this.confirmAndSendSWIFTTransfer = this.confirmAndSendSWIFTTransfer.bind(this);
         this.state = {
             isPopupOpen: {
-                confirmTransfer: false
+                confirmTransfer: false,
+                transferSuccess: false
             }
         };
     }
@@ -80,7 +84,7 @@ class TransfersSWIFTCreate extends Component {
     }
 
     get actionButtons() {
-        const create = () => {
+        const createAndClose = () => {
             this.createSwift();
             this.onTransferSentHandler = () => {
                 this.closePopup(popups.confirmTransfer);
@@ -89,26 +93,46 @@ class TransfersSWIFTCreate extends Component {
             };
         };
         const close = () => {
+            this.props.resetState();
             this.props.resetConfirmTransferPopupState();
             this.props.removeTab(this.props.activeTab.pathname);
         };
         return [
-            { text: this.translate('Create'), onClick: create, styleType: 'primaryLight' },
+            { text: this.translate('Send'), onClick: createAndClose, styleType: 'primaryLight' },
             { text: this.translate('Close'), onClick: close }
         ];
     }
+
+    // Performs validation, if ok - opens confirm dialog.
 
     confirmAndSendSWIFTTransfer() {
         let password = this.props.confirmTransferPopup.getIn(['data', 'password']);
         let otp = this.props.confirmTransferPopup.getIn(['data', 'otp']);
         let data = prepareTransferSwiftToSend(this.props.data, { password, otp });
-        this.props.createTransfer(data);
+        this.props.createTransfer(data)
+            .then(result => {
+                if (result.error) throw result.error;
+                this.closeConfirmTransferPopup();
+                this.openPopup(popups.transferSuccess);
+                return true;
+            }).catch(_ => {
+                // An error is thrown and the error popup is shown here.
+                this.closeConfirmTransferPopup();
+            });
         this.onTransferSentHandler();
     }
 
     closeConfirmTransferPopup() {
         this.props.resetConfirmTransferPopupState();
         this.closePopup(popups.confirmTransfer);
+    }
+
+    // When transfer is successfull, and ok is pressed - close the success popup and remove the tab.
+
+    closeTransferSuccessPopup() {
+        this.closePopup(popups.transferSuccess);
+        this.props.resetState();
+        this.props.removeTab(this.props.activeTab.pathname);
     }
 
     translate(key) {
@@ -127,6 +151,10 @@ class TransfersSWIFTCreate extends Component {
                   isOpen={this.state.isPopupOpen[popups.confirmTransfer]}
                   onConfirm={this.confirmAndSendSWIFTTransfer}
                   onCancel={this.closeConfirmTransferPopup}
+                />
+                <TransferSuccessPopup
+                  isOpen={this.state.isPopupOpen[popups.transferSuccess]}
+                  onOk={this.closeTransferSuccessPopup}
                 />
             </Page>
         );
