@@ -53,6 +53,7 @@ class TransferBudgetCreate extends Component {
         this.createBudgetTransfer = this.createBudgetTransfer.bind(this);
         this.confirmAndSendBudgetTransfer = this.confirmAndSendBudgetTransfer.bind(this);
         this.closeConfirmTransferPopup = this.closeConfirmTransferPopup.bind(this);
+        this.closeTransferSuccessPopup = this.closeTransferSuccessPopup.bind(this);
         this.loadTemplate = this.loadTemplate.bind(this);
         this.openPopup = this.openPopup.bind(this);
         this.closePopup = this.closePopup.bind(this);
@@ -69,8 +70,6 @@ class TransferBudgetCreate extends Component {
 
     componentWillMount() {
         this.props.setActiveTab({ mode: 'create', id: 'create' });
-        // this.props.getScreenConfiguration({ key: 'transferBudgetCreate' });
-        // this.props.fetchCustomerData();
         this.props.fetchAccounts();
         this.props.fetchTemplates();
     }
@@ -94,22 +93,19 @@ class TransferBudgetCreate extends Component {
     get actionButtons() {
         const createAndClose = () => {
             this.createBudgetTransfer();
-            this.onTransferSentHandler = () => {
-                this.closePopup(popups.confirmTransfer);
-                this.props.resetTransferState();
-                this.props.resetConfirmTransferPopupState();
-                this.props.removeTab(this.props.activeTab.pathname);
-            };
         };
         const close = () => {
+            this.props.resetTransferState();
             this.props.resetConfirmTransferPopupState();
             this.props.removeTab(this.props.activeTab.pathname);
         };
         return [
-            { text: this.translate('Send and Close'), onClick: createAndClose, styleType: 'primaryLight' },
+            { text: this.translate('Send'), onClick: createAndClose, styleType: 'primaryLight' },
             { text: this.translate('Close'), onClick: close }
         ];
     }
+
+    // Performs validation, if ok - opens confirm dialog.
 
     createBudgetTransfer() {
         let createValidationRules = getTransferBuddgetValidations();
@@ -124,24 +120,35 @@ class TransferBudgetCreate extends Component {
         this.props.requestOTP(this.props.data.get('sourceBank'), this.props.data.get('phone'));
     }
 
+    // Called by the confirm dialog when password and otp are entered.
+
     confirmAndSendBudgetTransfer() {
         let password = this.props.confirmTransferPopup.getIn(['data', 'password']);
         let otp = this.props.confirmTransferPopup.getIn(['data', 'otp']);
         let data = prepareTransferBudgetToSend(this.props.data, { password, otp });
-        this.props.createTransfer(data).then(result => {
-            if (result.error) throw result.error;
-            this.onTransferSentHandler();
-            return true;
-        }).catch(_ => {
-            this.closeConfirmTransferPopup();
-        });
+        this.props.createTransfer(data)
+            .then(result => {
+                if (result.error) throw result.error;
+                this.closeConfirmTransferPopup();
+                this.openPopup(popups.transferSuccess);
+                return true;
+            }).catch(_ => {
+                // An error is thrown and the error popup is shown here.
+                this.closeConfirmTransferPopup();
+            });
     }
 
     closeConfirmTransferPopup() {
         this.props.resetConfirmTransferPopupState();
-        this.props.fetchAccounts();
-        this.props.fetchTemplates();
         this.closePopup(popups.confirmTransfer);
+    }
+
+    // When transfer is successfull, and ok is pressed - close the success popup and remove the tab.
+
+    closeTransferSuccessPopup() {
+        this.closePopup(popups.transferSuccess);
+        this.props.resetTransferState();
+        this.props.removeTab(this.props.activeTab.pathname);
     }
 
     // Template handling
@@ -159,6 +166,8 @@ class TransferBudgetCreate extends Component {
         }).catch();
         this.closePopup(popups.saveTemplate);
     }
+
+    // Render
 
     renderHeader() {
         return (
@@ -206,7 +215,6 @@ class TransferBudgetCreate extends Component {
                         </div>
                     </div>
                     </Vertical>
-                
                 <ConfirmTransferPopup
                   isOpen={this.state.isPopupOpen[popups.confirmTransfer]}
                   onConfirm={this.confirmAndSendBudgetTransfer}
@@ -225,7 +233,7 @@ class TransferBudgetCreate extends Component {
                 />
                 <TransferSuccessPopup
                   isOpen={this.state.isPopupOpen[popups.transferSuccess]}
-                  onOk={() => { this.closePopup(popups.transferSuccess); }}
+                  onOk={this.closeTransferSuccessPopup}
                 />
             </Page>
         );

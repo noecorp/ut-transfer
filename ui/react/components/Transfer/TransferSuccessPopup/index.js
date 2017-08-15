@@ -8,7 +8,9 @@ import style from './style.css';
 class TransferSuccessPopup extends Component {
 //
     get actionButtons() {
-        const onOk = () => {};
+        const onOk = () => {
+            this.props.onOk();
+        };
         return [
             { label: this.context.translate('OK'), onClick: onOk, styleType: 'primaryDialog' }
         ];
@@ -45,7 +47,7 @@ TransferSuccessPopup.contextTypes = {
 
 TransferSuccessPopup.defaultProps = {
     isOpen: false,
-    onSave: () => {}
+    onOk: () => {}
 };
 
 export default TransferSuccessPopup;
