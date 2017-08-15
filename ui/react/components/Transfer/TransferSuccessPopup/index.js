@@ -2,16 +2,15 @@ import React, { Component, PropTypes } from 'react';
 
 import Popup from 'ut-front-react/components/Popup';
 import Text from 'ut-front-react/components/Text';
+import Icon from 'ut-front-react/components/Icon';
 import style from './style.css';
 
 class TransferSuccessPopup extends Component {
 //
-    constructor(props) {
-        super(props);
-    }
-
     get actionButtons() {
-        const onOk = () => {};
+        const onOk = () => {
+            this.props.onOk();
+        };
         return [
             { label: this.context.translate('OK'), onClick: onOk, styleType: 'primaryDialog' }
         ];
@@ -24,7 +23,12 @@ class TransferSuccessPopup extends Component {
               header={{text: this.context.translate('Success')}}
               footer={{actionButtons: this.actionButtons}}>
                 <div className={style.popupWrap}>
-                    <Text>Transfer executed successfully</Text>
+                    <div className={style.iconRow}>
+                        <Icon icon='success' />
+                    </div>
+                    <div className={style.infoRow}>
+                        <Text>Transfer executed successfully</Text>
+                    </div>
                 </div>
             </Popup>
         );
@@ -43,7 +47,7 @@ TransferSuccessPopup.contextTypes = {
 
 TransferSuccessPopup.defaultProps = {
     isOpen: false,
-    onSave: () => {}
+    onOk: () => {}
 };
 
 export default TransferSuccessPopup;
