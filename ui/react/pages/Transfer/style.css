@@ -29,3 +29,11 @@
     color: #333;
     border: 1px solid #999;
 }
+
+.saveTemplateButton {
+    margin-left: 10px;
+}
+
+.readOnlyInput {
+    background-color: #F5F5F5;
+}

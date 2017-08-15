@@ -65,6 +65,7 @@ class TransferBudgetCreate extends Component {
                   errorMessage={errors.get(input.key)}
                   validators={validationRules}
                   readonly={readonly}
+                  className={readonly && style.readOnlyInput}
                   onChange={this.onInputChange}
                 />
             </div>
@@ -146,7 +147,7 @@ class TransferBudgetCreate extends Component {
                           onChange={this.onInputChange}
                         />
                     </div>
-                    <div style={{flex: 1}}></div>
+                    <div style={{flex: 1}} />
                     <div style={{flex: 15}}>
                         <Input
                           key='key'
