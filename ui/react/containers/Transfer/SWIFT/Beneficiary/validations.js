@@ -52,3 +52,11 @@ export const cityValidation = {
         {type: textValidations.isRequired, errorMessage: <Text>City is required</Text>}
     ]
 };
+
+export const routingNumberValidation = {
+    key: ['beneficiary', 'routingNumber'],
+    type: validationTypes.text,
+    rules: [
+        {type: textValidations.isRequired, errorMessage: <Text>Routing Number is requried</Text>}
+    ]
+};

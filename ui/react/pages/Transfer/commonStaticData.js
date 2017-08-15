@@ -11,3 +11,9 @@ export const amlDeclaration = [
     { key: 'rent', name: <Text>Received rent</Text> },
     { key: 'gift', name: <Text>Received funds as a gift</Text> }
 ];
+
+export const expenses = [
+    { key: 'our', name: <Text>Our</Text> },
+    { key: 'ben', name: <Text>Ben</Text> },
+    { key: 'sha', name: <Text>Sha</Text> }
+];

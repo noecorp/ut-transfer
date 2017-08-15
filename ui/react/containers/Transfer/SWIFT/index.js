@@ -5,6 +5,7 @@ import Sender from './Sender';
 import BankBeneficiary from './BankBeneficiary';
 import Beneficiary from './Beneficiary';
 import Transfer from './Transfer';
+import BankExpenses from './BankExpenses';
 import AMLDeclaration from './AMLDeclaration';
 
 import style from './style.css';
@@ -37,6 +38,7 @@ class Swift extends Component {
                 <BankBeneficiary mode={mode} id={id} />
                 <Beneficiary mode={mode} id={id} />
                 <Transfer mode={mode} id={id} />
+                <BankExpenses mode={mode} id={id} />
                 <AMLDeclaration mode={mode} id={id} />
             </div>
         );

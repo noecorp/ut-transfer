@@ -69,6 +69,7 @@ class TransfersSWIFTCreate extends Component {
     createSwift() {
         let createValidationRules = getTransferSWIFTValidations();
         let validation = validateAll(this.props.data, createValidationRules);
+        // TODO: add validation for routing number only when USA is selected as country
         if (!validation.isValid) {
             let errors = prepareErrorsWithFullKeyPath(validation.errors);
             this.props.setErrors(errors);

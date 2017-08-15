@@ -49,6 +49,9 @@ export const defaultState = {
                 },
                 amlDeclaration: {
                     fundsOrigin: ''
+                },
+                expenses: {
+                    expenses: ''
                 }
             },
             nomenclatures: {

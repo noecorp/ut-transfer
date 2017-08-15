@@ -181,7 +181,7 @@ class Sender extends Component {
     }
     render() {
         return (
-            <TitledContentBox title={<Text>Sender</Text>}>
+            <TitledContentBox title={<Text>Sender</Text>} externalContentClasses={style.contentBoxExternal}>
                 <div className={style.formWrap}>
                     {this.renderLeftColumn()}
                     {this.renderRightColumn()}

@@ -6,7 +6,7 @@ import Dropdown from 'ut-front-react/components/Input/Dropdown';
 import Input from 'ut-front-react/components/Input';
 import Text from 'ut-front-react/components/Text';
 import style from './../style.css';
-
+import {countriesToShowRoutingNumber} from './helpers';
 import {changeField} from '../../../../pages/Transfer/SWIFT/actions';
 import {addressValidation, accountNumberValidation, cityValidation} from './validations';
 
@@ -92,6 +92,15 @@ class Beneficiary extends Component {
                       errorMessage={this.props.errors.get('accountNumber')}
                     />
                 </div>
+                {this.props.showRoutingNumber && <div className={style.inputWrap}>
+                    <Input value={this.getInputValue('routingNumber')} label={<Text>Routing Number</Text>}
+                      onChange={this.handleInputChange('routingNumber')}
+                      keyProp='routingNumber'
+                      boldLabel
+                      isValid={this.props.errors.get('routingNumber') === undefined}
+                      errorMessage={this.props.errors.get('routingNumber')}
+                    />
+                </div>}
             </div>
         );
     }
@@ -112,6 +121,7 @@ Beneficiary.contextTypes = {
 };
 
 Beneficiary.propTypes = {
+    showRoutingNumber: PropTypes.bool,
     mode: PropTypes.string,
     id: PropTypes.string,
     data: PropTypes.object,
@@ -126,11 +136,15 @@ Beneficiary.propTypes = {
 
 function mapStateToProps(state, ownProps) {
     const { mode, id } = ownProps;
+    let data = state.transferSwift.getIn([mode, id, 'data', 'beneficiary']);
+    let edited = state.transferSwift.getIn([mode, id, 'edited', 'beneficiary'], immutable.Map());
+    let countryKey = 'country';
     return {
-        data: state.transferSwift.getIn([mode, id, 'data', 'beneficiary']),
-        edited: state.transferSwift.getIn([mode, id, 'edited', 'beneficiary'], immutable.Map()),
+        data,
+        edited,
         countries: state.transferSwift.getIn([mode, id, 'nomenclatures', 'country']).toJS(),
-        errors: state.transferSwift.getIn([mode, id, 'errors', 'beneficiary'], immutable.Map())
+        errors: state.transferSwift.getIn([mode, id, 'errors', 'beneficiary'], immutable.Map()),
+        showRoutingNumber: !!countriesToShowRoutingNumber[edited.has(countryKey) ? edited.get(countryKey) : data.get(countryKey)]
     };
 }
 
