@@ -53,16 +53,6 @@ class Transfer extends Component {
                       ]}
                     />
                 </div>
-                <div className={style.inputWrap}>
-                    <Input value={this.getInputValue('otherBankCosts')} label={<Text>Other Bank Costs</Text>}
-                      onChange={this.handleInputChange('otherBankCosts')}
-                      keyProp='otherBankCosts'
-                      boldLabel
-                      validators={otherBankCostsValidation.rules}
-                      isValid={this.props.errors.get('otherBankCosts') === undefined}
-                      errorMessage={this.props.errors.get('otherBankCosts')}
-                    />
-                </div>
             </div>
         );
     }

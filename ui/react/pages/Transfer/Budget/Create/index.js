@@ -58,6 +58,7 @@ class TransferBudgetCreate extends Component {
         this.openPopup = this.openPopup.bind(this);
         this.closePopup = this.closePopup.bind(this);
         this.saveTemplate = this.saveTemplate.bind(this);
+        this.renderSaveTemplateSection = this.renderSaveTemplateSection.bind(this);
         this.state = {
             isPopupOpen: {
                 confirmTransfer: false,
@@ -175,19 +176,26 @@ class TransferBudgetCreate extends Component {
         );
     }
 
-    renderTemplatesSection() {
+    renderTemplatesSelectSection() {
         const buttonStyles = {};
         const onTemplateSelectClick = () => {
             this.openPopup(popups.templates);
-        };
-        const onSaveTemplateClick = () => {
-            this.openPopup(popups.saveTemplate);
         };
         return (
             <div className={transferStyle.templatesSection}>
                 <div className={transferStyle.templatesButton}>
                     <Button sizeType='small' style={buttonStyles} onClick={onTemplateSelectClick} >{this.translate('Select a template')}</Button>
                 </div>
+            </div>
+        );
+    }
+
+    renderSaveTemplateSection() {
+        const onSaveTemplateClick = () => {
+            this.openPopup(popups.saveTemplate);
+        };
+        return (
+            <div className={transferStyle.saveTemplateButton}>
                 <div className={transferStyle.templatesButton}>
                     <Button sizeType='small' onClick={onSaveTemplateClick} >{this.translate('Save as a template')}</Button>
                 </div>
@@ -206,10 +214,11 @@ class TransferBudgetCreate extends Component {
                         />}
                     >
                     <div className={transferStyle.pageContainer}>
-                        {this.renderTemplatesSection()}
+                        {this.renderTemplatesSelectSection()}
                         <div className={transferStyle.transferContainer}>
                             <TransferBudgetContainer mode='create' id='create' />
                         </div>
+                        {this.renderSaveTemplateSection()}
                         <div className={transferStyle.transferBottomContainer}>
                             <Text>I am aware that I bear criminal liability under article 313 of the Criminal Code when declaring wrong facts.</Text>
                         </div>
