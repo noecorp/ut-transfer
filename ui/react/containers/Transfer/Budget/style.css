@@ -41,6 +41,7 @@
 .flexLabel {
     flex-basis: 30%;
     padding-right: 10px;
+    color: #595959;
 }
 .flexInput {
     flex-basis: 70%;

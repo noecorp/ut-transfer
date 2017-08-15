@@ -176,18 +176,18 @@ class TransferBudgetCreate extends Component {
         );
     }
 
-    renderMainInfo() {
-        const { left, right } = inputsConfig;
-        const { errors } = this.props;
+    // TODO Separate these renders into different containers/components (as with Swift Transfers)!
+
+    renderSenderInfo() {
         return (
             <TitledContentBox title={this.translate('Sender')}>
                 <div className={style.formWrap}>
                     <div className={style.formLeft}>
                         <div className={style.inputWrap}>
-                            {this.renderDropdown(left.account)}
+                            {this.renderDropdown(inputsConfig.account)}
                         </div>
                         <div className={style.inputWrap}>
-                            {this.renderTextInput(left.sourceName)}
+                            {this.renderTextInput(inputsConfig.sourceName)}
                         </div>
                         <div className={style.inputWrapFlex}>
                             <div className={classnames(style.flexLabel, style.bold)}>
@@ -195,28 +195,27 @@ class TransferBudgetCreate extends Component {
                             </div>
                             <div className={style.flexInput}>
                                 <div style={{flex: 8}}>
-                                    {this.renderTextInput(left.civilIdentifier)}
+                                    {this.renderTextInput(inputsConfig.civilIdentifier)}
                                 </div>
                                 <div style={{flex: 2}} className={style.middleLabels}><Text>or</Text></div>
                                 <div style={{flex: 8}}>
-                                    {this.renderTextInput(left.foreignResidentIdentifier)}
+                                    {this.renderTextInput(inputsConfig.foreignResidentIdentifier)}
                                 </div>
                             </div>
                         </div>
                         <div className={style.inputWrap}>
-                            {this.renderTextInput(left.sourceIban)}
+                            {this.renderTextInput(inputsConfig.sourceIban)}
                         </div>
                         <div className={style.inputWrap}>
-                            {this.renderTextInput(left.sourceBank)}
+                            {this.renderTextInput(inputsConfig.sourceBank)}
+                        </div>
+                    </div>
+                    <div className={style.formRight}>
+                        <div className={style.inputWrap}>
+                            {this.renderTextInput(inputsConfig.bulstat)}
                         </div>
                         <div className={style.inputWrap}>
-                            {this.renderTextInput(left.bulstat)}
-                        </div>
-                        <div className={style.inputWrap}>
-                            {this.renderTextInput(left.destinationName)}
-                        </div>
-                        <div className={style.inputWrap}>
-                            {this.renderTextInput(left.liableEntityName)}
+                            {this.renderTextInput(inputsConfig.liableEntityName)}
                         </div>
                         <div className={style.inputWrapFlex}>
                             <div className={classnames(style.flexLabel, style.bold)}>
@@ -237,30 +236,58 @@ class TransferBudgetCreate extends Component {
                         </div>
                         {this.renderLiableEntityInfo()}
                     </div>
+                </div>
+            </TitledContentBox>
+        );
+    }
+
+    renderBeneficiaryInfo() {
+        return (
+            <TitledContentBox title={this.translate('Beneficiary')}>
+                <div className={style.formWrap}>
+                    <div className={style.formLeft}>
+                         <div className={style.inputWrap}>
+                            {this.renderTextInput(inputsConfig.iban)}
+                        </div>
+                        <div className={style.inputWrap}>
+                            {this.renderTextInput(inputsConfig.bic)}
+                        </div>
+                        <div className={style.inputWrap}>
+                            {this.renderTextInput(inputsConfig.bank)}
+                        </div>
+                    </div>
                     <div className={style.formRight}>
                         <div className={style.inputWrap}>
-                            {this.renderTextInput(right.iban)}
+                            {this.renderTextInput(inputsConfig.destinationName)}
+                        </div>
+                    </div>
+                </div>
+            </TitledContentBox>
+        );
+    }
+
+    renderTransferInfo() {
+        const { errors } = this.props;
+        return (
+            <TitledContentBox title={this.translate('Transfer Info')}>
+                <div className={style.formWrap}>
+                    <div className={style.formLeft}>
+                        <div className={style.inputWrap}>
+                            {this.renderDropdown(inputsConfig.paymentType)}
                         </div>
                         <div className={style.inputWrap}>
-                            {this.renderTextInput(right.bic)}
+                            {this.renderTextInput(inputsConfig.amount)}
                         </div>
                         <div className={style.inputWrap}>
-                            {this.renderTextInput(right.bank)}
+                            {this.renderTextInput(inputsConfig.reason)}
                         </div>
                         <div className={style.inputWrap}>
-                            {this.renderDropdown(right.paymentType)}
+                            {this.renderTextInput(inputsConfig.moreReason)}
                         </div>
+                    </div>
+                    <div className={style.formRight}>
                         <div className={style.inputWrap}>
-                            {this.renderTextInput(right.amount)}
-                        </div>
-                        <div className={style.inputWrap}>
-                            {this.renderTextInput(right.reason)}
-                        </div>
-                        <div className={style.inputWrap}>
-                            {this.renderTextInput(right.moreReason)}
-                        </div>
-                        <div className={style.inputWrap}>
-                            {this.renderDropdown(right.documentType)}
+                            {this.renderDropdown(inputsConfig.documentType)}
                         </div>
                         <div className={style.inputWrapFlex}>
                             <div className={classnames(style.flexLabel, style.bold)}>
@@ -272,7 +299,7 @@ class TransferBudgetCreate extends Component {
                                 </div>
                                 <div style={{flex: 1}} />
                                 <div style={{flex: 15}}>
-                                    {this.renderTextInput(right.documentNumber, false)}
+                                    {this.renderTextInput(inputsConfig.documentNumber, false)}
                                 </div>
                             </div>
                         </div>
@@ -385,7 +412,9 @@ class TransferBudgetCreate extends Component {
     render() {
         return (
         <div className={style.wrap}>
-            {this.renderMainInfo()}
+            {this.renderSenderInfo()}
+            {this.renderBeneficiaryInfo()}
+            {this.renderTransferInfo()}
             {this.renderAdditionalOptions()}
             {this.renderAMLDeclaration()}
         </div>);
