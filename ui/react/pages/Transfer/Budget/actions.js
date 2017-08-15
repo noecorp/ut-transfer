@@ -62,6 +62,6 @@ export const requestOTP = (bank, recipient) => {
     return {
         type: actionTypes.REQUEST_OTP,
         method: 'transfer.onlineBanking.transfer.requestOTP',
-        params: {bank, recipient}
+        params: { bank, recipient }
     };
 };

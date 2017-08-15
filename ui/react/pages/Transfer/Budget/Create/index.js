@@ -102,11 +102,8 @@ class TransferBudgetCreate extends Component {
             this.onTransferSentHandler = () => {
                 this.closePopup(popups.confirmTransfer);
                 this.props.resetTransferState();
-<<<<<<< HEAD
                 this.props.fetchAccounts();
-=======
                 this.props.resetConfirmTransferPopupState();
->>>>>>> feat-screenConf
             };
         };
         const close = () => {
