@@ -17,8 +17,7 @@ export const swiftValidation = {
     type: validationTypes.text,
     rules: [
         {type: textValidations.isRequired, errorMessage: <Text>Swift is required</Text>},
-        // TODO: change this with regex to match only 8 and 11 characters (not 9, 10)
-        {type: textValidations.length, minVal: 8, maxVal: 11, errorMessage: <Text>Swift should be 8 or 11 characters long</Text>}
+        {type: textValidations.regex, value: /^[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?$/, errorMessage: <Text>Swift is invalid</Text>}
     ]
 };
 

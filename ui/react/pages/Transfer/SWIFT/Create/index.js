@@ -80,15 +80,6 @@ class TransfersSWIFTCreate extends Component {
     }
 
     get actionButtons() {
-        const createAndClose = () => {
-            this.createSwift();
-            this.onTransferSentHandler = () => {
-                this.closePopup(popups.confirmTransfer);
-                this.props.resetState();
-                this.props.resetConfirmTransferPopupState();
-                this.props.removeTab(this.props.activeTab.pathname);
-            };
-        };
         const create = () => {
             this.createSwift();
             this.onTransferSentHandler = () => {
@@ -102,8 +93,7 @@ class TransfersSWIFTCreate extends Component {
             this.props.removeTab(this.props.activeTab.pathname);
         };
         return [
-            { text: this.translate('Create and Close'), onClick: createAndClose, styleType: 'primaryLight' },
-            { text: this.translate('Create'), onClick: create },
+            { text: this.translate('Create'), onClick: create, styleType: 'primaryLight' },
             { text: this.translate('Close'), onClick: close }
         ];
     }

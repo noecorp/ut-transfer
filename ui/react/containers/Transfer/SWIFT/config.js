@@ -1,5 +1,4 @@
 export const transformFields = [ // transliterate & uppercase
-    'sender,sourceAccount',
     'sender,address',
     'sender,city',
     'sender,iban',
