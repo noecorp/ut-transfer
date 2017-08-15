@@ -59,3 +59,16 @@
     color: red;
     font-size: 12px;
 }
+
+.readOnlyInput input {
+    background-color: #F5F5F5 !important;
+}
+
+
+.middleLabels {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 30px;
+    text-align: center;
+}

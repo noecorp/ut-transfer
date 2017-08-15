@@ -65,7 +65,7 @@ class TransferBudgetCreate extends Component {
                   errorMessage={errors.get(input.key)}
                   validators={validationRules}
                   readonly={readonly}
-                  className={readonly && style.readOnlyInput}
+                  inputWrapClassName={readonly && style.readOnlyInput}
                   onChange={this.onInputChange}
                 />
             </div>
@@ -197,7 +197,7 @@ class TransferBudgetCreate extends Component {
                                 <div style={{flex: 8}}>
                                     {this.renderTextInput(left.civilIdentifier)}
                                 </div>
-                                <div style={{flex: 2, textAlign: 'center'}}><Text>or</Text></div>
+                                <div style={{flex: 2}} className={style.middleLabels}><Text>or</Text></div>
                                 <div style={{flex: 8}}>
                                     {this.renderTextInput(left.foreignResidentIdentifier)}
                                 </div>
@@ -281,11 +281,11 @@ class TransferBudgetCreate extends Component {
                                 <Text>Period covered by the payment</Text>
                             </div>
                             <div className={style.flexInput}>
-                                <div style={{flex: 3}}>
+                                <div style={{flex: 4}}>
                                     {this.renderDatePicker({ key: 'startDate' })}
                                 </div>
-                                <div style={{flex: 1, textAlign: 'center'}}><Text>to</Text></div>
-                                <div style={{flex: 3}}>
+                                <div style={{flex: 1}} className={style.middleLabels}><Text>to</Text></div>
+                                <div style={{flex: 4}}>
                                     {this.renderDatePicker({ key: 'endDate' })}
                                 </div>
                             </div>
