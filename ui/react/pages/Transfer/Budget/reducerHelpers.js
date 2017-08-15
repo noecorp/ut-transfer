@@ -46,17 +46,20 @@ export const editTransferField = (state, action, options) => {
     const { field, data } = action.params;
     var { value } = action.params;
     const { activeTabMode, activeTabId } = options;
-    if (uppercasedInputs.indexOf(field) >= 0) {
+    if (uppercasedInputs.indexOf(field) >= 0 || uppercasedInputs.indexOf(field.toString()) >= 0) {
         value = value.toUpperCase();
     }
-    state = state.setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], field], value);
+    if (Array.isArray(field)) {
+        state = state.setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], ...field], value);
+    } else {
+        state = state.setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], field], value);
+    }
     if (data && data.error && data.errorMessage) {
         state = state.setIn([activeTabMode, activeTabId, 'errors', field], data.errorMessage);
     } else {
         state = state.deleteIn([activeTabMode, activeTabId, 'errors', field]);
     }
     if (field === 'account') {
-        
         let selectedAccount = state
             .getIn([activeTabMode, activeTabId, 'remote', 'accounts'])
             .filter(acc => acc.get('accountNumber') === action.params.value).first().toJS();
@@ -95,6 +98,23 @@ export const editTransferField = (state, action, options) => {
         }
         let paymentTypesDropdownData = getPaymentTypesDropdownData(value);
         state = state.setIn([activeTabMode, activeTabId, 'dropdownData', 'paymentType'], immutable.fromJS(paymentTypesDropdownData));
+    }
+    if (field === 'liableEntityType') {
+        if (value === 'person') {
+            state = state
+                .deleteIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'liableEntityInfo', 'bulstat'])
+                .deleteIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'liableEntityInfo', 'foreignResidentIdentifier']);
+        }
+        if (value === 'legalEntity') {
+            state = state
+                .deleteIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'liableEntityInfo', 'personalIdentifier'])
+                .deleteIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'liableEntityInfo', 'foreignResidentIdentifier']);
+        }
+        if (value === 'foreignResident') {
+            state = state
+                .deleteIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'liableEntityInfo', 'bulstat'])
+                .deleteIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'liableEntityInfo', 'foreignResidentIdentifier']);
+        }
     }
     return state;
 };

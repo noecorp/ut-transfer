@@ -118,8 +118,61 @@ class TransferBudgetCreate extends Component {
 
     getInputValue(key) {
         const { data, edited } = this.props;
-        let value = edited.has(key) ? edited.get(key) : data.get(key);
+        let value;
+        if (Array.isArray(key)) {
+            value = edited.hasIn(key) ? edited.getIn(key) : data.getIn(key);
+        } else {
+            value = edited.has(key) ? edited.get(key) : data.get(key);
+        }
         return value;
+    }
+
+    renderLiableEntityInfo() {
+        let liableEntityType = this.getInputValue('liableEntityType');
+        return (
+            <div className={style.inputWrapFlex}>
+                <div className={classnames(style.flexLabel, style.bold)}>
+                    <Text>Liable Entity Information</Text>
+                </div>
+                <div className={style.flexInput}>
+                    <div style={{flex: 15}}>
+                        <Input
+                          key='key'
+                          type='text'
+                          value={this.getInputValue(['liableEntityInfo', 'personalIdentifier'])}
+                          keyProp={['liableEntityInfo', 'personalIdentifier']}
+                          readonly={liableEntityType !== 'person'}
+                          placeholder={this.translate('Personal Identifier')}
+                          onChange={this.onInputChange}
+                        />
+                    </div>
+                    <div style={{flex: 1}}></div>
+                    <div style={{flex: 15}}>
+                        <Input
+                          key='key'
+                          type='text'
+                          value={this.getInputValue(['liableEntityInfo', 'bulstat'])}
+                          keyProp={['liableEntityInfo', 'bulstat']}
+                          readonly={liableEntityType !== 'legalEntity'}
+                          placeholder={this.translate('Bultstat')}
+                          onChange={this.onInputChange}
+                        />
+                    </div>
+                    <div style={{flex: 1}}></div>
+                    <div style={{flex: 15}}>
+                        <Input
+                          key='key'
+                          type='text'
+                          value={this.getInputValue(['liableEntityInfo', 'foreignResidentIdentifier'])}
+                          keyProp={['liableEntityInfo', 'foreignResidentIdentifier']}
+                          readonly={liableEntityType !== 'foreignResident'}
+                          placeholder={this.translate('Foreign Resident Identifier')}
+                          onChange={this.onInputChange}
+                        />
+                    </div>
+                </div>
+            </div>
+        );
     }
 
     renderMainInfo() {
@@ -162,16 +215,35 @@ class TransferBudgetCreate extends Component {
                             {this.renderTextInput(left.destinationName)}
                         </div>
                         <div className={style.inputWrap}>
-                            {this.renderTextInput(left.iban)}
+                            {this.renderTextInput(left.liableEntityName)}
                         </div>
-                        <div className={style.inputWrap}>
-                            {this.renderTextInput(left.bic)}
+                        <div className={style.inputWrapFlex}>
+                            <div className={classnames(style.flexLabel, style.bold)}>
+                                <Text>Liable Entity Type</Text>
+                            </div>
+                            <div className={style.flexInput}>
+                                <RadioInput
+                                  defaultValue={this.getInputValue('liableEntityType')}
+                                  onChange={this.onInputChange}
+                                  options={[
+                                      { id: 1, label: this.translate('Person'), name: 'liableEntityType', value: 'person' },
+                                      { id: 2, label: this.translate('Legal Entity'), name: 'liableEntityType', value: 'legalEntity' },
+                                      { id: 3, label: this.translate('Foreign resident'), name: 'liableEntityType', value: 'foreignResident' }
+                                  ]} />
+                            </div>
                         </div>
-                        <div className={style.inputWrap}>
-                            {this.renderTextInput(left.bank)}
-                        </div>
+                        {this.renderLiableEntityInfo()}
                     </div>
                     <div className={style.formRight}>
+                        <div className={style.inputWrap}>
+                            {this.renderTextInput(right.iban)}
+                        </div>
+                        <div className={style.inputWrap}>
+                            {this.renderTextInput(right.bic)}
+                        </div>
+                        <div className={style.inputWrap}>
+                            {this.renderTextInput(right.bank)}
+                        </div>
                         <div className={style.inputWrap}>
                             {this.renderDropdown(right.paymentType)}
                         </div>
