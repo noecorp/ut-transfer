@@ -13,7 +13,7 @@ export const amlDeclaration = [
 ];
 
 export const expenses = [
-    { key: 'our', name: <Text>Our</Text> },
-    { key: 'ben', name: <Text>Ben</Text> },
-    { key: 'sha', name: <Text>Sha</Text> }
+    { key: 'our', name: <Text>OUR - Expenses to the Sender</Text> },
+    { key: 'ben', name: <Text>BEN - Expenses to the Beneficiary</Text> },
+    { key: 'sha', name: <Text>SHA - Shared Expenses</Text> }
 ];
