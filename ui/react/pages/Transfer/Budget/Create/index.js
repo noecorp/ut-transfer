@@ -9,6 +9,7 @@ import { validateAll } from 'ut-front-react/utils/validator';
 import { removeTab } from 'ut-front-react/containers/TabMenu/actions';
 import Button from 'ut-front-react/components/Button';
 import Text from 'ut-front-react/components/Text';
+import Vertical from 'ut-front-react/components/Layout/Vertical.js';
 
 import ConfirmTransferPopup from '../../../../containers/Transfer/ConfirmTransferPopup';
 import TemplatesPopup from '../../../../components/Transfer/TemplatesPopup';
@@ -97,22 +98,12 @@ class TransferBudgetCreate extends Component {
                 this.props.removeTab(this.props.activeTab.pathname);
             };
         };
-        const create = () => {
-            this.createBudgetTransfer();
-            this.onTransferSentHandler = () => {
-                this.closePopup(popups.confirmTransfer);
-                this.props.resetTransferState();
-                this.props.fetchAccounts();
-                this.props.resetConfirmTransferPopupState();
-            };
-        };
         const close = () => {
             this.props.resetConfirmTransferPopupState();
             this.props.removeTab(this.props.activeTab.pathname);
         };
         return [
-            { text: this.translate('Create and Close'), onClick: createAndClose, styleType: 'primaryLight' },
-            { text: this.translate('Create'), onClick: create },
+            { text: this.translate('Send and Close'), onClick: createAndClose, styleType: 'primaryLight' },
             { text: this.translate('Close'), onClick: close }
         ];
     }
@@ -198,18 +189,23 @@ class TransferBudgetCreate extends Component {
         return (
             <Page>
                 <AddTab pathname={getLink('ut-transfer:transfersBudgetCreate')} title={this.translate('Transfer to the Budget')} />
-                <div className={transferStyle.pageContainer}>
-                    <Header
-                      text={<Text>Payment slip (Transfer to the Budget)</Text>}
-                      buttons={this.actionButtons} />
-                    {this.renderTemplatesSection()}
-                    <div className={transferStyle.transferContainer}>
-                        <TransferBudgetContainer mode='create' id='create' />
+                    <Vertical fixedComponent={
+                        <Header
+                          text={<Text>Payment slip (Transfer to the Budget)</Text>}
+                          buttons={this.actionButtons}
+                        />}
+                    >
+                    <div className={transferStyle.pageContainer}>
+                        {this.renderTemplatesSection()}
+                        <div className={transferStyle.transferContainer}>
+                            <TransferBudgetContainer mode='create' id='create' />
+                        </div>
+                        <div className={transferStyle.transferBottomContainer}>
+                            <Text>I am aware that I bear criminal liability under article 313 of the Criminal Code when declaring wrong facts.</Text>
+                        </div>
                     </div>
-                    <div className={transferStyle.transferBottomContainer}>
-                        <Text>I am aware that I bear criminal liability under article 313 of the Criminal Code when declaring wrong facts.</Text>
-                    </div>
-                </div>
+                    </Vertical>
+                
                 <ConfirmTransferPopup
                   isOpen={this.state.isPopupOpen[popups.confirmTransfer]}
                   onConfirm={this.confirmAndSendBudgetTransfer}
