@@ -54,7 +54,7 @@ class ConfirmTransferPopup extends Component {
               footer={{actionButtons: this.actionButtons}} >
                 <div className={style.popupWrap}>
                     <div className={style.infoRow}>
-                        <Text>Please confirm this transfer with your password and the OTP you have received on your phone.</Text>
+                        <Text>Please confirm this transfer with your password and the TAN you have received on your phone.</Text>
                     </div>
                     <div className={style.row}>
                         <Input
@@ -72,8 +72,8 @@ class ConfirmTransferPopup extends Component {
                         <Input
                           type='text'
                           keyProp='otp'
-                          label={this.context.translate('OTP')}
-                          placeholder={this.context.translate('OTP')}
+                          label={this.context.translate('TAN')}
+                          placeholder={this.context.translate('TAN')}
                           value={otp}
                           isValid={!errors.get('otp')}
                           validators={validations.otp.rules}
