@@ -319,7 +319,7 @@ class TransferBudgetCreate extends Component {
                         </div>
                         <div className={style.inputWrapFlex}>
                             <div className={classnames(style.flexLabel, style.bold)}>
-                                <Text>Payment System</Text>
+                                <Text>Payment System</Text> *
                             </div>
                             <div className={style.flexInput}>
                                 <div className={style.additionalOptionsRadioWrap} style={{ display: 'flex', flexBasis: '100%' }}>

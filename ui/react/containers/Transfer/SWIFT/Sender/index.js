@@ -60,7 +60,6 @@ class Sender extends Component {
                       keyProp='name'
                       boldLabel
                       readonly
-                      inputWrapClassName={style.readOnlyInput}
                     />
                 </div>
                 <div className={style.inputWrap}>
@@ -100,8 +99,22 @@ class Sender extends Component {
             </div>
         );
     }
-
+    isDisabled(accountNumber) {
+        if (accountNumber.includes('CREX') || accountNumber.includes('CREH')) {
+            switch (accountNumber[13]) {
+                case '1':
+                case '3':
+                case '4':
+                case '9':
+                    return true;
+                default:
+                    return false;
+            }
+        }
+        return false;
+    }
     renderRightColumn() {
+        let isCurrencyDisabled = this.isDisabled(this.props.accountNumber);
         return (
             <div className={style.formRight}>
                 <div className={style.inputWrap}>
@@ -110,7 +123,6 @@ class Sender extends Component {
                       keyProp='phone'
                       boldLabel
                       readonly
-                      inputWrapClassName={style.readOnlyInput}
                     />
                 </div>
                 <div className={style.inputWrap}>
@@ -119,7 +131,6 @@ class Sender extends Component {
                       keyProp='ibanOrderer'
                       boldLabel
                       readonly
-                      inputWrapClassName={style.readOnlyInput}
                     />
                 </div>
                 <div className={classnames(style.inputWrap)}>
@@ -142,6 +153,7 @@ class Sender extends Component {
                                   placeholder={this.translate('Select')}
                                   boldLabel
                                   keyProp='currency'
+                                  disabled={isCurrencyDisabled}
                                   isValid={this.props.errors.get('currency') === undefined}
                                   onSelect={this.handleInputChange('currency')}
                                   data={this.props.currencies}
@@ -165,18 +177,28 @@ class Sender extends Component {
                       data={[
                           {
                               key: 'abroad',
-                              name: 'Abroad'
+                              name: <Text>Abroad</Text>
                           },
                           {
                               key: 'domesticLocal',
-                              name: 'Domestic for local party'
+                              name: <Text>Domestic for local party</Text>
                           },
                           {
                               key: 'domestivForeign',
-                              name: 'Domestic for foreign party'
+                              name: <Text>Domestic for foreign party</Text>
                           }
                       ]}
                       className={style.rowPaddings}
+                    />
+                </div>
+                <div className={style.inputWrap}>
+                    <Input value={this.getInputValue('exchangeRate')} label={<Text>Exchange Rate</Text>}
+                      onChange={this.handleInputChange('exchangeRate')}
+                      keyProp='exchangeRate'
+                      boldLabel
+                      //  validators={exchangeRateValidation.rules}
+                      isValid={this.props.errors.get('exchangeRate') === undefined}
+                      errorMessage={this.props.errors.get('exchangeRate')}
                     />
                 </div>
             </div>
@@ -184,7 +206,7 @@ class Sender extends Component {
     }
     render() {
         return (
-            <TitledContentBox title={<Text>Sender</Text>} externalContentClasses={style.contentBoxExternal}>
+            <TitledContentBox title={<Text>Sender</Text>} externalContentClasses={style.contentBoxExternal} externalHeaderClasses={style.externalHeaderClasses}>
                 <div className={style.formWrap}>
                     {this.renderLeftColumn()}
                     {this.renderRightColumn()}
@@ -228,6 +250,7 @@ function mapStateToProps(state, ownProps) {
     return {
         accounts: state.transferSwift.getIn(['create', 'create', 'dropdownData', 'account']).toJS(),
         data: state.transferSwift.getIn([mode, id, 'data', 'sender']),
+        accountNumber: state.transferSwift.getIn([mode, id, 'data', 'beneficiary', 'accountNumber']),
         edited: state.transferSwift.getIn([mode, id, 'edited', 'sender'], immutable.Map()),
         errors: state.transferSwift.getIn([mode, id, 'errors', 'sender'], immutable.Map()),
         countries: state.transferSwift.getIn([mode, id, 'nomenclatures', 'country'], immutable.List()).toJS(),

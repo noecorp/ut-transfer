@@ -37,6 +37,26 @@ export const editTransferField = (state, action, options) => {
             .deleteIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'beneficiary', 'routingNumber'])
             .deleteIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'errors', 'beneficiary', 'routingNumber']);
     }
+    if (action.key.toString() === 'beneficiary,accountNumber') {
+        if (action.value.substring(4, 8) === 'CREХ') {
+            let newCurrency = state.getIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'sender', 'currency']);
+            switch (action.value[13]) {
+                case '1':
+                    newCurrency = 'USD';
+                    break;
+                case '3':
+                    newCurrency = 'CHF';
+                    break;
+                case '4':
+                    newCurrency = 'EUR';
+                    break;
+                case '9':
+                    newCurrency = 'GBP';
+                    break;
+            }
+            state = state.setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'sender', 'currency'], newCurrency);
+        }
+    }
     if (action.data && action.data.errorMessage) {
         state = state.setIn([activeTabMode, activeTabId, 'errors', ...action.key], action.data.errorMessage);
     } else {

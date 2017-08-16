@@ -17,3 +17,8 @@ export const expenses = [
     { key: 'ben', name: <Text>BEN - Expenses to the Beneficiary</Text> },
     { key: 'sha', name: <Text>SHA - Shared Expenses</Text> }
 ];
+
+export const priorities = [
+    { key: 'standard', name: <Text>Standard</Text> },
+    { key: 'urgent', name: <Text>Urgent</Text> }
+];
