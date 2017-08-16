@@ -11,7 +11,7 @@
                 "name": "ТД НА НАП СОФИЯ"
             },
             "reason": "ДАНЪЦИ 2016",
-            "debit": 150,
+            "debit": 200,
             "credit": 0,
             "dateTime": "2017-07-15 21:36"
         },
@@ -26,7 +26,7 @@
                 "name": "НЗОК"
             },
             "reason": "ОСИГУРОВКИ - М.6 И М.7 2017",
-            "debit": 240.50,
+            "debit": 240.5,
             "credit": 0,
             "dateTime": "2017-07-14 22:13"
         },
@@ -34,20 +34,20 @@
             "currency": "EUR",
             "transferId": "TX3790QARV347197",
             "type": "SWIFTTransfer",
-            "sourceAccount" : 3,
-            "destinationAccount": {
+            "sourceAccount": {
                 "bank": "ROYAL BANK OF SCOTLAND",
                 "iban": "GB29RBOS60161331926819",
                 "name": "JOHN MCGREGOR"
             },
+            "destinationAccount": 3,
             "reason": "TRANSFER OF FUNDS",
-            "debit": 100,
-            "credit": 0,
+            "debit": 0,
+            "credit": 50,
             "dateTime": "2017-07-10 02:43"
         },
         {
             "currency": "BGN",
-            "transferId": "TX8812EFDN168761",            
+            "transferId": "TX8812EFDN168761",
             "type": "budgetTransfer",
             "destinationAccount": 1,
             "sourceAccount": {
@@ -62,7 +62,7 @@
         },
         {
             "currency": "BGN",
-            "transferId": "TX8922EACN168765",            
+            "transferId": "TX8922EACN168765",
             "type": "budgetTransfer",
             "destinationAccount": 2,
             "sourceAccount": {
@@ -72,14 +72,14 @@
             },
             "reason": "ЗАХРАНВАНЕ СМЕТКА",
             "debit": 0,
-            "credit": 500,
+            "credit": 300,
             "dateTime": "2017-06-12 21:36"
         },
         {
             "currency": "EUR",
             "transferId": "TX3790QARV347197",
             "type": "SWIFTTransfer",
-            "sourceAccount" : 3,
+            "sourceAccount": 3,
             "destinationAccount": {
                 "bank": "AIB BANK DUBLIN",
                 "iban": "IE96AIBK93136500995097",
@@ -116,7 +116,7 @@
                 "name": "ОБЩИНА РУСЕ"
             },
             "reason": "ТАКСА БИТОВИ ОТПАДЪЦИ 2016, ПАРТ НО 116574",
-            "debit": 14.50,
+            "debit": 14.5,
             "credit": 0,
             "dateTime": "2017-06-28 12:15"
         },
@@ -124,7 +124,7 @@
             "currency": "EUR",
             "transferId": "TX3790QARV347197",
             "type": "SWIFTTransfer",
-            "sourceAccount" : 3,
+            "sourceAccount": 3,
             "destinationAccount": {
                 "bank": "AIB BANK DUBLIN",
                 "iban": "IE96AIBK93136500995097",
@@ -161,7 +161,7 @@
                 "name": "ТМУ АЕРОГАРА СОФИЯ"
             },
             "reason": "МИТНИ СБОРОВЕ",
-            "debit": 50.50,
+            "debit": 100,
             "credit": 0,
             "dateTime": "2017-05-14 18:25"
         },
@@ -169,30 +169,30 @@
             "currency": "EUR",
             "transferId": "TX6647QAER671528",
             "type": "SWIFTTransfer",
-            "sourceAccount" : 3,
-            "destinationAccount": {
+            "sourceAccount": {
                 "bank": "SPARKASSE LUENEBURG",
                 "iban": "DE89240501100011005865",
                 "name": "SPORTVEREINIGUNG SCHARNEBECK E.V."
             },
+            "destinationAccount": 3,
             "reason": "BANKVERBINDUNG DER SVE",
-            "debit": 100,
-            "credit": 0,
+            "debit": 0,
+            "credit": 75,
             "dateTime": "2017-05-07 02:43"
         },
         {
             "currency": "BGN",
             "transferId": "TX8915EAAE168561",
-            "sourceAccount": 1,
-            "type": "budgetTransfer",
-            "destinationAccount": {
+            "sourceAccount": {
                 "bank": "ТБ ИНВЕСТБАНК АД",
                 "iban": "BG73IORT80488687372400",
                 "name": "НЗОК БЛАГОЕВГРАД"
             },
-            "reason": "ЗДРАВНИ ОСИГУРОВКИ М.4 2017",
-            "debit": 70.85,
-            "credit": 0,
+            "type": "budgetTransfer",
+            "destinationAccount": 1,
+            "reason": "ЗАХРАНВАНЕ СМЕТКА",
+            "debit": 0,
+            "credit": 120.00,
             "dateTime": "2017-04-22 16:30"
         },
         {
@@ -206,7 +206,7 @@
                 "name": "ТМУ АЕРОГАРА СОФИЯ"
             },
             "reason": "МИТНИ СБОРОВЕ",
-            "debit": 10.50,
+            "debit": 50.5,
             "credit": 0,
             "dateTime": "2017-04-18 15:45"
         },
@@ -214,16 +214,46 @@
             "currency": "EUR",
             "transferId": "TX6647QAER671528",
             "type": "SWIFTTransfer",
-            "sourceAccount" : 3,
-            "destinationAccount": {
+            "sourceAccount": {
                 "bank": "SPARKASSE LUENEBURG",
                 "iban": "DE89240501100011005865",
                 "name": "SPORTVEREINIGUNG SCHARNEBECK E.V."
             },
+            "destinationAccount": 3,
             "reason": "BANKVERBINDUNG DER SVE",
-            "debit": 100,
-            "credit": 0,
+            "debit": 0,
+            "credit": 100,
             "dateTime": "2017-04-16 09:30"
+        },
+        {
+            "currency": "BGN",
+            "transferId": "TX2199AAPP888902",
+            "sourceAccount": 1,
+            "type": "budgetTransfer",
+            "destinationAccount": {
+                "bank": "ИНВЕСТБАНК",
+                "iban": "BG53IORT73758402020000",
+                "name": "TEST"
+            },
+            "reason": "ДАНЪК СГРАДИ 2016",
+            "debit": 20,
+            "credit": 0,
+            "dateTime": "2017-07-16 04:17"
+        },
+        {
+            "currency": "EUR",
+            "transferId": "TX2873EXNA795138",
+            "sourceAccount": 2,
+            "type": "SWIFTTransfer",
+            "destinationAccount": {
+                "bank": "SOCIETE GENERALE",
+                "iban": "TEST",
+                "name": "TEST"
+            },
+            "reason": "FUNDS TRANSFER",
+            "debit": 0,
+            "credit": 30,
+            "dateTime": "2017-07-16 04:53"
         }
     ]
 }

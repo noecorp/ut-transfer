@@ -1,6 +1,6 @@
 {
     "accounts": [
-        {   
+        {
             "customerData": {
                 "firstName": "Николай",
                 "lastName": "Иванов",
@@ -12,7 +12,7 @@
             "accountNumber": 1,
             "name": "Разплащателна сметка",
             "type": "operational",
-            "balance": 5232.50,
+            "balance": 10232.5,
             "currency": "BGN",
             "iban": "BG39CREX92603314548700",
             "bank": "Токуда Банк",
@@ -31,7 +31,7 @@
             "accountNumber": 2,
             "name": "Разплащателна сметка",
             "type": "savings",
-            "balance": 8020.25,
+            "balance": 5610.25,
             "currency": "BGN",
             "iban": "BG39CREX92601016221000",
             "bank": "Уникредит Булбанк",
