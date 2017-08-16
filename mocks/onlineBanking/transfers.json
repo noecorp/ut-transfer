@@ -18,7 +18,7 @@
         {
             "currency": "BGN",
             "transferId": "TX6951OWMK630323",
-            "sourceAccount": 1,
+            "sourceAccount": 2,
             "type": "budgetTransfer",
             "destinationAccount": {
                 "bank": "ИНВЕСТБАНК",
@@ -28,13 +28,13 @@
             "reason": "ОСИГУРОВКИ - М.6 И М.7 2017",
             "debit": 240.50,
             "credit": 0,
-            "dateTime": "2017-07-15 22:13"
+            "dateTime": "2017-07-14 22:13"
         },
         {
             "currency": "EUR",
             "transferId": "TX3790QARV347197",
             "type": "SWIFTTransfer",
-            "sourceAccount" : 1,
+            "sourceAccount" : 3,
             "destinationAccount": {
                 "bank": "ROYAL BANK OF SCOTLAND",
                 "iban": "GB29RBOS60161331926819",
@@ -43,7 +43,187 @@
             "reason": "TRANSFER OF FUNDS",
             "debit": 100,
             "credit": 0,
-            "dateTime": "2017-07-16 02:43"
+            "dateTime": "2017-07-10 02:43"
+        },
+        {
+            "currency": "BGN",
+            "transferId": "TX8812EFDN168761",            
+            "type": "budgetTransfer",
+            "destinationAccount": 1,
+            "sourceAccount": {
+                "bank": "БАНКА ДСК",
+                "iban": "BG30STSA93008210084400",
+                "name": "ТОДОР ПЕТКОВ"
+            },
+            "reason": "ЗАХРАНВАНЕ СМЕТКА",
+            "debit": 0,
+            "credit": 100,
+            "dateTime": "2017-06-12 21:36"
+        },
+        {
+            "currency": "BGN",
+            "transferId": "TX8922EACN168765",            
+            "type": "budgetTransfer",
+            "destinationAccount": 2,
+            "sourceAccount": {
+                "bank": "БАНКА ДСК",
+                "iban": "BG30STSA93008210084400",
+                "name": "ИВАН ИВАНОВ"
+            },
+            "reason": "ЗАХРАНВАНЕ СМЕТКА",
+            "debit": 0,
+            "credit": 500,
+            "dateTime": "2017-06-12 21:36"
+        },
+        {
+            "currency": "EUR",
+            "transferId": "TX3790QARV347197",
+            "type": "SWIFTTransfer",
+            "sourceAccount" : 3,
+            "destinationAccount": {
+                "bank": "AIB BANK DUBLIN",
+                "iban": "IE96AIBK93136500995097",
+                "name": "JANE LEE"
+            },
+            "reason": "FUNDS TRANSFER",
+            "debit": 100,
+            "credit": 0,
+            "dateTime": "2017-06-09 10:43"
+        },
+        {
+            "currency": "BGN",
+            "transferId": "TX8812EFDN168761",
+            "sourceAccount": 1,
+            "type": "budgetTransfer",
+            "destinationAccount": {
+                "bank": "ТБ ИНВЕСТБАНК АД",
+                "iban": "BG53IORT73758402020000",
+                "name": "ОБЩИНА ВРАЦА"
+            },
+            "reason": "ДАНЪК МПС ВР0515ВМ 2017",
+            "debit": 70.85,
+            "credit": 0,
+            "dateTime": "2017-06-30 21:36"
+        },
+        {
+            "currency": "BGN",
+            "transferId": "TX5874OWMK6332179",
+            "sourceAccount": 2,
+            "type": "budgetTransfer",
+            "destinationAccount": {
+                "bank": "ТБ ИНВЕСТБАНК АД",
+                "iban": "BG96IORT73798400080000",
+                "name": "ОБЩИНА РУСЕ"
+            },
+            "reason": "ТАКСА БИТОВИ ОТПАДЪЦИ 2016, ПАРТ НО 116574",
+            "debit": 14.50,
+            "credit": 0,
+            "dateTime": "2017-06-28 12:15"
+        },
+        {
+            "currency": "EUR",
+            "transferId": "TX3790QARV347197",
+            "type": "SWIFTTransfer",
+            "sourceAccount" : 3,
+            "destinationAccount": {
+                "bank": "AIB BANK DUBLIN",
+                "iban": "IE96AIBK93136500995097",
+                "name": "LANGUAGE CONTACT LTD"
+            },
+            "reason": "ADVANCE PAYMENT",
+            "debit": 100,
+            "credit": 0,
+            "dateTime": "2017-06-13 10:43"
+        },
+        {
+            "currency": "BGN",
+            "transferId": "TX8812EFDN168761",
+            "sourceAccount": 1,
+            "type": "budgetTransfer",
+            "destinationAccount": {
+                "bank": "ТБ ИНВЕСТБАНК АД",
+                "iban": "BG53IORT73758402020000",
+                "name": "ОБЩИНА ВРАЦА"
+            },
+            "reason": "ДАНЪК МПС ВР0515ВМ 2017",
+            "debit": 70.85,
+            "credit": 0,
+            "dateTime": "2017-05-30 21:36"
+        },
+        {
+            "currency": "BGN",
+            "transferId": "TX6698ERMA03972171",
+            "sourceAccount": 2,
+            "type": "budgetTransfer",
+            "destinationAccount": {
+                "bank": "УНИКРЕДИТ БУЛБАНК АД",
+                "iban": "BG96IORT73798400080000",
+                "name": "ТМУ АЕРОГАРА СОФИЯ"
+            },
+            "reason": "МИТНИ СБОРОВЕ",
+            "debit": 50.50,
+            "credit": 0,
+            "dateTime": "2017-05-14 18:25"
+        },
+        {
+            "currency": "EUR",
+            "transferId": "TX6647QAER671528",
+            "type": "SWIFTTransfer",
+            "sourceAccount" : 3,
+            "destinationAccount": {
+                "bank": "SPARKASSE LUENEBURG",
+                "iban": "DE89240501100011005865",
+                "name": "SPORTVEREINIGUNG SCHARNEBECK E.V."
+            },
+            "reason": "BANKVERBINDUNG DER SVE",
+            "debit": 100,
+            "credit": 0,
+            "dateTime": "2017-05-07 02:43"
+        },
+        {
+            "currency": "BGN",
+            "transferId": "TX8915EAAE168561",
+            "sourceAccount": 1,
+            "type": "budgetTransfer",
+            "destinationAccount": {
+                "bank": "ТБ ИНВЕСТБАНК АД",
+                "iban": "BG73IORT80488687372400",
+                "name": "НЗОК БЛАГОЕВГРАД"
+            },
+            "reason": "ЗДРАВНИ ОСИГУРОВКИ М.4 2017",
+            "debit": 70.85,
+            "credit": 0,
+            "dateTime": "2017-04-22 16:30"
+        },
+        {
+            "currency": "BGN",
+            "transferId": "TX6698ERMA03972171",
+            "sourceAccount": 2,
+            "type": "budgetTransfer",
+            "destinationAccount": {
+                "bank": "МБ СВОБОДНА ЗОНА БУРГАС",
+                "iban": "BG80STSA93008210083500",
+                "name": "ТМУ АЕРОГАРА СОФИЯ"
+            },
+            "reason": "МИТНИ СБОРОВЕ",
+            "debit": 10.50,
+            "credit": 0,
+            "dateTime": "2017-04-18 15:45"
+        },
+        {
+            "currency": "EUR",
+            "transferId": "TX6647QAER671528",
+            "type": "SWIFTTransfer",
+            "sourceAccount" : 3,
+            "destinationAccount": {
+                "bank": "SPARKASSE LUENEBURG",
+                "iban": "DE89240501100011005865",
+                "name": "SPORTVEREINIGUNG SCHARNEBECK E.V."
+            },
+            "reason": "BANKVERBINDUNG DER SVE",
+            "debit": 100,
+            "credit": 0,
+            "dateTime": "2017-04-16 09:30"
         }
     ]
 }

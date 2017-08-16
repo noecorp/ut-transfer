@@ -47,14 +47,14 @@
                     "value": "7011204020"
                 }
             },
-            "accountNumber": 2,
+            "accountNumber": 3,
             "name": "Спестовна сметка",
             "type": "savings",
             "balance": 8020.25,
             "currency": "EUR",
             "iban": "BG39CREX92601016221000",
             "bank": "Райфайзен Банк",
-            "bankLatin": "Refieisen Bank",
+            "bankLatin": "Raiffeisen Bank",
             "phone": "359883322174"
         }
     ]
