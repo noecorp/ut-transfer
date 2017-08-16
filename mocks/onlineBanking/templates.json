@@ -1,6 +1,77 @@
 {
     "templates": {
-        "budget": [],
+        "budget": [
+            {
+                "name": "Митни сборове",
+                "data": {
+                    "data": {
+                        "paymentType": "222800",
+                        "sourceIban": "BG39CREX92603314548700",
+                        "documentNumber": "50",
+                        "reason": "МИТНИ СБОРОВЕ",
+                        "liableEntityName": "НИКОЛАЙ ИВАНОВ",
+                        "sourceName": "НИКОЛАЙ ИВАНОВ",
+                        "iban": "BG16STSA93008210083100",
+                        "liableEntityInfo": {
+                            "personalIdentifier": "9005054040"
+                        },
+                        "endDate": "2017-08-20",
+                        "documentDate": "2017-08-01",
+                        "bulstat": "BG1234567890",
+                        "sourceBankLatin": "TOKUDA BANK",
+                        "account": 1,
+                        "transferExecution": "now",
+                        "phone": "359883322174",
+                        "startDate": "2017-08-07",
+                        "liableEntityType": "person",
+                        "documentType": "4",
+                        "paymentSystem": "bisera",
+                        "sourceBank": "ТОКУДА БАНК",
+                        "amount": "100",
+                        "destinationName": "АГЕНЦИЯ МИТНИЦИ",
+                        "transferExecutionDate": "8/16/2017",
+                        "bic": "STSABGSF",
+                        "bank": "БАНКА ДСК",
+                        "civilIdentifier": "9005054040"
+                    }
+                }
+            },
+            {
+                "name": "Данък недвижими имоти",
+                "data": {
+                    "data": {
+                        "paymentType": "442100",
+                        "sourceIban": "BG39CREX92601016221000",
+                        "documentNumber": "11504560",
+                        "reason": "ДАНЪК НЕДВИЖИМИ ИМОТИ 2016",
+                        "liableEntityName": "ФИРМА ЕООД",
+                        "sourceName": "ЛЮБОМИР АЛЕКСАНДРОВ",
+                        "iban": "BG24SOMB91308413443044",
+                        "liableEntityInfo": {
+                            "bulstat": "BG22545690"
+                        },
+                        "endDate": "2016-12-31",
+                        "documentDate": "2017-05-01",
+                        "bulstat": "BG22545690",
+                        "sourceBankLatin": "UNICREDIT BULBANK",
+                        "account": 2,
+                        "transferExecution": "now",
+                        "phone": "359883322174",
+                        "startDate": "2016-01-01",
+                        "liableEntityType": "legalEntity",
+                        "documentType": "5",
+                        "paymentSystem": "bisera",
+                        "sourceBank": "УНИКРЕДИТ БУЛБАНК",
+                        "amount": "250",
+                        "destinationName": "СТОЛИЧНА ОБЩИНА - РАЙОН ТРИАДИЦА",
+                        "transferExecutionDate": "8/16/2017",
+                        "bic": "SOMBBGSF",
+                        "bank": "ОБЩИНСКА БАНКА",
+                        "civilIdentifier": "7502051280"
+                    }
+                }
+            }
+        ],
         "swift": []
     }
 }
