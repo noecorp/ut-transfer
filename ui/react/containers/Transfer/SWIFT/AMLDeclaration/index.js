@@ -29,7 +29,7 @@ class AMLDeclaration extends Component {
 
     render() {
         return (
-            <TitledContentBox title={<Text>Declaration under art.4, para.7 and art.6, para.5, item.3 of the Law on Measures against Money Laundering</Text>}>
+            <TitledContentBox title={<Text>Declaration under art.4, para.7 and art.6, para.5, item.3 of the Law on Measures against Money Laundering</Text>} externalContentClasses={style.contentBoxExternal}>
                 <div className={style.formWrap}>
                     <div className={style.formLeft}>
                         <div className={style.inputWrap}>

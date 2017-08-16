@@ -106,7 +106,7 @@ class Beneficiary extends Component {
     }
     render() {
         return (
-            <TitledContentBox title={<Text>Beneficiary</Text>}>
+            <TitledContentBox title={<Text>Beneficiary</Text>} externalContentClasses={style.contentBoxExternal}>
                 <div className={style.formWrap}>
                     {this.renderLeftColumn()}
                     {this.renderRightColumn()}

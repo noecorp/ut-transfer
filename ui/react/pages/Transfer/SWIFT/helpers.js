@@ -1,3 +1,7 @@
+import React from 'react';
+import Text from 'ut-front-react/components/Text';
+import { countriesToShowRoutingNumber } from '../../../containers/Transfer/SWIFT/Beneficiary/helpers';
+
 const cyrrilicToLatinMap = new Map([
     ['А', 'A'],
     ['Б', 'B'],
@@ -66,4 +70,23 @@ export const transformValue = (value) => {
         }
     };
     return transliterated.join('');
+};
+
+export const performCustomValidations = (data, validationResult) => {
+    if (data.getIn(['sender', 'sum']) && Number(data.getIn(['sender', 'sum'])) > 30000 && !data.getIn(['amlDeclaration', 'fundsOrigin'])) {
+        validationResult.isValid = false;
+        validationResult.errors.push({
+            key: ['amlDeclaration', 'fundsOrigin'],
+            errorMessage: <Text>Funds Origin is required</Text>
+        });
+    }
+    if (data.getIn(['beneficiary', 'country']) &&
+        !!countriesToShowRoutingNumber[data.getIn(['beneficiary', 'country'])] &&
+        !data.getIn(['beneficiary', 'routingNumber'])) {
+        validationResult.isValid = false;
+        validationResult.errors.push({
+            key: ['beneficiary', 'routingNumber'],
+            errorMessage: <Text>Routing Number is required</Text>
+        });
+    }
 };

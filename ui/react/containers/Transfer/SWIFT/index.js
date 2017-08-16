@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Sender from './Sender';
 import BankBeneficiary from './BankBeneficiary';
 import Beneficiary from './Beneficiary';
+import CorrespondentBankBeneficiary from './CorrespondentBankBeneficiary';
 import Transfer from './Transfer';
 import BankExpenses from './BankExpenses';
 import AMLDeclaration from './AMLDeclaration';
@@ -36,6 +37,7 @@ class Swift extends Component {
             <div className={style.contentBoxesWrapper}>
                 <Sender mode={mode} id={id} />
                 <BankBeneficiary mode={mode} id={id} />
+                <CorrespondentBankBeneficiary mode={mode} id={id} />
                 <Beneficiary mode={mode} id={id} />
                 <Transfer mode={mode} id={id} />
                 <BankExpenses mode={mode} id={id} />

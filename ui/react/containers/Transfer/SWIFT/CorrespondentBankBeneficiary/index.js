@@ -8,9 +8,9 @@ import Text from 'ut-front-react/components/Text';
 import style from './../style.css';
 
 import {changeField} from '../../../../pages/Transfer/SWIFT/actions';
-import {swiftValidation, cityValidation, nameValidation, addressValidation} from './validations';
+import {swiftValidation} from './validations';
 
-class BankBeneficiary extends Component {
+class CorrespondendBankBeneficiary extends Component {
     translate(stringToTranslate) {
         return this.context.translate(stringToTranslate);
     }
@@ -23,7 +23,7 @@ class BankBeneficiary extends Component {
 
     handleInputChange(fieldName) {
         return (data) => {
-            this.props.changeField(['bankBeneficiary', fieldName], data.value, data);
+            this.props.changeField(['correspondentBankBeneficiary', fieldName], data.value, data);
         };
     }
 
@@ -45,9 +45,6 @@ class BankBeneficiary extends Component {
                       onChange={this.handleInputChange('name')}
                       keyProp='name'
                       boldLabel
-                      validators={nameValidation.rules}
-                      isValid={this.props.errors.get('name') === undefined}
-                      errorMessage={this.props.errors.get('name')}
                     />
                 </div>
                 <div className={style.inputWrap}>
@@ -55,9 +52,6 @@ class BankBeneficiary extends Component {
                       onChange={this.handleInputChange('address')}
                       keyProp='address'
                       boldLabel
-                      validators={addressValidation.rules}
-                      isValid={this.props.errors.get('address') === undefined}
-                      errorMessage={this.props.errors.get('address')}
                     />
                 </div>
             </div>
@@ -72,21 +66,15 @@ class BankBeneficiary extends Component {
                         onChange={this.handleInputChange('city')}
                         keyProp='city'
                         boldLabel
-                        validators={cityValidation.rules}
-                        isValid={this.props.errors.get('city') === undefined}
-                        errorMessage={this.props.errors.get('city')}
                       />
                 </div>
                 <div className={style.inputWrap}>
                     <Dropdown
                       defaultSelected={this.getInputValue('country')}
-                      label={<span><Text>Country</Text> *</span>}
+                      label={<span><Text>Country</Text></span>}
                       placeholder={this.translate('Select')}
                       boldLabel
                       keyProp='country'
-                      disabled={!this.props.isCountryDisabled}
-                      isValid={this.props.errors.get('country') === undefined}
-                      errorMessage={this.props.errors.get('country')}
                       onSelect={this.handleInputChange('country')}
                       data={this.props.countries}
                       className={style.rowPaddings}
@@ -98,7 +86,7 @@ class BankBeneficiary extends Component {
 
     render() {
         return (
-            <TitledContentBox title={<Text>Beneficiary Bank</Text>} externalContentClasses={style.contentBoxExternal}>
+            <TitledContentBox title={<Text>Correspondent Beneficiary Bank</Text>} externalContentClasses={style.contentBoxExternal}>
                 <div className={style.formWrap}>
                     {this.renderLeftColumn()}
                     {this.renderRightColumn()}
@@ -108,11 +96,11 @@ class BankBeneficiary extends Component {
     }
 }
 
-BankBeneficiary.contextTypes = {
+CorrespondendBankBeneficiary.contextTypes = {
     translate: PropTypes.func
 };
 
-BankBeneficiary.propTypes = {
+CorrespondendBankBeneficiary.propTypes = {
     mode: PropTypes.string,
     id: PropTypes.string,
     countries: PropTypes.arrayOf(PropTypes.shape({
@@ -130,15 +118,14 @@ BankBeneficiary.propTypes = {
 function mapStateToProps(state, ownProps) {
     const { mode, id } = ownProps;
     return {
-        data: state.transferSwift.getIn([mode, id, 'data', 'bankBeneficiary']),
-        isCountryDisabled: state.transferSwift.getIn([mode, id, 'data', 'sender', 'transferDestination']) === 'abroad',
-        edited: state.transferSwift.getIn([mode, id, 'edited', 'bankBeneficiary'], immutable.Map()),
+        data: state.transferSwift.getIn([mode, id, 'data', 'correspondentBankBeneficiary']),
+        edited: state.transferSwift.getIn([mode, id, 'edited', 'correspondentBankBeneficiary'], immutable.Map()),
         countries: state.transferSwift.getIn([mode, id, 'nomenclatures', 'country']).toJS(),
-        errors: state.transferSwift.getIn([mode, id, 'errors', 'bankBeneficiary'], immutable.Map())
+        errors: state.transferSwift.getIn([mode, id, 'errors', 'correspondentBankBeneficiary'], immutable.Map())
     };
 }
 
 export default connect(
     mapStateToProps,
     {changeField}
-)(BankBeneficiary);
+)(CorrespondendBankBeneficiary);

@@ -7,6 +7,7 @@ import { AddTab } from 'ut-front-react/containers/TabMenu';
 import Header from 'ut-front-react/components/PageLayout/Header';
 import Text from 'ut-front-react/components/Text';
 import { validateAll } from 'ut-front-react/utils/validator';
+import Vertical from 'ut-front-react/components/Layout/Vertical.js';
 
 import ConfirmTransferPopup from '../../../../containers/Transfer/ConfirmTransferPopup';
 import TransferSuccessPopup from '../../../../components/Transfer/TransferSuccessPopup';
@@ -23,7 +24,7 @@ import {
     createTransfer
 } from '../actions';
 import { resetConfirmTransferPopupState } from './../../../../containers/Transfer/ConfirmTransferPopup/actions';
-import { prepareTransferSwiftToSend } from '../helpers';
+import { prepareTransferSwiftToSend, performCustomValidations } from '../helpers';
 import { removeTab } from 'ut-front-react/containers/TabMenu/actions';
 
 import transferStyle from '../../style.css';
@@ -73,6 +74,7 @@ class TransfersSWIFTCreate extends Component {
     createSwift() {
         let createValidationRules = getTransferSWIFTValidations();
         let validation = validateAll(this.props.data, createValidationRules);
+        performCustomValidations(this.props.data, validation);
         // TODO: add validation for routing number only when USA is selected as country
         if (!validation.isValid) {
             let errors = prepareErrorsWithFullKeyPath(validation.errors);
@@ -143,10 +145,17 @@ class TransfersSWIFTCreate extends Component {
         return (
             <Page>
                 <AddTab pathname={getLink('ut-transfer:transfersSWIFT')} title={'SWIFT Transfers'} />
-                <div className={transferStyle.pageContainer}>
-                    <Header text={<Text>SWIFT Transfers</Text>} buttons={this.actionButtons} />
-                    <Swift mode='create' id='create' />
-                </div>
+                <Vertical fixedComponent={<Header text={<Text>SWIFT Transfers</Text>} buttons={this.actionButtons} />}>
+                    <div className={transferStyle.pageContainer}>
+                        <div className={transferStyle.transferTopContainer}>
+                            <Text>All fields in SWIFT payment form are filled with latin characters.</Text>
+                        </div>
+                        <Swift mode='create' id='create' />
+                        <div className={transferStyle.transferBottomContainer}>
+                            <Text>I am aware that I bear criminal liability under article 313 of the Criminal Code when declaring wrong facts.</Text>
+                        </div>
+                    </div>
+                </Vertical>
                 <ConfirmTransferPopup
                   isOpen={this.state.isPopupOpen[popups.confirmTransfer]}
                   onConfirm={this.confirmAndSendSWIFTTransfer}

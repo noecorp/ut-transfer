@@ -34,6 +34,13 @@ export const defaultState = {
                     country: '',
                     address: ''
                 },
+                correspondentBankBeneficiary: {
+                    swift: '',
+                    city: '',
+                    name: '',
+                    country: '',
+                    address: ''
+                },
                 beneficiary: {
                     recipient: '',
                     country: '',

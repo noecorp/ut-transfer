@@ -23,13 +23,13 @@ class BankExpenses extends Component {
 
     handleInputChange(fieldName) {
         return (data) => {
-            this.props.changeField(['bankExpenses', fieldName], data.value, data);
+            this.props.changeField(['expenses', fieldName], data.value, data);
         };
     }
 
     render() {
         return (
-            <TitledContentBox title={<Text>Bank Expenses</Text>}>
+            <TitledContentBox title={<Text>Bank Expenses</Text>} externalContentClasses={style.contentBoxExternal}>
                 <div className={style.formWrap}>
                     <div className={style.formLeft}>
                         <div className={style.inputWrap}>

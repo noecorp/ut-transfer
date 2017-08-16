@@ -3,6 +3,7 @@ import { formatRuleItems, transformValue } from './helpers';
 import { methodRequestState } from 'ut-front-react/constants';
 import { defaultState } from './defaultState';
 import { transformFields } from '../../../containers/Transfer/SWIFT/config';
+import { countriesToShowRoutingNumber } from './../../../containers/Transfer/SWIFT/Beneficiary/helpers';
 
 const editPropertyMapping = {
     'create': 'data',
@@ -21,13 +22,18 @@ export const editTransferField = (state, action, options) => {
         let iban = selectedAccount.iban;
         let phone = selectedAccount.phone || 'todo!';
         state = state
-            .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'sender', 'name'], name)
-            .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'sender', 'iban'], iban)
+            .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'sender', 'name'], transformValue(name))
+            .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'sender', 'iban'], transformValue(iban))
             .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'sender', 'phone'], phone);
     }
     if (field === 'transferDestination' && action.data.value !== 'abroad') {
         state = state
             .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'bankBeneficiary', 'country'], '353');
+    }
+    if (action.key.toString() === 'beneficiary,country' && !countriesToShowRoutingNumber[action.value]) {
+        state = state
+            .deleteIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'beneficiary', 'routingNumber'])
+            .deleteIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'errors', 'beneficiary', 'routingNumber']);
     }
     if (action.data && action.data.errorMessage) {
         state = state.setIn([activeTabMode, activeTabId, 'errors', ...action.key], action.data.errorMessage);

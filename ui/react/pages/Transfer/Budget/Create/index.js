@@ -207,12 +207,7 @@ class TransferBudgetCreate extends Component {
         return (
             <Page>
                 <AddTab pathname={getLink('ut-transfer:transfersBudgetCreate')} title={this.translate('Transfer to the Budget')} />
-                    <Vertical fixedComponent={
-                        <Header
-                          text={<Text>Payment slip (Transfer to the Budget)</Text>}
-                          buttons={this.actionButtons}
-                        />}
-                    >
+                <Vertical fixedComponent={ <Header text={<Text>Payment slip (Transfer to the Budget)</Text>} buttons={this.actionButtons} />}>
                     <div className={transferStyle.pageContainer}>
                         {this.renderTemplatesSelectSection()}
                         <div className={transferStyle.transferContainer}>
@@ -223,7 +218,7 @@ class TransferBudgetCreate extends Component {
                             <Text>I am aware that I bear criminal liability under article 313 of the Criminal Code when declaring wrong facts.</Text>
                         </div>
                     </div>
-                    </Vertical>
+                </Vertical>
                 <ConfirmTransferPopup
                   isOpen={this.state.isPopupOpen[popups.confirmTransfer]}
                   onConfirm={this.confirmAndSendBudgetTransfer}

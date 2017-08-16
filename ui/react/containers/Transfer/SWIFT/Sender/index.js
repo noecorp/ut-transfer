@@ -60,6 +60,7 @@ class Sender extends Component {
                       keyProp='name'
                       boldLabel
                       readonly
+                      inputWrapClassName={style.readOnlyInput}
                     />
                 </div>
                 <div className={style.inputWrap}>
@@ -109,6 +110,7 @@ class Sender extends Component {
                       keyProp='phone'
                       boldLabel
                       readonly
+                      inputWrapClassName={style.readOnlyInput}
                     />
                 </div>
                 <div className={style.inputWrap}>
@@ -117,6 +119,7 @@ class Sender extends Component {
                       keyProp='ibanOrderer'
                       boldLabel
                       readonly
+                      inputWrapClassName={style.readOnlyInput}
                     />
                 </div>
                 <div className={classnames(style.inputWrap)}>

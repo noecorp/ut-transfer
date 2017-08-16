@@ -9,7 +9,7 @@ import Text from 'ut-front-react/components/Text';
 import style from './../style.css';
 
 import {changeField} from '../../../../pages/Transfer/SWIFT/actions';
-import {reasonValidation, otherBankCostsValidation, commentsValidation} from './validations';
+import {reasonValidation} from './validations';
 
 class Transfer extends Component {
     translate(stringToTranslate) {
@@ -75,9 +75,6 @@ class Transfer extends Component {
                       onChange={this.handleInputChange('comments')}
                       keyProp='comments'
                       boldLabel
-                      validators={commentsValidation.rules}
-                      isValid={this.props.errors.get('comments') === undefined}
-                      errorMessage={this.props.errors.get('comments')}
                     />
                 </div>
             </div>
@@ -85,7 +82,7 @@ class Transfer extends Component {
     }
     render() {
         return (
-            <TitledContentBox title={<Text>Transfer</Text>}>
+            <TitledContentBox title={<Text>Transfer</Text>} externalContentClasses={style.contentBoxExternal}>
                 <div className={style.formWrap}>
                     {this.renderLeftColumn()}
                     {this.renderRightColumn()}

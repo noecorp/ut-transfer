@@ -5,9 +5,9 @@ import Text from 'ut-front-react/components/Text';
 export function getTransferValidations() {
     return [
         priorityValidation,
-        reasonValidation,
-        otherBankCostsValidation,
-        commentsValidation
+        reasonValidation
+        // otherBankCostsValidation
+        // commentsValidation
     ];
 }
 
@@ -27,18 +27,18 @@ export const reasonValidation = {
     ]
 };
 
-export const otherBankCostsValidation = {
-    key: ['transfer', 'otherBankCosts'],
-    type: validationTypes.text,
-    rules: [
-        {type: textValidations.isRequired, errorMessage: <Text>Other Bank Costs is required</Text>}
-    ]
-};
+// export const otherBankCostsValidation = {
+//     key: ['transfer', 'otherBankCosts'],
+//     type: validationTypes.text,
+//     rules: [
+//         {type: textValidations.isRequired, errorMessage: <Text>Other Bank Costs is required</Text>}
+//     ]
+// };
 
-export const commentsValidation = {
-    key: ['transfer', 'comments'],
-    type: validationTypes.text,
-    rules: [
-        {type: textValidations.isRequired, errorMessage: <Text>More Info is required</Text>}
-    ]
-};
+// export const commentsValidation = {
+//     key: ['transfer', 'comments'],
+//     type: validationTypes.text,
+//     rules: [
+//         {type: textValidations.isRequired, errorMessage: <Text>More Info is required</Text>}
+//     ]
+// };

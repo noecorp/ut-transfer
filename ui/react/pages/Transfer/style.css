@@ -1,6 +1,9 @@
 .transferContainer {
     margin: 10px 20px 20px 20px;
 }
+.transferTopContainer {
+    margin: 20px 20px 0 20px;
+}
 .transferBottomContainer {
     margin: 10px 20px 20px 20px;
 }
