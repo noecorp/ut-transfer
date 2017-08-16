@@ -191,16 +191,6 @@ class Sender extends Component {
                       className={style.rowPaddings}
                     />
                 </div>
-                <div className={style.inputWrap}>
-                    <Input value={this.getInputValue('exchangeRate')} label={<Text>Exchange Rate</Text>}
-                      onChange={this.handleInputChange('exchangeRate')}
-                      keyProp='exchangeRate'
-                      boldLabel
-                      //  validators={exchangeRateValidation.rules}
-                      isValid={this.props.errors.get('exchangeRate') === undefined}
-                      errorMessage={this.props.errors.get('exchangeRate')}
-                    />
-                </div>
             </div>
         );
     }
