@@ -1,3 +1,49 @@
 {
-    "transfers": []
+    "transfers": [
+        {
+            "currency": "BGN",
+            "transferId": "TX8812EFDN168761",
+            "sourceAccount": 1,
+            "type": "budgetTransfer",
+            "destinationAccount": {
+                "bank": "ИНВЕСТБАНК",
+                "iban": "BG53IORT73758402020000",
+                "name": "ТД НА НАП СОФИЯ"
+            },
+            "reason": "ДАНЪЦИ 2016",
+            "debit": 150,
+            "credit": 0,
+            "dateTime": "2017-07-15 21:36"
+        },
+        {
+            "currency": "BGN",
+            "transferId": "TX6951OWMK630323",
+            "sourceAccount": 1,
+            "type": "budgetTransfer",
+            "destinationAccount": {
+                "bank": "ИНВЕСТБАНК",
+                "iban": "BG53IORT73758402020000",
+                "name": "НЗОК"
+            },
+            "reason": "ОСИГУРОВКИ - М.6 И М.7 2017",
+            "debit": 240.50,
+            "credit": 0,
+            "dateTime": "2017-07-15 22:13"
+        },
+        {
+            "currency": "EUR",
+            "transferId": "TX3790QARV347197",
+            "type": "SWIFTTransfer",
+            "sourceAccount" : 1,
+            "destinationAccount": {
+                "bank": "ROYAL BANK OF SCOTLAND",
+                "iban": "GB29RBOS60161331926819",
+                "name": "JOHN MCGREGOR"
+            },
+            "reason": "TRANSFER OF FUNDS",
+            "debit": 100,
+            "credit": 0,
+            "dateTime": "2017-07-16 02:43"
+        }
+    ]
 }

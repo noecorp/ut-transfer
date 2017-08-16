@@ -1,17 +1,9 @@
 {
-    "customerData": {
-        "firstName": "Николай",
-        "lastName": "Клиента",
-        "civilIdentifier": {
-            "type": "resident",
-            "value": "9005054040"
-        }
-    },
     "accounts": [
         {   
             "customerData": {
                 "firstName": "Николай",
-                "lastName": "Клиента",
+                "lastName": "Иванов",
                 "civilIdentifier": {
                     "type": "resident",
                     "value": "9005054040"
@@ -23,24 +15,47 @@
             "balance": 5232.50,
             "currency": "BGN",
             "iban": "BG39CREX92603314548700",
-            "phone": "0876966554"
+            "bank": "Токуда Банк",
+            "bankLatin": "Tokuda Bank",
+            "phone": "359883322174"
         },
         {
             "customerData": {
-                "firstName": "Николай",
-                "lastName": "Клиента",
+                "firstName": "Любомир",
+                "lastName": "Александров",
                 "civilIdentifier": {
                     "type": "resident",
-                    "value": "9005054040"
+                    "value": "7502051280"
+                }
+            },
+            "accountNumber": 2,
+            "name": "Разплащателна сметка",
+            "type": "savings",
+            "balance": 8020.25,
+            "currency": "BGN",
+            "iban": "BG39CREX92601016221000",
+            "bank": "Уникредит Булбанк",
+            "bankLatin": "Unicredit Bulbank",
+            "phone": "359883322174"
+        },
+        {
+            "customerData": {
+                "firstName": "Георги",
+                "lastName": "Стоянов",
+                "civilIdentifier": {
+                    "type": "resident",
+                    "value": "7011204020"
                 }
             },
             "accountNumber": 2,
             "name": "Спестовна сметка",
             "type": "savings",
             "balance": 8020.25,
-            "currency": "BGN",
+            "currency": "EUR",
             "iban": "BG39CREX92601016221000",
-            "phone": "0876966554"
+            "bank": "Райфайзен Банк",
+            "bankLatin": "Refieisen Bank",
+            "phone": "359883322174"
         }
     ]
 }
