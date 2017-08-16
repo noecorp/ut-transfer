@@ -38,7 +38,7 @@ export const editTransferField = (state, action, options) => {
             .deleteIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'errors', 'beneficiary', 'routingNumber']);
     }
     if (action.key.toString() === 'beneficiary,accountNumber') {
-        if (action.value.substring(4, 8) === 'CREХ') {
+        if (['CREХ', 'CREX', 'CREH'].includes(action.value.substring(4, 8))) {
             let newCurrency = state.getIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'sender', 'currency']);
             switch (action.value[13]) {
                 case '1':

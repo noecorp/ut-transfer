@@ -100,7 +100,7 @@ class Sender extends Component {
         );
     }
     isDisabled(accountNumber) {
-        if (accountNumber.includes('CREX') || accountNumber.includes('CREH')) {
+        if (['CREX', 'CREH'].includes(accountNumber.substring(4, 8))) {
             switch (accountNumber[13]) {
                 case '1':
                 case '3':
@@ -218,6 +218,7 @@ Sender.propTypes = {
     mode: PropTypes.string,
     id: PropTypes.string,
     data: PropTypes.object,
+    accountNumber: PropTypes.string,
     edited: PropTypes.object,
     sourceAccounts: PropTypes.object.isRequired,
     transferDestinations: PropTypes.object.isRequired,
