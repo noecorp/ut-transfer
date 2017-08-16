@@ -50,7 +50,7 @@ const createSWIFTTransfer = ({ data, transferId, transferDateTime }) => {
     const swiftTransfer = {
         currency: data.sender.currency,
         transferId,
-        sourceAccount: data.sender.account,
+        sourceAccount: data.sender.sourceAccount,
         type: 'SWIFTTransfer',
         destinationAccount: {
             bank: data.bankBeneficiary.name,
