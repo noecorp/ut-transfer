@@ -10,6 +10,7 @@ import style from './../style.css';
 
 import {changeField} from '../../../../pages/Transfer/SWIFT/actions';
 import {reasonValidation} from './validations';
+import { priorities } from '../../../../pages/Transfer/commonStaticData';
 
 class Transfer extends Component {
     translate(stringToTranslate) {
@@ -41,16 +42,7 @@ class Transfer extends Component {
                       isValid={this.props.errors.get('priority') === undefined}
                       errorMessage={this.props.errors.get('priority')}
                       onSelect={this.handleInputChange('priority')}
-                      data={[
-                          {
-                              key: 'standard',
-                              name: 'Standard'
-                          },
-                          {
-                              key: 'urgent',
-                              name: 'Urgent'
-                          }
-                      ]}
+                      data={priorities}
                     />
                 </div>
             </div>
