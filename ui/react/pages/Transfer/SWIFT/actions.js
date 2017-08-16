@@ -44,10 +44,13 @@ export const fetchAccounts = () => ({
     method: 'transfer.onlineBanking.account.fetch'
 });
 
-export const requestOTP = () => ({
-    type: actionTypes.REQUEST_OTP,
-    method: 'transfer.onlineBanking.transfer.requestOTP'
-});
+export const requestOTP = (bank, recipient) => {
+    return {
+        type: actionTypes.REQUEST_OTP,
+        method: 'transfer.onlineBanking.transfer.requestOTP',
+        params: { bank, recipient }
+    };
+};
 
 export const resetState = () => ({
     type: actionTypes.RESET_STATE

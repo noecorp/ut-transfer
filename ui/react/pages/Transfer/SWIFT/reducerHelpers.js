@@ -20,10 +20,12 @@ export const editTransferField = (state, action, options) => {
         let { customerData } = selectedAccount;
         let name = `${customerData.firstName} ${customerData.lastName}`;
         let iban = selectedAccount.iban;
+        let bank = selectedAccount.bank;
         let phone = selectedAccount.phone || 'todo!';
         state = state
             .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'sender', 'name'], transformValue(name))
             .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'sender', 'iban'], transformValue(iban))
+            .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'sender', 'bank'], transformValue(bank))
             .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'sender', 'phone'], phone);
     }
     if (field === 'transferDestination' && action.data.value !== 'abroad') {

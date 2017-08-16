@@ -65,9 +65,50 @@ const createSWIFTTransfer = ({ data, transferId, transferDateTime }) => {
     return swiftTransfer;
 };
 
+const sortTransfers = (transfer1, transfer2) => {
+    const transfer1Date = new Date(transfer1.dateTime);
+    const transfer2Date = new Date(transfer2.dateTime);
+    if (transfer1Date < transfer2Date) {
+        return 1;
+    }
+    if (transfer1Date > transfer2Date) {
+        return -1;
+    }
+    return 0;
+};
+
+const addTransfersToAccountsData = ({ accounts, transfers }) => {
+    const accountsMap = new Map();
+    for (let i = 0; i < accounts.length; i++) {
+        let account = accounts[i];
+        account.transfers = [];
+        accountsMap.set(account.accountNumber, account);
+    };
+    for (let i = 0; i < transfers.length; i++) {
+        let transfer = transfers[i];
+        let accountNumber;
+        if (typeof transfer.sourceAccount === 'number') {
+            accountNumber = transfer.sourceAccount;
+        }
+        if (!accountNumber && typeof transfer.destinationAccount === 'number') {
+            accountNumber = transfer.destinationAccount;
+        }
+        let account = accountsMap.get(accountNumber);
+        account.transfers.push(transfer);
+    }
+    
+    for (let i = 0; i < accounts.length; i++) {
+        let account = accounts[i];
+        let sortedTransfers = account.transfers.sort(sortTransfers);
+        account.transfers = sortedTransfers;
+    }
+    return accounts;
+}
+
 module.exports = {
     generateTransferDateTime,
     generateTransferId,
     createBudgetTransfer,
-    createSWIFTTransfer
+    createSWIFTTransfer,
+    addTransfersToAccountsData
 };

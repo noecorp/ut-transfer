@@ -67,6 +67,7 @@ export const editTransferField = (state, action, options) => {
         let name = `${customerData.firstName} ${customerData.lastName}`;
         let sourceIban = selectedAccount.iban;
         let sourceBank = selectedAccount.bank;
+        let sourceBankLatin = selectedAccount.bankLatin;
         let { civilIdentifier } = customerData;
         var sourcePersonIdentifier;
         if (civilIdentifier.type === 'resident') {
@@ -77,6 +78,7 @@ export const editTransferField = (state, action, options) => {
         state = state
             .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'sourceIban'], sourceIban.toUpperCase())
             .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'sourceBank'], sourceBank.toUpperCase())
+            .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'sourceBankLatin'], sourceBankLatin.toUpperCase())
             .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'sourceName'], name.toUpperCase())
             .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'phone'], selectedAccount.phone)
             .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], sourcePersonIdentifier], civilIdentifier.value);

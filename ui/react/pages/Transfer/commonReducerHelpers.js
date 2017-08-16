@@ -3,7 +3,6 @@ import { methodRequestState } from 'ut-front-react/constants';
 
 import { confirmTransferPopupDefaultState } from '../../containers/Transfer/ConfirmTransferPopup/defaultState';
 
-
 export const setActiveTab = (state, action, options) => {
     return state.set('activeTabData', immutable.Map({
         mode: action.params.mode,
@@ -20,6 +19,9 @@ export const fetchAccounts = (state, action, options) => {
     const { activeTabMode, activeTabId } = options;
     if (action.methodRequestState === methodRequestState.FINISHED && !action.error) {
         let { accounts } = action.result;
+        accounts.length && accounts.forEach(account => {
+            delete account.transfers;
+        });
         let accountsForDropdown = accounts.map(account => ({
             key: account.accountNumber,
             name: `${account.bank}: ${account.accountNumber} - ${account.name} (${account.balance} ${account.currency})`

@@ -6,12 +6,13 @@ const {
     generateTransferId,
     generateTransferDateTime,
     createBudgetTransfer,
-    createSWIFTTransfer
+    createSWIFTTransfer,
+    addTransfersToAccountsData
 } = require('./onlineBankingHelpers');
 
 var nexmo = new Nexmo({
-    apiKey: '036be2be',
-    apiSecret: '9970f46b95ae70c7'
+    apiKey: 'b248da3d', // '036be2be',
+    apiSecret: 'cecaf5e174a8cb02' // '9970f46b95ae70c7'
 });
 
 const DECLINED = {
@@ -21,14 +22,6 @@ const DECLINED = {
 };
 var errors = require('../../errors');
 var currency = require('../../currency');
-
-var pad = (number, size) => {
-    var result = number + '';
-    while (result.length < size) {
-        result = '0' + result;
-    }
-    return result;
-};
 
 var processReversal = (bus, log, $meta) => params => {
     var transferId;
@@ -502,11 +495,17 @@ module.exports = {
         };
     },
     'onlineBanking.account.fetch': function(msg, $meta) {
-        const mockOnlineBankingFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'accounts.json');
-        const mockOnlineBankingData = fs.readFileSync(mockOnlineBankingFilePath, 'UTF-8');
-        const data = JSON.parse(mockOnlineBankingData);
+        const mockOnlineBankingAccountsFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'accounts.json');
+        const mockOnlineBankingAccountsData = fs.readFileSync(mockOnlineBankingAccountsFilePath, 'UTF-8');
+        const mockOnlineBankingTransfersFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'transfers.json');
+        const mockOnlineBankingTransfersData = fs.readFileSync(mockOnlineBankingTransfersFilePath, 'UTF-8');
+        const accountsData = JSON.parse(mockOnlineBankingAccountsData);
+        const transfersData = JSON.parse(mockOnlineBankingTransfersData);
+        const { accounts } = accountsData;
+        const { transfers } = transfersData;
+        const accountsResult = addTransfersToAccountsData({ accounts, transfers });
         return {
-            accounts: data.accounts
+            accounts: accountsResult
         };
     },
     'onlineBanking.transfer.fetch': function(msg, $meta) {
@@ -553,12 +552,23 @@ module.exports = {
         }
         // Persist data
         const mockOnlineBankingTransfersFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'transfers.json');
+        const mockOnlineBankingAccountsFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'accounts.json');
         const mockTransfersData = fs.readFileSync(mockOnlineBankingTransfersFilePath, 'UTF-8');
+        const mockAccountsData = fs.readFileSync(mockOnlineBankingAccountsFilePath, 'UTF-8');
         let transfersData = JSON.parse(mockTransfersData);
+        let accountsData = JSON.parse(mockAccountsData);
         transfersData.transfers.push(transfer);
+        // Update balance
+        let account = accountsData.accounts.find(account => account.accountNumber === transfer.sourceAccount);
+        if (account) {
+            account.balance = account.balance - transfer.debit;
+        }
+        accountsData = JSON.stringify(accountsData);
         transfersData = JSON.stringify(transfersData);
 
         fs.writeFileSync(mockOnlineBankingTransfersFilePath, transfersData, 'UTF-8');
+        fs.writeFileSync(mockOnlineBankingAccountsFilePath, accountsData, 'UTF-8');
+
         return { success: true };
     },
     'onlineBanking.transferTemplate.create': function(msg, $meta) {
