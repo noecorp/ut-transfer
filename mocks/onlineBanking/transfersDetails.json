@@ -1,5 +1,38 @@
 {
     "transfersDetails": [
-        
+        {
+            "id": 24,
+            "transferId": "TX4079SAQT372911",
+            "transferDateTime": "2017-07-18 11:21",
+            "transferType": "budgetTransfer",
+            "data": {
+                "paymentType": "442200",
+                "sourceIban": "BG39CREX92601016221000",
+                "documentNumber": "50",
+                "reason": "ДАНЪК ВЪРХУ НАСЛЕДСТВАТА",
+                "liableEntityName": "ИВАН АЛЕКСАНДРОВ",
+                "sourceName": "ЛЮБОМИР АЛЕКСАНДРОВ",
+                "iban": "BG79SOMB91308410296344",
+                "liableEntityInfo": {
+                    "personalIdentifier": "9902055050"
+                },
+                "endDate": "2017-08-13",
+                "documentDate": "2017-08-07",
+                "bulstat": "BG1234567890",
+                "sourceBankLatin": "UNICREDIT BULBANK",
+                "account": 2,
+                "phone": "359883322174",
+                "startDate": "2017-08-07",
+                "liableEntityType": "person",
+                "documentType": "1",
+                "paymentSystem": "bisera",
+                "sourceBank": "УНИКРЕДИТ БУЛБАНК",
+                "amount": "25",
+                "destinationName": "ОБЩИНА СМОЛЯН",
+                "bic": "SOMBBGSF",
+                "bank": "ОБЩИНСКА БАНКА",
+                "civilIdentifier": "7502051280"
+            }
+        }
     ]
 }

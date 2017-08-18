@@ -1,6 +1,7 @@
 {
     "transfers": [
         {
+            "id": 1,
             "currency": "BGN",
             "transferId": "TX8812EFDN168761",
             "sourceAccount": 1,
@@ -16,6 +17,7 @@
             "dateTime": "2017-07-15 21:36"
         },
         {
+            "id": 2,
             "currency": "BGN",
             "transferId": "TX6951OWMK630323",
             "sourceAccount": 2,
@@ -31,6 +33,7 @@
             "dateTime": "2017-07-14 22:13"
         },
         {
+            "id": 3,
             "currency": "EUR",
             "transferId": "TX3790QARV347197",
             "type": "SWIFTTransfer",
@@ -46,6 +49,7 @@
             "dateTime": "2017-07-10 02:43"
         },
         {
+            "id": 4,
             "currency": "BGN",
             "transferId": "TX8812EFDN168761",
             "type": "budgetTransfer",
@@ -61,6 +65,7 @@
             "dateTime": "2017-06-12 21:36"
         },
         {
+            "id": 5,
             "currency": "BGN",
             "transferId": "TX8922EACN168765",
             "type": "budgetTransfer",
@@ -76,6 +81,7 @@
             "dateTime": "2017-06-12 21:36"
         },
         {
+            "id": 6,
             "currency": "EUR",
             "transferId": "TX3790QARV347197",
             "type": "SWIFTTransfer",
@@ -91,6 +97,7 @@
             "dateTime": "2017-06-09 10:43"
         },
         {
+            "id": 7,
             "currency": "BGN",
             "transferId": "TX8812EFDN168761",
             "sourceAccount": 1,
@@ -106,6 +113,7 @@
             "dateTime": "2017-06-30 21:36"
         },
         {
+            "id": 8,
             "currency": "BGN",
             "transferId": "TX5874OWMK6332179",
             "sourceAccount": 2,
@@ -121,6 +129,7 @@
             "dateTime": "2017-06-28 12:15"
         },
         {
+            "id": 9,
             "currency": "EUR",
             "transferId": "TX3790QARV347197",
             "type": "SWIFTTransfer",
@@ -136,6 +145,7 @@
             "dateTime": "2017-06-13 10:43"
         },
         {
+            "id": 10,
             "currency": "BGN",
             "transferId": "TX8812EFDN168761",
             "sourceAccount": 1,
@@ -151,6 +161,7 @@
             "dateTime": "2017-05-30 21:36"
         },
         {
+            "id": 11,
             "currency": "BGN",
             "transferId": "TX6698ERMA03972171",
             "sourceAccount": 2,
@@ -166,6 +177,7 @@
             "dateTime": "2017-05-14 18:25"
         },
         {
+            "id": 12,
             "currency": "EUR",
             "transferId": "TX6647QAER671528",
             "type": "SWIFTTransfer",
@@ -181,6 +193,7 @@
             "dateTime": "2017-05-07 02:43"
         },
         {
+            "id": 13,
             "currency": "BGN",
             "transferId": "TX8915EAAE168561",
             "sourceAccount": {
@@ -192,10 +205,11 @@
             "destinationAccount": 1,
             "reason": "ЗАХРАНВАНЕ СМЕТКА",
             "debit": 0,
-            "credit": 120.00,
+            "credit": 120,
             "dateTime": "2017-04-22 16:30"
         },
         {
+            "id": 14,
             "currency": "BGN",
             "transferId": "TX6698ERMA03972171",
             "sourceAccount": 2,
@@ -211,6 +225,7 @@
             "dateTime": "2017-04-18 15:45"
         },
         {
+            "id": 15,
             "currency": "EUR",
             "transferId": "TX6647QAER671528",
             "type": "SWIFTTransfer",
@@ -226,6 +241,7 @@
             "dateTime": "2017-04-16 09:30"
         },
         {
+            "id": 16,
             "currency": "BGN",
             "transferId": "TX2199AAPP888902",
             "sourceAccount": 1,
@@ -241,6 +257,7 @@
             "dateTime": "2017-07-16 04:17"
         },
         {
+            "id": 17,
             "currency": "EUR",
             "transferId": "TX2873EXNA795138",
             "sourceAccount": 2,
@@ -254,6 +271,118 @@
             "debit": 0,
             "credit": 30,
             "dateTime": "2017-07-16 04:53"
+        },
+        {
+            "id": 18,
+            "currency": "BGN",
+            "transferId": "TX9060ZUKP921956",
+            "sourceAccount": 2,
+            "type": "budgetTransfer",
+            "destinationAccount": {
+                "bank": "ОБЩИНСКА БАНКА",
+                "iban": "BG24SOMB91308413443044",
+                "name": "СТОЛИЧНА ОБЩИНА - РАЙОН ТРИАДИЦА"
+            },
+            "reason": "ДАНЪК НЕДВИЖИМИ ИМОТИ 2016",
+            "debit": 250,
+            "credit": 0,
+            "dateTime": "2017-07-16 12:29"
+        },
+        {
+            "id": 19,
+            "currency": "BGN",
+            "transferId": "TX0668VFIV820064",
+            "sourceAccount": 1,
+            "type": "budgetTransfer",
+            "destinationAccount": {
+                "bank": "БАНКА ДСК",
+                "iban": "BG16STSA93008210083100",
+                "name": "АГЕНЦИЯ МИТНИЦИ"
+            },
+            "reason": "МИТНИ СБОРОВЕ",
+            "debit": 100,
+            "credit": 0,
+            "dateTime": "2017-07-16 12:54"
+        },
+        {
+            "id": 20,
+            "currency": "BGN",
+            "transferId": "TX9647GXKN323814",
+            "sourceAccount": 2,
+            "type": "budgetTransfer",
+            "destinationAccount": {
+                "bank": "ОБЩИНСКА БАНКА",
+                "iban": "BG24SOMB91308413443044",
+                "name": "СТОЛИЧНА ОБЩИНА - РАЙОН ТРИАДИЦА"
+            },
+            "reason": "ДАНЪК НЕДВИЖИМИ ИМОТИ 2016",
+            "debit": 250,
+            "credit": 0,
+            "dateTime": "2017-07-16 14:59"
+        },
+        {
+            "id": 21,
+            "currency": "BGN",
+            "transferId": "TX5326DDUH598732",
+            "sourceAccount": 1,
+            "type": "budgetTransfer",
+            "destinationAccount": {
+                "bank": "БАНКА ДСК",
+                "iban": "BG16STSA93008210083100",
+                "name": "АГЕНЦИЯ МИТНИЦИ"
+            },
+            "reason": "МИТНИ СБОРОВЕ",
+            "debit": 100,
+            "credit": 0,
+            "dateTime": "2017-07-17 11:06"
+        },
+        {
+            "id": 22,
+            "currency": "BGN",
+            "transferId": "TX5558AAUE495791",
+            "sourceAccount": {
+                "bank": "БАНКА ДСК",
+                "iban": "BG16STSA93008210083100",
+                "name": "ЕЛЕНА ГЕОРГИЕВА"
+            },
+            "type": "creditTransfer",
+            "destinationAccount": 1,
+            "reason": "ЗАХРАНВАНЕ СМЕТКА",
+            "debit": 0,
+            "credit": 200,
+            "dateTime": "2017-08-16 15:06"
+        },
+        {
+            "id": 23,
+            "currency": "BGN",
+            "transferId": "TX5558AAUE495791",
+            "sourceAccount": {
+                "bank": "ПЪРВА ИНВЕСТИЦИОННА БАНКА",
+                "iban": "BG95FINV93008210083100",
+                "name": "ИВАН ПЕТРОВ"
+            },
+            "type": "creditTransfer",
+            "destinationAccount": 2,
+            "reason": "НАЕМ М.7 СОФИЯ - МЛАДОСТ 1А",
+            "debit": 0,
+            "credit": 200,
+            "dateTime": "2017-08-16 15:06"
+        },
+        {
+            "currency": "BGN",
+            "id": 24,
+            "transferId": "TX4079SAQT372911",
+            "sourceAccount": 2,
+            "type": "budgetTransfer",
+            "destinationAccount": {
+                "bank": "ОБЩИНСКА БАНКА",
+                "iban": "BG79SOMB91308410296344",
+                "name": "ОБЩИНА СМОЛЯН"
+            },
+            "reason": "ДАНЪК ВЪРХУ НАСЛЕДСТВАТА",
+            "debit": 25,
+            "credit": 0,
+            "dateTime": "2017-07-18 11:21"
         }
     ]
 }
