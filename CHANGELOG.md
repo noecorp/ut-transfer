@@ -1,3 +1,15 @@
+<a name="6.15.10"></a>
+## [6.15.10](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.15.7...v6.15.10) (2017-08-18)
+
+
+### Bug Fixes
+
+* MCTUNE-3278 - reversal workaround for Microcred ([5018c20](https://github.com/softwaregroup-bg/ut-transfer/commit/5018c20))
+* package.json ([9e83236](https://github.com/softwaregroup-bg/ut-transfer/commit/9e83236))
+* rebase-related issue ([e0dbe09](https://github.com/softwaregroup-bg/ut-transfer/commit/e0dbe09))
+
+
+
 <a name="6.15.9"></a>
 ## [6.15.9](https://github.com/softwaregroup-bg/ut-transfer/compare/v6.15.7...v6.15.9) (2017-08-15)
 
