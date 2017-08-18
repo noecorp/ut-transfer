@@ -16,10 +16,10 @@ export const getScreenConfiguration = (key) => ({
     params: { key }
 });
 
-export const fetchCustomerData = () => ({
-    type: actionTypes.FETCH_CUSTOMER_DATA,
-    method: 'transfer.onlineBanking.customerData.fetch'
-});
+// export const fetchCustomerData = () => ({
+//     type: actionTypes.FETCH_CUSTOMER_DATA,
+//     method: 'transfer.onlineBanking.customerData.fetch'
+// });
 
 export const fetchAccounts = () => ({
     type: actionTypes.FETCH_ACCOUNTS,
@@ -30,6 +30,12 @@ export const createTransfer = (params) => ({
     type: actionTypes.CREATE_TRANSFER,
     method: 'transfer.onlineBanking.transfer.create',
     params: { ...params, transferType: 'budgetTransfer' }
+});
+
+export const getTransfer = (transferId) => ({
+    type: actionTypes.GET_TRANSFER,
+    method: 'transfer.onlineBanking.transfer.get',
+    params: { transferId }
 });
 
 export const editTransferField = ({ field, value, data }) => ({

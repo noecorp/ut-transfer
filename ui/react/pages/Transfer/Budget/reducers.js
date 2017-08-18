@@ -20,8 +20,8 @@ export default function transfersBudget(state = defaultStateImmutable, action) {
             return transferBudgetReducers.getScreenConfiguration(state, action, options);
         case actionTypes.FETCH_ACCOUNTS:
             return commonTransferReducers.fetchAccounts(state, action, options);
-        case actionTypes.FETCH_CUSTOMER_DATA:
-            return transferBudgetReducers.fetchCustomerData(state, action, options);
+        // case actionTypes.FETCH_CUSTOMER_DATA:
+        //     return transferBudgetReducers.fetchCustomerData(state, action, options);
         case actionTypes.EDIT_TRANSFER_FIELD:
             return transferBudgetReducers.editTransferField(state, action, options);
         case actionTypes.RESET_TRANSFER_STATE:
@@ -32,6 +32,8 @@ export default function transfersBudget(state = defaultStateImmutable, action) {
             return transferBudgetReducers.createTemplate(state, action, options);
         case actionTypes.APPLY_TEMPLATE:
             return transferBudgetReducers.applyTemplate(state, action, options);
+        case actionTypes.GET_TRANSFER:
+            return transferBudgetReducers.getTransfer(state, action, options);
     }
     return state;
 };

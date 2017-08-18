@@ -9,6 +9,12 @@ const {
     createSWIFTTransfer,
     addTransfersToAccountsData
 } = require('./onlineBankingHelpers');
+const {
+    getNewTransferId,
+    writeData: writeMockData,
+    readData: readMockData,
+    dataTypes: mockDataType
+} = require('./onlineBankingRepository');
 
 var nexmo = new Nexmo({
     apiKey: 'b248da3d', // '036be2be',
@@ -495,87 +501,82 @@ module.exports = {
         };
     },
     'onlineBanking.account.fetch': function(msg, $meta) {
-        const mockOnlineBankingAccountsFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'accounts.json');
-        const mockOnlineBankingAccountsData = fs.readFileSync(mockOnlineBankingAccountsFilePath, 'UTF-8');
-        const mockOnlineBankingTransfersFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'transfers.json');
-        const mockOnlineBankingTransfersData = fs.readFileSync(mockOnlineBankingTransfersFilePath, 'UTF-8');
-        const accountsData = JSON.parse(mockOnlineBankingAccountsData);
-        const transfersData = JSON.parse(mockOnlineBankingTransfersData);
-        const { accounts } = accountsData;
-        const { transfers } = transfersData;
+        const { accounts } = readMockData(mockDataType.accounts);
+        const { transfers } = readMockData(mockDataType.transfers);
         const accountsResult = addTransfersToAccountsData({ accounts, transfers });
         return {
             accounts: accountsResult
         };
     },
     'onlineBanking.transfer.fetch': function(msg, $meta) {
-        const mockOnlineBankingTransfersFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'transfers.json');
-        const mockOnlineBankingAccountsFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'accounts.json');
-        const mockTransfersData = fs.readFileSync(mockOnlineBankingTransfersFilePath, 'UTF-8');
-        const mockAccountsData = fs.readFileSync(mockOnlineBankingAccountsFilePath, 'UTF-8');
-        const transfersData = JSON.parse(mockTransfersData);
-        const accountsData = JSON.parse(mockAccountsData);
+        const { accounts } = readMockData(mockDataType.accounts);
+        const transfersData = readMockData(mockDataType.transfers);
         const transfers = transfersData.transfers.map(transfer => {
             if (typeof transfer.sourceAccount === 'number') {
                 transfer.sourceAccount =
-                    accountsData.accounts.filter(account => account.accountNumber === transfer.sourceAccount)[0];
+                    accounts.filter(account => account.accountNumber === transfer.sourceAccount)[0];
             }
             if (typeof transfer.destinationAccount === 'number') {
                 transfer.destinationAccount =
-                    accountsData.accounts.filter(account => account.accountNumber === transfer.destinationAccount)[0];
+                    accounts.filter(account => account.accountNumber === transfer.destinationAccount)[0];
             }
             return transfer;
         });
         return {
-            accounts: transfers
+            transfers
         };
     },
     'onlineBanking.transfer.create': function(msg, $meta) {
-        const data = msg.data;
-        const auth = msg.auth;
-        // Generate transfer id
-        const {otp: reqOtp} = auth;
+        const { transferType, data, auth } = msg;
+        const id = getNewTransferId();
+        const transferId = generateTransferId();
+        const transferDateTime = generateTransferDateTime();
+
+        // Validate OTP
+        const { otp: reqOtp } = auth;
         const mockOTPPath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'otp.json');
         let mockOTPData = JSON.parse(fs.readFileSync(mockOTPPath, 'UTF-8'));
         const isOTPValid = mockOTPData.otps.filter(otp => otp.otp === reqOtp);
         if (isOTPValid.length === 0) {
             throw errors.incorrectOTP();
         }
-        const transferId = generateTransferId();
-        const transferDateTime = generateTransferDateTime();
+
         var transfer;
+        var transferDetails = {
+            id,
+            transferId,
+            transferDateTime,
+            transferType,
+            data
+        };
         if (msg.transferType === 'budgetTransfer') {
-            transfer = createBudgetTransfer({ data, transferId, transferDateTime });
+            transfer = createBudgetTransfer({ data, transferId, id, transferDateTime });
         }
         if (msg.transferType === 'SWIFTTransfer') {
-            transfer = createSWIFTTransfer({ data, transferId, transferDateTime });
+            transfer = createSWIFTTransfer({ data, transferId, id, transferDateTime });
         }
+
         // Persist data
-        const mockOnlineBankingTransfersFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'transfers.json');
-        const mockOnlineBankingAccountsFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'accounts.json');
-        const mockTransfersData = fs.readFileSync(mockOnlineBankingTransfersFilePath, 'UTF-8');
-        const mockAccountsData = fs.readFileSync(mockOnlineBankingAccountsFilePath, 'UTF-8');
-        let transfersData = JSON.parse(mockTransfersData);
-        let accountsData = JSON.parse(mockAccountsData);
-        transfersData.transfers.push(transfer);
+        let transfersDetailsData = readMockData(mockDataType.transfersDetails);
+        let transfersData = readMockData(mockDataType.transfers);
+        let accountsData = readMockData(mockDataType.accounts);
+
         // Update balance
         let account = accountsData.accounts.find(account => account.accountNumber === transfer.sourceAccount);
         if (account) {
             account.balance = account.balance - transfer.debit;
         }
-        accountsData = JSON.stringify(accountsData);
-        transfersData = JSON.stringify(transfersData);
-
-        fs.writeFileSync(mockOnlineBankingTransfersFilePath, transfersData, 'UTF-8');
-        fs.writeFileSync(mockOnlineBankingAccountsFilePath, accountsData, 'UTF-8');
+        transfersData.transfers.push(transfer);
+        transfersDetailsData.transfersDetails.push(transferDetails);
+        writeMockData(mockDataType.accounts, accountsData);
+        writeMockData(mockDataType.transfers, transfersData);
+        writeMockData(mockDataType.transfersDetails, transfersDetailsData);
 
         return { success: true };
     },
     'onlineBanking.transferTemplate.create': function(msg, $meta) {
         const { name, type, data } = msg;
-        const mockOnlineBankingTemplatesFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'templates.json');
-        const mockTemplatesData = fs.readFileSync(mockOnlineBankingTemplatesFilePath, 'UTF-8');
-        let templateData = JSON.parse(mockTemplatesData);
+        const templateData = readMockData(mockDataType.templates);
         const existingTemplate = templateData.templates[type].find(template => template.name === name);
         if (existingTemplate) {
             existingTemplate.data = data;
@@ -583,15 +584,12 @@ module.exports = {
             let newTemplate = { name, data };
             templateData.templates[type].push(newTemplate);
         }
-        templateData = JSON.stringify(templateData);
-        fs.writeFileSync(mockOnlineBankingTemplatesFilePath, templateData, 'UTF-8');
+        writeMockData(mockDataType.templates, templateData);
         return { success: true };
     },
     'onlineBanking.transferTemplate.get': function(msg, $meta) {
         const { type, name } = msg;
-        const mockOnlineBankingTemplatesFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'templates.json');
-        const mockTemplatesData = fs.readFileSync(mockOnlineBankingTemplatesFilePath, 'UTF-8');
-        const templateData = JSON.parse(mockTemplatesData);
+        const templateData = readMockData(mockDataType.templates);
         const existingTemplate = templateData.templates[type].find(template => template.name === name);
         if (existingTemplate) {
             return { template: existingTemplate };
@@ -601,34 +599,34 @@ module.exports = {
     },
     'onlineBanking.transferTemplate.fetch': function(msg, $meta) {
         const { type } = msg;
-        const mockOnlineBankingTemplatesFilePath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'templates.json');
-        const mockTemplatesData = fs.readFileSync(mockOnlineBankingTemplatesFilePath, 'UTF-8');
-        const templateData = JSON.parse(mockTemplatesData);
+        const templateData = readMockData(mockDataType.templates);
         const templates = templateData.templates[type];
         return { templates };
     },
     'onlineBanking.transfer.requestOTP': function(msg, $meta) {
-        const otp = randomize('0', 6);
-        const callback = (error, result) => {
-            if (error) return error;
-            const mockOTPPath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'otp.json');
-            let mockOTPData = JSON.parse(fs.readFileSync(mockOTPPath, 'UTF-8'));
-            result.messages[0].otp = otp;
-            mockOTPData.otps.push(result.messages[0]);
-            fs.writeFileSync(mockOTPPath, JSON.stringify(mockOTPData));
-            return result;
-        };
-        nexmo.message.sendSms(msg.bank, msg.recipient, otp, {
-            from: msg.bank
-        }, callback);
-        return {
-            success: true
-        };
+        return { success: true };
+        // const otp = randomize('0', 6);
+        // const callback = (error, result) => {
+        //     if (error) return error;
+        //     const mockOTPData = readMockData(mockDataType.otp);
+        //     // const mockOTPPath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'otp.json');
+        //     // let mockOTPData = JSON.parse(fs.readFileSync(mockOTPPath, 'UTF-8'));
+        //     result.messages[0].otp = otp;
+        //     mockOTPData.otps.push(result.messages[0]);
+        //     writeMockData(mockDataType.otp, mockOTPData);
+        //     // fs.writeFileSync(mockOTPPath, JSON.stringify(mockOTPData));
+        //     return result;
+        // };
+        // nexmo.message.sendSms(msg.bank, msg.recipient, otp, {
+        //     from: msg.bank
+        // }, callback);
+        // return { success: true };
     },
     'onlineBanking.transfer.validateOTP': function(msg, $meta) {
-        const {otp: reqOtp} = msg;
-        const mockOTPPath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'otp.json');
-        let mockOTPData = JSON.parse(fs.readFileSync(mockOTPPath, 'UTF-8'));
+        const { otp: reqOtp } = msg;
+        const mockOTPData = readMockData(mockDataType.otp);
+        // const mockOTPPath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'otp.json');
+        // let mockOTPData = JSON.parse(fs.readFileSync(mockOTPPath, 'UTF-8'));
         const isOTPValid = mockOTPData.otps.filter(otp => otp.otp === reqOtp);
         if (isOTPValid.length !== 0) {
             return {
@@ -639,7 +637,16 @@ module.exports = {
                 success: false
             };
         }
+    },
+    'onlineBanking.transfer.get': function(msg, $meta) {
+        const { transferId } = msg;
+        const transfersDetailsData = readMockData(mockDataType.transfersDetails);
+        const transferDetails = transfersDetailsData.transfersDetails.find(transfer => transfer.id === transferId);
+        if (transferDetails) {
+            return transferDetails;
+        } else {
+            throw new Error('Transfer not found');
+        }
     }
-
 };
 // todo handle timeout from destination port

@@ -27,9 +27,10 @@ const generateTransferId = () => {
     return transferId;
 };
 
-const createBudgetTransfer = ({ data, transferId, transferDateTime }) => {
+const createBudgetTransfer = ({ data, transferId, id, transferDateTime }) => {
     const budgetTransfer = {
         currency: 'BGN',
+        id,
         transferId,
         sourceAccount: data.account,
         type: 'budgetTransfer',
@@ -46,9 +47,10 @@ const createBudgetTransfer = ({ data, transferId, transferDateTime }) => {
     return budgetTransfer;
 };
 
-const createSWIFTTransfer = ({ data, transferId, transferDateTime }) => {
+const createSWIFTTransfer = ({ data, transferId, id, transferDateTime }) => {
     const swiftTransfer = {
         currency: data.sender.currency,
+        id,
         transferId,
         sourceAccount: data.sender.sourceAccount,
         type: 'SWIFTTransfer',
@@ -96,14 +98,13 @@ const addTransfersToAccountsData = ({ accounts, transfers }) => {
         let account = accountsMap.get(accountNumber);
         account.transfers.push(transfer);
     }
-    
     for (let i = 0; i < accounts.length; i++) {
         let account = accounts[i];
         let sortedTransfers = account.transfers.sort(sortTransfers);
         account.transfers = sortedTransfers;
     }
     return accounts;
-}
+};
 
 module.exports = {
     generateTransferDateTime,

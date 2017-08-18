@@ -10,9 +10,7 @@ export const defaultTransferState = {
     dropdownData: {
         account: [],
         documentType: documentTypes
-    },
-    screenConfiguration: {},
-    // confirmTransferPopup: confirmTransferPopupDefaultState
+    }
 };
 
 export const defaultState = {

@@ -16,7 +16,7 @@ import { validations } from './validations';
 import style from './style.css';
 import { amlDeclaration } from '../../../pages/Transfer/commonStaticData';
 
-class TransferBudgetCreate extends Component {
+class TransferBudget extends Component {
     constructor(props, context) {
         super(props, context);
         this.onInputChange = this.onInputChange.bind(this);
@@ -47,10 +47,10 @@ class TransferBudgetCreate extends Component {
     }
 
     renderTextInput(input) {
-        const { errors } = this.props;
+        const { errors, inputsAreReadonly } = this.props;
         const value = this.getInputValue(input.key);
         const validationRules = this.getValidationRules(input.key);
-        let readonly = input.hasOwnProperty('readonly') ? input.readonly : false;
+        let readonly = inputsAreReadonly || (input.hasOwnProperty('readonly') ? input.readonly : false);
         return (
             <div className={style.inputWrap}>
                 <Input
@@ -73,13 +73,14 @@ class TransferBudgetCreate extends Component {
     }
 
     renderDropdown(input) {
-        const { errors } = this.props;
+        const { errors, inputsAreReadonly } = this.props;
         const value = this.getInputValue(input.key);
         const dropdownData = input.data || this.getDropdownData(input.key) || [];
         return (
             <div className={style.inputWrap}>
                 <Dropdown
                   boldLabel
+                  disabled={inputsAreReadonly}
                   placeholder={this.translate('Select')}
                   key={input.key}
                   data={dropdownData}
@@ -96,12 +97,13 @@ class TransferBudgetCreate extends Component {
     }
 
     renderDatePicker(input) {
-        const { errors } = this.props;
+        const { errors, inputsAreReadonly } = this.props;
         const errorMessage = errors.get(input.key);
         return (
             <div className={style.datepickerWrap}>
                 <div>
                     <DatePicker
+                      disabled={inputsAreReadonly}
                       isValid={!errors.get(input.key)}
                       defaultValue={this.getInputValue(input.key)}
                       onChange={this.onDatePickerChange(input.key)} />
@@ -129,6 +131,7 @@ class TransferBudgetCreate extends Component {
     }
 
     renderLiableEntityInfo() {
+        const { inputsAreReadonly } = this.props;
         let liableEntityType = this.getInputValue('liableEntityType');
         return (
             <div className={style.inputWrapFlex}>
@@ -142,7 +145,7 @@ class TransferBudgetCreate extends Component {
                           type='text'
                           value={this.getInputValue(['liableEntityInfo', 'personalIdentifier'])}
                           keyProp={['liableEntityInfo', 'personalIdentifier']}
-                          readonly={liableEntityType !== 'person'}
+                          readonly={inputsAreReadonly || liableEntityType !== 'person'}
                           placeholder={this.translate('Personal Identifier')}
                           onChange={this.onInputChange}
                         />
@@ -154,7 +157,7 @@ class TransferBudgetCreate extends Component {
                           type='text'
                           value={this.getInputValue(['liableEntityInfo', 'bulstat'])}
                           keyProp={['liableEntityInfo', 'bulstat']}
-                          readonly={liableEntityType !== 'legalEntity'}
+                          readonly={inputsAreReadonly || liableEntityType !== 'legalEntity'}
                           placeholder={this.translate('Bultstat')}
                           onChange={this.onInputChange}
                         />
@@ -166,7 +169,7 @@ class TransferBudgetCreate extends Component {
                           type='text'
                           value={this.getInputValue(['liableEntityInfo', 'foreignResidentIdentifier'])}
                           keyProp={['liableEntityInfo', 'foreignResidentIdentifier']}
-                          readonly={liableEntityType !== 'foreignResident'}
+                          readonly={inputsAreReadonly || liableEntityType !== 'foreignResident'}
                           placeholder={this.translate('Foreign Resident Identifier')}
                           onChange={this.onInputChange}
                         />
@@ -179,6 +182,7 @@ class TransferBudgetCreate extends Component {
     // TODO Separate these renders into different containers/components (as with Swift Transfers)!
 
     renderSenderInfo() {
+        const { inputsAreReadonly } = this.props;
         return (
             <TitledContentBox title={this.translate('Sender')}>
                 <div className={style.formWrap}>
@@ -224,6 +228,7 @@ class TransferBudgetCreate extends Component {
                             <div className={style.flexInput}>
                                 <div className={style.additionalOptionsRadioWrap} style={{ display: 'flex', flexBasis: '100%' }}>
                                 <RadioInput
+                                  disabled={inputsAreReadonly}
                                   defaultValue={this.getInputValue('liableEntityType')}
                                   onChange={this.onInputChange}
                                   options={[
@@ -267,7 +272,7 @@ class TransferBudgetCreate extends Component {
     }
 
     renderTransferInfo() {
-        const { errors } = this.props;
+        const { errors, inputsAreReadonly } = this.props;
         return (
             <TitledContentBox title={this.translate('Transfer Info')}>
                 <div className={style.formWrap}>
@@ -324,6 +329,7 @@ class TransferBudgetCreate extends Component {
                             <div className={style.flexInput}>
                                 <div className={style.additionalOptionsRadioWrap} style={{ display: 'flex', flexBasis: '100%' }}>
                                     <RadioInput
+                                      disabled={inputsAreReadonly}
                                       defaultValue={this.getInputValue('paymentSystem')}
                                       onChange={this.onInputChange}
                                       options={[
@@ -344,6 +350,7 @@ class TransferBudgetCreate extends Component {
     }
 
     renderAMLDeclaration() {
+        const { inputsAreReadonly } = this.props;
         return (
             <TitledContentBox title={<span className={style.bold}><Text>Declaration under art.4, para.7 and art.6, para.5, item.3 of the Law on Measures against Money Laundering</Text></span>}>
                 <div className={style.formWrap}>
@@ -354,6 +361,7 @@ class TransferBudgetCreate extends Component {
                               label={<Text>Funds Origin</Text>}
                               placeholder={this.translate('Select')}
                               boldLabel
+                              disabled={inputsAreReadonly}
                               keyProp='fundsOrigin'
                               isValid={this.props.errors.get('fundsOrigin') === undefined}
                               errorMessage={this.props.errors.get('fundsOrigin')}
@@ -369,6 +377,7 @@ class TransferBudgetCreate extends Component {
     }
 
     renderAdditionalOptions() {
+        const { inputsAreReadonly } = this.props;
         return (
             <TitledContentBox title={this.translate('Additional Options')}>
                 <div className={style.formWrap}>
@@ -380,6 +389,7 @@ class TransferBudgetCreate extends Component {
                             <div className={style.flexInput}>
                                 <div className={style.additionalOptionsRadioWrap} style={{ display: 'flex', flexBasis: '100%' }}>
                                     <RadioInput
+                                      disabled={inputsAreReadonly}
                                       defaultValue={this.getInputValue('transferExecution')}
                                       onChange={this.onInputChange}
                                       options={[
@@ -421,11 +431,13 @@ class TransferBudgetCreate extends Component {
     }
 }
 
-TransferBudgetCreate.contextTypes = {
+TransferBudget.contextTypes = {
     translate: PropTypes.func
 };
 
-TransferBudgetCreate.propTypes = {
+TransferBudget.propTypes = {
+    // inline props
+    inputsAreReadonly: PropTypes.bool,
     mode: PropTypes.string,
     id: PropTypes.string,
     // data
@@ -435,6 +447,10 @@ TransferBudgetCreate.propTypes = {
     dropdownData: PropTypes.object,
     // actions
     editTransferField: PropTypes.func
+};
+
+TransferBudget.defaultProps = {
+    inputsAreReadonly: false
 };
 
 const mapStateToProps = ({ transfersBudget }, ownProps) => {
@@ -454,4 +470,4 @@ const mapDispatchToProps = {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(TransferBudgetCreate);
+)(TransferBudget);

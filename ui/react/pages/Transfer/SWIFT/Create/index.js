@@ -82,7 +82,6 @@ class TransfersSWIFTCreate extends Component {
             return;
         }
         this.openPopup(popups.confirmTransfer);
-        debugger;
         this.props.requestOTP(this.props.data.getIn(['sender', 'bank']), this.props.data.getIn(['sender', 'phone']));
     }
 

@@ -6,7 +6,7 @@ import { uppercasedInputs } from '../../../containers/Transfer/Budget/config';
 
 const editPropertyMapping = {
     'create': 'data',
-    'edit': 'edited'
+    'details': 'edited'
 };
 
 // PRIVATE HELPERS
@@ -22,6 +22,23 @@ const getPaymentTypesDropdownData = (iban) => {
     return paymentTypesDropdownData;
 };
 
+const getIbanInfo = (iban) => {
+    let bicIdentifier = iban.substr(4, 4).toUpperCase();
+    let correspondingBic = bics.find(bic => bic.identifier === bicIdentifier);
+    if (correspondingBic) {
+        return {
+            bic: correspondingBic.bic,
+            bank: correspondingBic.bank.toUpperCase()
+        };
+    };
+};
+
+const parseBudgetTransferGetResult = (result) => {
+    // TODO add more parsing if needed.
+    // For now only return the data portion of the result, containing all transfer data.
+    return result.data;
+};
+
 // EXPORTED REDUCERS
 
 export const getScreenConfiguration = (state, action, options) => {
@@ -32,12 +49,20 @@ export const getScreenConfiguration = (state, action, options) => {
     return state;
 };
 
-export const fetchCustomerData = (state, action, options) => {
+export const getTransfer = (state, action, options) => {
     const { activeTabMode, activeTabId } = options;
-    if (action.methodRequestState === methodRequestState.FINISHED && !action.error) {
-        return state
-            .setIn([activeTabMode, activeTabId, 'remote', 'customerData'], immutable.fromJS(action.result.customerData))
-            .setIn([activeTabMode, activeTabId, 'remote', 'customerData', 'name'], `${action.result.customerData.firstName} ${action.result.customerData.lastName}`);
+    if (action.methodRequestState === methodRequestState.REQUESTED) {
+        return state.setIn([activeTabMode, activeTabId], immutable.fromJS(defaultTransferState));
+    }
+    if (action.methodRequestState === methodRequestState.FINISHED) {
+        state = state.setIn([activeTabMode, activeTabId, 'data'], immutable.fromJS(parseBudgetTransferGetResult(action.result)));
+        const iban = action.result.data.iban;
+        let correspondingBic = getIbanInfo(iban);
+        let paymentTypesDropdownData = getPaymentTypesDropdownData(iban);
+        state = state
+            .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'bic'], correspondingBic.bic)
+            .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'bank'], correspondingBic.bank.toUpperCase())
+            .setIn([activeTabMode, activeTabId, 'dropdownData', 'paymentType'], immutable.fromJS(paymentTypesDropdownData));
     }
     return state;
 };
@@ -91,8 +116,7 @@ export const editTransferField = (state, action, options) => {
         }
     }
     if (field === 'iban' && value.length === 22) {
-        let bicIdentifier = value.substr(4, 4).toUpperCase();
-        let correspondingBic = bics.find(bic => bic.identifier === bicIdentifier);
+        const correspondingBic = getIbanInfo(value);
         if (correspondingBic) {
             state = state
                 .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'bic'], correspondingBic.bic)
