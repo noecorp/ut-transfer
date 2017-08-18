@@ -134,12 +134,16 @@ export const editTransferField = (state, action, options) => {
         if (value === 'legalEntity') {
             state = state
                 .deleteIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'liableEntityInfo', 'personalIdentifier'])
-                .deleteIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'liableEntityInfo', 'foreignResidentIdentifier']);
+                .deleteIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'liableEntityInfo', 'foreignResidentIdentifier'])
+                .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'personalIdentifier'], '')
+                .deleteIn([activeTabMode, activeTabId, 'errors', 'personalIdentifier']);
         }
         if (value === 'foreignResident') {
             state = state
                 .deleteIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'liableEntityInfo', 'bulstat'])
-                .deleteIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'liableEntityInfo', 'foreignResidentIdentifier']);
+                .deleteIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'liableEntityInfo', 'foreignResidentIdentifier'])
+                .setIn([activeTabMode, activeTabId, editPropertyMapping[activeTabMode], 'personalIdentifier'], '')
+                .deleteIn([activeTabMode, activeTabId, 'errors', 'personalIdentifier']);
         }
     }
     return state;

@@ -143,9 +143,12 @@ class TransferBudget extends Component {
                         <Input
                           key='key'
                           type='text'
-                          value={this.getInputValue(['liableEntityInfo', 'personalIdentifier'])}
-                          keyProp={['liableEntityInfo', 'personalIdentifier']}
+                          value={this.getInputValue(['personalIdentifier'])}
+                          keyProp={'personalIdentifier'}
                           readonly={inputsAreReadonly || liableEntityType !== 'person'}
+                          isValid={!this.props.errors.get('personalIdentifier')}
+                          errorMessage={this.props.errors.get('personalIdentifier')}
+                          validators={this.getValidationRules('personalIdentifier')}
                           placeholder={this.translate('Personal Identifier')}
                           onChange={this.onInputChange}
                         />
@@ -162,7 +165,7 @@ class TransferBudget extends Component {
                           onChange={this.onInputChange}
                         />
                     </div>
-                    <div style={{flex: 1}}></div>
+                    <div style={{flex: 1}} />
                     <div style={{flex: 15}}>
                         <Input
                           key='key'

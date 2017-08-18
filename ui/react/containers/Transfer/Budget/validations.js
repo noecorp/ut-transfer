@@ -73,6 +73,14 @@ export const validations = {
         rules: [
             { type: textValidations.isRequired, errorMessage: <Text>Document Number is required</Text> }
         ]
+    },
+    personalIdentifier: {
+        key: ['personalIdentifier'],
+        type: validationTypes.text,
+        rules: [
+            { type: textValidations.isRequired, errorMessage: <Text>EGN is required</Text> },
+            { type: textValidations.uniformCivilNumber, errorMessage: <Text>EGN is invalid</Text> }
+        ]
     }
 };
 
@@ -115,6 +123,14 @@ export const customValidations = [
                 isRequired: true,
                 errorMessage: <Text>Payment System is required</Text>
             }
+        ]
+    },
+    {
+        field: 'personalIdentifier',
+        key: ['personalIdentifier'],
+        type: validationTypes.text,
+        rules: [
+            { type: textValidations.uniformCivilNumber, errorMessage: <Text>EGN is invalid</Text> }
         ]
     }
 ];
