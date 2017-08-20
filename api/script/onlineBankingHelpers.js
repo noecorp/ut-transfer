@@ -40,7 +40,7 @@ const createBudgetTransfer = ({ data, transferId, id, transferDateTime }) => {
             name: data.destinationName
         },
         reason: `${data.reason}`,
-        debit: Number(data.amount),
+        debit: Number(data.amount).toFixed(2),
         credit: 0,
         dateTime: transferDateTime
     };
@@ -60,7 +60,7 @@ const createSWIFTTransfer = ({ data, transferId, id, transferDateTime }) => {
             name: data.beneficiary.recipient
         },
         reason: `${data.transfer.reason}`,
-        debit: Number(data.sender.sum),
+        debit: Number(data.sender.sum).toFixed(2),
         credit: 0,
         dateTime: transferDateTime
     };

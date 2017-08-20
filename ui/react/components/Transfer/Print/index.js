@@ -1,5 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 
+import Text from 'ut-front-react/components/Text';
+
+import Header from './Header';
 import Field from './Field';
 import Title from './Title';
 import print from './style.css';
@@ -27,9 +30,10 @@ class Print extends Component {
         return (
             <div className={print.pageWrap}>
                 <div className={print.slipWrap}>
+                    <Header />
                     {printConfig[this.props.transferType].map(row => {
                         return (<div className={print.row}>
-                            {row.title && <div className={print.rowTitle}>{row.title}</div>}
+                            {row.title && <div className={print.rowTitle}><Text>{row.title}</Text></div>}
                             <div className={print.rowItems}>
                                 {row.items.map(item => {
                                     if (item.type === 'field') {

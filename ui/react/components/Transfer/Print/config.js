@@ -11,20 +11,20 @@ const budget = [
         { type: 'field', label: 'Beneficiary Bank', dataPath: ['bank'] }
     ] },
     { items: [
-        { type: 'title', flex: 3, heading: 'Payment slip', summary: 'For transfer from/to the Budget' },
+        { type: 'title', flex: 3, heading: 'Payment Order', summary: 'For transfer from/to the budget' },
         { type: 'field', flex: 2, label: 'Currency', defaultValue: 'BGN' },
         { type: 'field', flex: 2, label: 'Amount', dataPath: ['amount'], align: 'right' }
     ] },
     { items: [
-        { type: 'field', label: 'Reason', dataPath: ['reason'] }
+        { type: 'field', label: 'Payment Reason', dataPath: ['reason'] }
     ] },
     { items: [
-        { type: 'field', label: 'More Reason', dataPath: ['moreReason'] }
+        { type: 'field', label: 'Additional Payment Reason', dataPath: ['moreReason'] }
     ] },
     { items: [
-        { type: 'field', flex: 1, label: 'D.Type', dataPath: ['documentType'] },
-        { type: 'field', flex: 10, label: 'Doc. Number', dataPath: ['documentNumber'] },
-        { type: 'field', flex: 10, label: 'Doc. Date', dataPath: ['documentDate'] }
+        { type: 'field', flex: 2, label: 'Doc. Type', dataPath: ['documentType'] },
+        { type: 'field', flex: 5, label: 'Doc. Number', dataPath: ['documentNumber'] },
+        { type: 'field', flex: 5, label: 'Doc. Date', dataPath: ['documentDate'] }
     ] },
     { title: 'Payment period', items: [
         { type: 'field', label: 'Start Date', dataPath: ['startDate'] },
@@ -43,7 +43,7 @@ const budget = [
     ]},
     { items: [
         { type: 'field', flex: 2, label: 'Sender IBAN', dataPath: ['sourceIban'] },
-        { type: 'field', flex: 1, label: 'Sender BIC' }
+        { type: 'field', flex: 1, label: 'Sender BIC', dataPath: ['sourceBIC'] }
     ]},
     { items: [
         { type: 'field', flex: 1, label: 'Payment System', dataPath: ['paymentSystem'] },

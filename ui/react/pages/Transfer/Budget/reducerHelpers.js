@@ -1,8 +1,10 @@
 import immutable from 'immutable';
-import { bics, paymentTypes } from './staticData';
-import { defaultTransferState } from './defaultState';
 import { methodRequestState } from 'ut-front-react/constants';
+
+import { paymentTypes } from './staticData';
+import { defaultTransferState } from './defaultState';
 import { uppercasedInputs } from '../../../containers/Transfer/Budget/config';
+import { getIbanInfo } from '../helpers';
 
 const editPropertyMapping = {
     'create': 'data',
@@ -20,17 +22,6 @@ const getPaymentTypesDropdownData = (iban) => {
         paymentTypesDropdownData.push({ key, name });
     });
     return paymentTypesDropdownData;
-};
-
-const getIbanInfo = (iban) => {
-    let bicIdentifier = iban.substr(4, 4).toUpperCase();
-    let correspondingBic = bics.find(bic => bic.identifier === bicIdentifier);
-    if (correspondingBic) {
-        return {
-            bic: correspondingBic.bic,
-            bank: correspondingBic.bank.toUpperCase()
-        };
-    };
 };
 
 const parseBudgetTransferGetResult = (result) => {
