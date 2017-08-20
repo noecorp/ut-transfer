@@ -71,28 +71,9 @@ class TransfersSWIFTCreate extends Component {
         this.props.fetchAccounts();
     }
 
-    createSwift() {
-        let createValidationRules = getTransferSWIFTValidations();
-        let validation = validateAll(this.props.data, createValidationRules);
-        performCustomValidations(this.props.data, validation);
-        // TODO: add validation for routing number only when USA is selected as country
-        if (!validation.isValid) {
-            let errors = prepareErrorsWithFullKeyPath(validation.errors);
-            this.props.setErrors(errors);
-            return;
-        }
-        this.openPopup(popups.confirmTransfer);
-        this.props.requestOTP(this.props.data.getIn(['sender', 'bank']), this.props.data.getIn(['sender', 'phone']));
-    }
-
     get actionButtons() {
         const createAndClose = () => {
             this.createSwift();
-            this.onTransferSentHandler = () => {
-                this.closePopup(popups.confirmTransfer);
-                this.props.resetState();
-                this.props.resetConfirmTransferPopupState();
-            };
         };
         const close = () => {
             this.props.resetState();
@@ -106,6 +87,20 @@ class TransfersSWIFTCreate extends Component {
     }
 
     // Performs validation, if ok - opens confirm dialog.
+
+    createSwift() {
+        let createValidationRules = getTransferSWIFTValidations();
+        let validation = validateAll(this.props.data, createValidationRules);
+        performCustomValidations(this.props.data, validation);
+        // TODO: add validation for routing number only when USA is selected as country
+        if (!validation.isValid) {
+            let errors = prepareErrorsWithFullKeyPath(validation.errors);
+            this.props.setErrors(errors);
+            return;
+        }
+        this.openPopup(popups.confirmTransfer);
+        this.props.requestOTP(this.props.data.getIn(['sender', 'bank']), this.props.data.getIn(['sender', 'phone']));
+    }
 
     confirmAndSendSWIFTTransfer() {
         let password = this.props.confirmTransferPopup.getIn(['data', 'password']);
@@ -121,7 +116,6 @@ class TransfersSWIFTCreate extends Component {
                 // An error is thrown and the error popup is shown here.
                 this.closeConfirmTransferPopup();
             });
-        this.onTransferSentHandler();
     }
 
     closeConfirmTransferPopup() {
