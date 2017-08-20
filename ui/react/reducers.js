@@ -13,6 +13,7 @@ import {transferPartnerDetails} from './containers/Partners/Popups/Details/reduc
 
 import transfersBudget from './pages/Transfer/Budget/reducers';
 import transferSwift from './pages/Transfer/SWIFT/reducers';
+import transferPrint from './pages/Transfer/Print/reducers';
 import transferConfirmPopup from './containers/Transfer/ConfirmTransferPopup/reducers';
 
 const defaultStateConfig = fromJS({
@@ -49,5 +50,6 @@ export default {
 
     transfersBudget,
     transferSwift,
+    transferPrint,
     transferConfirmPopup
 };

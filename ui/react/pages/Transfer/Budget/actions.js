@@ -29,7 +29,7 @@ export const fetchAccounts = () => ({
 export const createTransfer = (params) => ({
     type: actionTypes.CREATE_TRANSFER,
     method: 'transfer.onlineBanking.transfer.create',
-    params: { ...params, transferType: 'budgetTransfer' }
+    params: { ...params, transferType: 'budget' }
 });
 
 export const getTransfer = (transferId) => ({

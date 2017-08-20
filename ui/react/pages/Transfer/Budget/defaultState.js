@@ -1,4 +1,3 @@
-import immutable from 'immutable';
 import { documentTypes } from './staticData';
 // import { confirmTransferPopupDefaultState } from '../../../containers/Transfer/ConfirmTransferPopup/defaultState';
 
@@ -27,4 +26,4 @@ export const defaultState = {
     }
 };
 
-export default immutable.fromJS(defaultState);
+export default defaultState;

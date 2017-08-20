@@ -4,7 +4,7 @@
             "id": 24,
             "transferId": "TX4079SAQT372911",
             "transferDateTime": "2017-07-18 11:21",
-            "transferType": "budgetTransfer",
+            "transferType": "budget",
             "data": {
                 "paymentType": "442200",
                 "sourceIban": "BG39CREX92601016221000",

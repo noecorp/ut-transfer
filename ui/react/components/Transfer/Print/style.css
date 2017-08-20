@@ -1,0 +1,24 @@
+.pageWrap {
+    background: white;
+    padding: 10px;
+}
+.slipWrap {
+    display: flex;
+    flex-direction: column;
+}
+.row {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5px;
+}
+.rowTitle {
+    margin: 0 5px;
+    padding-bottom: 5px;
+    font-size: 1em;
+    border-bottom: 1px solid #eee;
+}
+.rowItems {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

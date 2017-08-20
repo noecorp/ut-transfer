@@ -549,10 +549,10 @@ module.exports = {
             transferType,
             data
         };
-        if (msg.transferType === 'budgetTransfer') {
+        if (msg.transferType === 'budget') {
             transfer = createBudgetTransfer({ data, transferId, id, transferDateTime });
         }
-        if (msg.transferType === 'SWIFTTransfer') {
+        if (msg.transferType === 'swift') {
             transfer = createSWIFTTransfer({ data, transferId, id, transferDateTime });
         }
 

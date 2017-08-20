@@ -1,0 +1,20 @@
+.fieldWrap {
+    display: flex;
+    flex-direction: column;
+    margin: 0 5px;
+}
+.label {
+    display: block;
+    font-size: 10px;
+}
+.field {
+    padding: 3px;
+    font-family: 'Roboto Mono', monospace;
+    border: 1px solid #ccc;
+    letter-spacing: 6.1px;
+    min-height: 30px;
+    background-color: #fff; 
+    background-image: 
+        repeating-linear-gradient(to right, transparent, transparent 13.5px, #ddd 14.5px);
+    background-size: 100% 5px;
+}

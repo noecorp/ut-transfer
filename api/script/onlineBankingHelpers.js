@@ -33,7 +33,7 @@ const createBudgetTransfer = ({ data, transferId, id, transferDateTime }) => {
         id,
         transferId,
         sourceAccount: data.account,
-        type: 'budgetTransfer',
+        transferType: 'budget',
         destinationAccount: {
             bank: data.bank,
             iban: data.iban,
@@ -53,7 +53,7 @@ const createSWIFTTransfer = ({ data, transferId, id, transferDateTime }) => {
         id,
         transferId,
         sourceAccount: data.sender.sourceAccount,
-        type: 'SWIFTTransfer',
+        transferType: 'swift',
         destinationAccount: {
             bank: data.bankBeneficiary.name,
             iban: data.beneficiary.accountNumber,

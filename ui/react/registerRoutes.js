@@ -10,5 +10,7 @@ export default () => {
     registerRoute('ut-transfer:transfersBudgetDetails').path('details/:id').parent('ut-transfer:transfersBudget');
     registerRoute('ut-transfer:transfersSWIFT').path('swift').parent('ut-transfer:transfers');
     registerRoute('ut-transfer:transfersSWIFTCreate').path('create').parent('ut-transfer:transfersSWIFT');
+    // root
+    registerRoute('ut-transfer:printTransfer').path('print/:transferType/:id').parent('ut-transfer:transfers');
     return mainRoute;
 };

@@ -5,7 +5,7 @@
             "currency": "BGN",
             "transferId": "TX8812EFDN168761",
             "sourceAccount": 1,
-            "type": "budgetTransfer",
+            "transferType": "budget",
             "destinationAccount": {
                 "bank": "ИНВЕСТБАНК",
                 "iban": "BG53IORT73758402020000",
@@ -21,7 +21,7 @@
             "currency": "BGN",
             "transferId": "TX6951OWMK630323",
             "sourceAccount": 2,
-            "type": "budgetTransfer",
+            "transferType": "budget",
             "destinationAccount": {
                 "bank": "ИНВЕСТБАНК",
                 "iban": "BG53IORT73758402020000",
@@ -36,7 +36,7 @@
             "id": 3,
             "currency": "EUR",
             "transferId": "TX3790QARV347197",
-            "type": "SWIFTTransfer",
+            "transferType": "swift",
             "sourceAccount": {
                 "bank": "ROYAL BANK OF SCOTLAND",
                 "iban": "GB29RBOS60161331926819",
@@ -52,7 +52,7 @@
             "id": 4,
             "currency": "BGN",
             "transferId": "TX8812EFDN168761",
-            "type": "budgetTransfer",
+            "transferType": "budget",
             "destinationAccount": 1,
             "sourceAccount": {
                 "bank": "БАНКА ДСК",
@@ -68,7 +68,7 @@
             "id": 5,
             "currency": "BGN",
             "transferId": "TX8922EACN168765",
-            "type": "budgetTransfer",
+            "transferType": "budget",
             "destinationAccount": 2,
             "sourceAccount": {
                 "bank": "БАНКА ДСК",
@@ -84,7 +84,7 @@
             "id": 6,
             "currency": "EUR",
             "transferId": "TX3790QARV347197",
-            "type": "SWIFTTransfer",
+            "transferType": "swift",
             "sourceAccount": 3,
             "destinationAccount": {
                 "bank": "AIB BANK DUBLIN",
@@ -101,7 +101,7 @@
             "currency": "BGN",
             "transferId": "TX8812EFDN168761",
             "sourceAccount": 1,
-            "type": "budgetTransfer",
+            "transferType": "budget",
             "destinationAccount": {
                 "bank": "ТБ ИНВЕСТБАНК АД",
                 "iban": "BG53IORT73758402020000",
@@ -117,7 +117,7 @@
             "currency": "BGN",
             "transferId": "TX5874OWMK6332179",
             "sourceAccount": 2,
-            "type": "budgetTransfer",
+            "transferType": "budget",
             "destinationAccount": {
                 "bank": "ТБ ИНВЕСТБАНК АД",
                 "iban": "BG96IORT73798400080000",
@@ -132,7 +132,7 @@
             "id": 9,
             "currency": "EUR",
             "transferId": "TX3790QARV347197",
-            "type": "SWIFTTransfer",
+            "transferType": "swift",
             "sourceAccount": 3,
             "destinationAccount": {
                 "bank": "AIB BANK DUBLIN",
@@ -149,7 +149,7 @@
             "currency": "BGN",
             "transferId": "TX8812EFDN168761",
             "sourceAccount": 1,
-            "type": "budgetTransfer",
+            "transferType": "budget",
             "destinationAccount": {
                 "bank": "ТБ ИНВЕСТБАНК АД",
                 "iban": "BG53IORT73758402020000",
@@ -165,7 +165,7 @@
             "currency": "BGN",
             "transferId": "TX6698ERMA03972171",
             "sourceAccount": 2,
-            "type": "budgetTransfer",
+            "transferType": "budget",
             "destinationAccount": {
                 "bank": "УНИКРЕДИТ БУЛБАНК АД",
                 "iban": "BG96IORT73798400080000",
@@ -180,7 +180,7 @@
             "id": 12,
             "currency": "EUR",
             "transferId": "TX6647QAER671528",
-            "type": "SWIFTTransfer",
+            "transferType": "swift",
             "sourceAccount": {
                 "bank": "SPARKASSE LUENEBURG",
                 "iban": "DE89240501100011005865",
@@ -201,7 +201,7 @@
                 "iban": "BG73IORT80488687372400",
                 "name": "НЗОК БЛАГОЕВГРАД"
             },
-            "type": "budgetTransfer",
+            "transferType": "budget",
             "destinationAccount": 1,
             "reason": "ЗАХРАНВАНЕ СМЕТКА",
             "debit": 0,
@@ -213,7 +213,7 @@
             "currency": "BGN",
             "transferId": "TX6698ERMA03972171",
             "sourceAccount": 2,
-            "type": "budgetTransfer",
+            "transferType": "budget",
             "destinationAccount": {
                 "bank": "МБ СВОБОДНА ЗОНА БУРГАС",
                 "iban": "BG80STSA93008210083500",
@@ -228,7 +228,7 @@
             "id": 15,
             "currency": "EUR",
             "transferId": "TX6647QAER671528",
-            "type": "SWIFTTransfer",
+            "transferType": "swift",
             "sourceAccount": {
                 "bank": "SPARKASSE LUENEBURG",
                 "iban": "DE89240501100011005865",
@@ -245,7 +245,7 @@
             "currency": "BGN",
             "transferId": "TX2199AAPP888902",
             "sourceAccount": 1,
-            "type": "budgetTransfer",
+            "transferType": "budget",
             "destinationAccount": {
                 "bank": "ИНВЕСТБАНК",
                 "iban": "BG53IORT73758402020000",
@@ -261,7 +261,7 @@
             "currency": "EUR",
             "transferId": "TX2873EXNA795138",
             "sourceAccount": 2,
-            "type": "SWIFTTransfer",
+            "transferType": "swift",
             "destinationAccount": {
                 "bank": "SOCIETE GENERALE",
                 "iban": "TEST",
@@ -277,7 +277,7 @@
             "currency": "BGN",
             "transferId": "TX9060ZUKP921956",
             "sourceAccount": 2,
-            "type": "budgetTransfer",
+            "transferType": "budget",
             "destinationAccount": {
                 "bank": "ОБЩИНСКА БАНКА",
                 "iban": "BG24SOMB91308413443044",
@@ -293,7 +293,7 @@
             "currency": "BGN",
             "transferId": "TX0668VFIV820064",
             "sourceAccount": 1,
-            "type": "budgetTransfer",
+            "transferType": "budget",
             "destinationAccount": {
                 "bank": "БАНКА ДСК",
                 "iban": "BG16STSA93008210083100",
@@ -309,7 +309,7 @@
             "currency": "BGN",
             "transferId": "TX9647GXKN323814",
             "sourceAccount": 2,
-            "type": "budgetTransfer",
+            "transferType": "budget",
             "destinationAccount": {
                 "bank": "ОБЩИНСКА БАНКА",
                 "iban": "BG24SOMB91308413443044",
@@ -325,7 +325,7 @@
             "currency": "BGN",
             "transferId": "TX5326DDUH598732",
             "sourceAccount": 1,
-            "type": "budgetTransfer",
+            "transferType": "budget",
             "destinationAccount": {
                 "bank": "БАНКА ДСК",
                 "iban": "BG16STSA93008210083100",
@@ -345,7 +345,7 @@
                 "iban": "BG16STSA93008210083100",
                 "name": "ЕЛЕНА ГЕОРГИЕВА"
             },
-            "type": "creditTransfer",
+            "transferType": "credit",
             "destinationAccount": 1,
             "reason": "ЗАХРАНВАНЕ СМЕТКА",
             "debit": 0,
@@ -361,7 +361,7 @@
                 "iban": "BG95FINV93008210083100",
                 "name": "ИВАН ПЕТРОВ"
             },
-            "type": "creditTransfer",
+            "transferType": "credit",
             "destinationAccount": 2,
             "reason": "НАЕМ М.7 СОФИЯ - МЛАДОСТ 1А",
             "debit": 0,
@@ -373,7 +373,7 @@
             "id": 24,
             "transferId": "TX4079SAQT372911",
             "sourceAccount": 2,
-            "type": "budgetTransfer",
+            "transferType": "budget",
             "destinationAccount": {
                 "bank": "ОБЩИНСКА БАНКА",
                 "iban": "BG79SOMB91308410296344",

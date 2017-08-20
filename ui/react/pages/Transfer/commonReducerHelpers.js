@@ -1,8 +1,6 @@
 import immutable from 'immutable';
 import { methodRequestState } from 'ut-front-react/constants';
 
-import { confirmTransferPopupDefaultState } from '../../containers/Transfer/ConfirmTransferPopup/defaultState';
-
 export const setActiveTab = (state, action, options) => {
     return state.set('activeTabData', immutable.Map({
         mode: action.params.mode,

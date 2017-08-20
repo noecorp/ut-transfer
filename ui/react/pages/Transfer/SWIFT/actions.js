@@ -59,5 +59,5 @@ export const resetState = () => ({
 export const createTransfer = (params) => ({
     type: actionTypes.CREATE_TRANSFER,
     method: 'transfer.onlineBanking.transfer.create',
-    params: { ...params, transferType: 'SWIFTTransfer' }
+    params: { ...params, transferType: 'swift' }
 });

@@ -1,0 +1,12 @@
+.titleWrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+.row {
+    text-align: center;
+}
+.rowLarge {
+    font-size: 1.4em;
+    line-height: 1.2em;
+}

@@ -6,8 +6,8 @@ import {
     Partner,
     TransferBudgetDetails,
     TransferBudgetCreate,
-    // TransfersSWIFT, // TODO - use if needed
-    TransferSWIFTCreate
+    TransferSWIFTCreate,
+    TransferPrint
 } from './pages';
 
 export const mainRoute = registerRoutes();
@@ -26,6 +26,16 @@ export const UtTransferRoutes = () => {
                     <IndexRoute component={TransferSWIFTCreate} />
                     <Route path={getRoute('ut-transfer:transfersSWIFTCreate')} component={TransferSWIFTCreate} />
                 </Route>
+            </Route>
+        </Route>
+    );
+};
+
+export const UtTransferRootRoutes = () => {
+    return (
+        <Route path={getRoute('ut-transfer:home')}>
+            <Route path={getRoute('ut-transfer:transfers')}>
+                <Route path={getRoute('ut-transfer:printTransfer')} component={TransferPrint} />
             </Route>
         </Route>
     );
