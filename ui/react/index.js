@@ -31,7 +31,7 @@ export const UtTransferRoutes = () => {
     );
 };
 
-export const UtTransferRootRoutes = () => {
+export const UtTransferMasterRoutes = () => {
     return (
         <Route path={getRoute('ut-transfer:home')}>
             <Route path={getRoute('ut-transfer:transfers')}>
