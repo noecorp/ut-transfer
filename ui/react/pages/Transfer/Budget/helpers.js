@@ -1,6 +1,8 @@
 import React from 'react';
+import { validationTypes, textValidations } from 'ut-front-react/validator/constants.js';
 import Text from 'ut-front-react/components/Text';
 import { customValidations } from '../../../containers/Transfer/Budget/validations';
+import {isValidUniformCivilNumberRule} from 'ut-front-react/validator';
 
 export const prepareTransferBudgetToSend = (data, auth) => {
     return {
@@ -25,6 +27,15 @@ export const performCustomValidations = (data, validationResult) => {
                     key: validation.key,
                     errorMessage: rule.errorMessage
                 });
+            }
+            if (validation.type === validationTypes.text && rule.type === textValidations.uniformCivilNumber && data.get('liableEntityType') === 'person') {
+                let result = {};
+                isValidUniformCivilNumberRule(data.get('personalIdentifier') || '', rule, result);
+                if (result.isValid === false) {
+                    let err = result.errors[result.errors.length - 1];
+                    err.key = validation.key;
+                    validationResult.errors.push(err);
+                }
             }
         });
     });
