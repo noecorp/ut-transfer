@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
-const randomize = require('randomatic');
-const Nexmo = require('nexmo');
+// const randomize = require('randomatic');
+// const Nexmo = require('nexmo');
 const {
     generateTransferId,
     generateTransferDateTime,
@@ -16,10 +16,10 @@ const {
     dataTypes: mockDataType
 } = require('./onlineBankingRepository');
 
-var nexmo = new Nexmo({
-    apiKey: 'b248da3d', // '036be2be',
-    apiSecret: 'cecaf5e174a8cb02' // '9970f46b95ae70c7'
-});
+// var nexmo = new Nexmo({
+//     apiKey: 'b248da3d', // '036be2be',
+//     apiSecret: 'cecaf5e174a8cb02' // '9970f46b95ae70c7'
+// });
 
 const DECLINED = {
     ledger: ['transfer.insufficientFunds', 'transfer.invalidAccount', 'transfer.genericDecline', 'transfer.incorrectPin'],

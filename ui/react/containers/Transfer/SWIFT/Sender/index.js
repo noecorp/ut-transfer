@@ -11,12 +11,8 @@ import classnames from 'classnames';
 
 import {changeField} from '../../../../pages/Transfer/SWIFT/actions';
 import {
-    phoneValidation,
-    nameValidation,
-    ibanOrdererValidation,
     addressValidation,
     cityValidation,
-    currencyValidation,
     sumValidation
 } from './validations';
 

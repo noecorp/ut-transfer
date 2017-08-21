@@ -3,10 +3,12 @@
   "version": "6.19.1",
   "main": "./index.js",
   "dependencies": {
+    "classnames": "^2.2.5",
     "immutable": "^3.8.1",
     "joi": "10.0.6",
     "nexmo": "^2.0.2",
-    "randomatic": "^1.1.7"
+    "randomatic": "^1.1.7",
+    "ut-customer": "^6.22.6"
   },
   "devDependencies": {
     "ut-tools": "^5.17.26",

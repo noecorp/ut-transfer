@@ -6,7 +6,6 @@ import Input from 'ut-front-react/components/Input';
 import style from './style.css';
 
 class SaveTemplatePopup extends Component {
-//
     constructor(props) {
         super(props);
         this.onNameChange = this.onNameChange.bind(this);
@@ -52,9 +51,8 @@ class SaveTemplatePopup extends Component {
                     </div>
                 </div>
             </Popup>
-        )
+        );
     }
-//
 }
 
 SaveTemplatePopup.propTypes = {

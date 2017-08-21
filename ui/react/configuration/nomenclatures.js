@@ -4,6 +4,5 @@ const nomenclatures = {
     ]
 
 };
- 
+
 export default nomenclatures;
- 

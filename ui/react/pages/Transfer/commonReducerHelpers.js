@@ -30,5 +30,3 @@ export const fetchAccounts = (state, action, options) => {
     }
     return state;
 };
-
-
