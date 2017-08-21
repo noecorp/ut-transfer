@@ -35,7 +35,7 @@ export const validations = {
         type: validationTypes.text,
         rules: [
             { type: textValidations.isRequired, errorMessage: <Text>IBAN is required</Text> },
-            { type: textValidations.length, minVal: 22, maxVal: 22, errorMessage: <Text>IBAN must have a length of 22</Text> }
+            { type: textValidations.iban, errorMessage: <Text>IBAN must be valid</Text> }
         ]
     },
     paymentType: {
@@ -86,43 +86,38 @@ export const validations = {
 
 export const customValidations = [
     {
+        field: 'iban',
+        key: ['iban'],
+        rules: [
+            { type: textValidations.iban, errorMessage: <Text>IBAN must be valid</Text> }
+        ]
+    },
+    {
         field: 'documentDate',
         key: ['documentDate'],
         rules: [
-            {
-                isRequired: true,
-                errorMessage: <Text>Document Date is required</Text>
-            }
+            { isRequired: true, errorMessage: <Text>Document Date is required</Text> }
         ]
     },
     {
         field: 'startDate',
         key: ['startDate'],
         rules: [
-            {
-                isRequired: true,
-                errorMessage: <Text>Payment Start Date is required</Text>
-            }
+            { isRequired: true, errorMessage: <Text>Payment Start Date is required</Text> }
         ]
     },
     {
         field: 'endDate',
         key: ['endDate'],
         rules: [
-            {
-                isRequired: true,
-                errorMessage: <Text>Payment End Date is required</Text>
-            }
+            { isRequired: true, errorMessage: <Text>Payment End Date is required</Text> }
         ]
     },
     {
         field: 'paymentSystem',
         key: ['paymentSystem'],
         rules: [
-            {
-                isRequired: true,
-                errorMessage: <Text>Payment System is required</Text>
-            }
+            { isRequired: true, errorMessage: <Text>Payment System is required</Text> }
         ]
     },
     {
