@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
-// const randomize = require('randomatic');
-// const Nexmo = require('nexmo');
+const randomize = require('randomatic');
+const Nexmo = require('nexmo');
 const {
     generateTransferId,
     generateTransferDateTime,
@@ -16,10 +16,10 @@ const {
     dataTypes: mockDataType
 } = require('./onlineBankingRepository');
 
-// var nexmo = new Nexmo({
-//     apiKey: 'b248da3d', // '036be2be',
-//     apiSecret: 'cecaf5e174a8cb02' // '9970f46b95ae70c7'
-// });
+var nexmo = new Nexmo({
+    apiKey: 'b248da3d',
+    apiSecret: 'cecaf5e174a8cb02'
+});
 
 const DECLINED = {
     ledger: ['transfer.insufficientFunds', 'transfer.invalidAccount', 'transfer.genericDecline', 'transfer.incorrectPin'],
@@ -528,6 +528,7 @@ module.exports = {
     },
     'onlineBanking.transfer.create': function(msg, $meta) {
         const { transferType, data, auth } = msg;
+
         const id = getNewTransferId();
         const transferId = generateTransferId();
         const transferDateTime = generateTransferDateTime();
@@ -604,23 +605,19 @@ module.exports = {
         return { templates };
     },
     'onlineBanking.transfer.requestOTP': function(msg, $meta) {
+        const otp = randomize('0', 6);
+        const callback = (error, result) => {
+            if (error) return error;
+            const mockOTPData = readMockData(mockDataType.otp);
+            result.messages[0].otp = otp;
+            mockOTPData.otps.push(result.messages[0]);
+            writeMockData(mockDataType.otp, mockOTPData);
+            return result;
+        };
+        nexmo.message.sendSms(msg.bank, msg.recipient, otp, {
+            from: msg.bank
+        }, callback);
         return { success: true };
-        // const otp = randomize('0', 6);
-        // const callback = (error, result) => {
-        //     if (error) return error;
-        //     const mockOTPData = readMockData(mockDataType.otp);
-        //     // const mockOTPPath = path.resolve(__dirname, '../', '../', 'mocks', 'onlineBanking', 'otp.json');
-        //     // let mockOTPData = JSON.parse(fs.readFileSync(mockOTPPath, 'UTF-8'));
-        //     result.messages[0].otp = otp;
-        //     mockOTPData.otps.push(result.messages[0]);
-        //     writeMockData(mockDataType.otp, mockOTPData);
-        //     // fs.writeFileSync(mockOTPPath, JSON.stringify(mockOTPData));
-        //     return result;
-        // };
-        // nexmo.message.sendSms(msg.bank, msg.recipient, otp, {
-        //     from: msg.bank
-        // }, callback);
-        // return { success: true };
     },
     'onlineBanking.transfer.validateOTP': function(msg, $meta) {
         const { otp: reqOtp } = msg;
