@@ -33,13 +33,15 @@ class TransferBudgetDetails extends Component {
     }
 
     renderFeatureButtons() {
+        const handlePrintClick = () => {
+            let link = getLink('ut-transfer:printTransfer', { transferType: 'budget', id: this.props.params.id });
+            let href = this.props.router.createHref(link);
+            window.open(href, '_blank');
+        };
         return (
             <div className={transferStyle.templatesSection}>
                 <div className={transferStyle.templatesButton}>
-                    <Button sizeType='small' >{this.translate('Print')}</Button>
-                </div>
-                <div id='printContent' style={{ display: 'none' }}>
-                    Print content
+                    <Button sizeType='small' onClick={handlePrintClick}>{this.translate('Print')}</Button>
                 </div>
             </div>
         );
@@ -68,6 +70,7 @@ TransferBudgetDetails.contextTypes = {
 };
 
 TransferBudgetDetails.propTypes = {
+    router: PropTypes.object,
     params: PropTypes.object,
     setActiveTab: PropTypes.func,
     fetchAccounts: PropTypes.func,
