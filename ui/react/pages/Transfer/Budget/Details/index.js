@@ -41,7 +41,6 @@ class TransferBudgetDetails extends Component {
                 <div id='printContent' style={{ display: 'none' }}>
                     Print content
                 </div>
-                <iframe id='printIframe' style={{ height: '0', width: '0', position: 'absolute' }} />
             </div>
         );
     }
