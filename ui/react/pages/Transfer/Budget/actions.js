@@ -5,6 +5,11 @@ export const setActiveTab = ({ mode, id }) => ({
     params: { mode, id }
 });
 
+export const setTransferBudgetCreateData = (data) => ({
+    type: actionTypes.SET_TRANSFER_BUDGET_CREATE_DATA,
+    params: { data }
+});
+
 export const setErrors = (errors) => ({
     type: actionTypes.SET_ERRORS,
     params: { errors }
@@ -15,11 +20,6 @@ export const getScreenConfiguration = (key) => ({
     method: 'user.screenConfiguration.get',
     params: { key }
 });
-
-// export const fetchCustomerData = () => ({
-//     type: actionTypes.FETCH_CUSTOMER_DATA,
-//     method: 'transfer.onlineBanking.customerData.fetch'
-// });
 
 export const fetchAccounts = () => ({
     type: actionTypes.FETCH_ACCOUNTS,

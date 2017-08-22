@@ -32,6 +32,14 @@ const parseBudgetTransferGetResult = (result) => {
 
 // EXPORTED REDUCERS
 
+export const setTransferBudgetCreateData = (state, action, options) => {
+    const data = action.params.data.data;
+    let paymentTypesDropdownData = getPaymentTypesDropdownData(data.iban);
+    return state
+        .setIn(['create', 'create', 'data'], immutable.fromJS(data))
+        .setIn(['create', 'create', 'dropdownData', 'paymentType'], immutable.fromJS(paymentTypesDropdownData));
+};
+
 export const getScreenConfiguration = (state, action, options) => {
     const { activeTabMode, activeTabId } = options;
     if (action.methodRequestState === methodRequestState.FINISHED && !action.error) {
