@@ -1,6 +1,7 @@
 ALTER PROCEDURE [transfer].[push.create]
     @transferTypeId bigint,
     @acquirerCode varchar(50),
+    @acquirerTxState smallint = NULL,
     @transferDateTime datetime,
     @localDateTime varchar(14),
     @settlementDate varchar(14),
@@ -131,7 +132,8 @@ BEGIN TRY
         issuerFee,
         transferFee,
         description,
-        reversed
+        reversed,
+        acquirerTxState
     )
     OUTPUT
         INSERTED.*,
@@ -173,7 +175,8 @@ BEGIN TRY
         @issuerFee,
         @transferFee,
         @description,
-        0
+        0,
+        @acquirerTxState
 
     DECLARE @transferId BIGINT = @@IDENTITY
 
