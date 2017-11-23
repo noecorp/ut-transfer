@@ -23,6 +23,7 @@ const DECLINED = {
 };
 var errors = require('../../errors');
 var currency = require('../../currency');
+var count = 0;
 
 var processReversal = (bus, log, $meta) => params => {
     var transferId;
@@ -252,7 +253,7 @@ module.exports = {
                 }
             })
             .then(() => transfer)
-            .then(this.bus.importMethod(transfer.issuerPort + '.push.execute'))
+            .then(this.bus.importMethod(++count % 2 === 0 ? 'bancnet/transfer.push.execute' : 't24/transfer.push.execute'))
             .then(result => {
                 if (transfer.transferType === 'ministatement') {
                     transfer.ministatement = result.ministatement;
