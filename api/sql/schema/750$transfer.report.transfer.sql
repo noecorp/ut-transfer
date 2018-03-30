@@ -2,6 +2,7 @@ ALTER PROCEDURE [transfer].[report.transfer]
     @transferId bigint,
     @cardNumber varchar(32),
     @traceNumber bigint,
+    @transferIdIssuer varchar(100),
     @accountNumber varchar(100),
     @deviceId varchar(100),
     @processingCode varchar(100),
@@ -48,6 +49,7 @@ IF OBJECT_ID('tempdb..#transfersReport') IS NOT NULL
             t.[transferId],
             t.[credentialId],
             t.[issuerId],
+            t.[transferIdIssuer],
             t.[transferAmount],
             t.[actualAmount],
             t.[replacementAmount],
@@ -82,6 +84,7 @@ IF OBJECT_ID('tempdb..#transfersReport') IS NOT NULL
             AND (@traceNumber IS NULL OR t.[transferId] = @traceNumber OR t.[issuerSerialNumber] = @traceNumber)
             -- AND (@cardNumber IS NULL OR c.[cardNumber] LIKE '%' + @cardNumber + '%')
             AND (@cardNumber IS NULL OR t.cardId = @cardNumberId)
+            AND (@transferIdIssuer IS NULL OR t.transferIdIssuer = @transferIdIssuer)
             -- AND (@deviceId IS NULL OR t.[requestDetails].value('(/root/terminalId)[1]', 'VARCHAR(8)') LIKE '%' + @deviceId + '%')
             AND (@deviceId IS NULL OR tl.terminalId LIKE '%' + @deviceId + '%')
             AND (@processingCode IS NULL OR t.[transferTypeId] = @processingCode)
@@ -172,12 +175,11 @@ SELECT
     CASE WHEN t.issuerId != 'cbs' THEN t.issuerSerialNumber
         ELSE t.transferId
     END [traceNumber],
-    CASE t.channelType
-        WHEN 'iso' THEN t.transferIdAcquirer
-        WHEN 'atm' THEN t.issuerSerialNumber
-        ELSE t.transferId
+    CASE WHEN t.channelType = 'iso' THEN t.transferIdAcquirer
+        ELSE ''
     END [stan],
     t.retrievalReferenceNumber [rrn],
+    ISNULL(ib.bankCode, '') [bankCode],
     NULL [additionalInfo],
     t.style,
     t.alerts,
@@ -188,6 +190,8 @@ JOIN
     transfer.vTransferEvent t ON t.transferId = r.transferId
 JOIN
     [card].[card] c ON c.cardId = t.cardId
+LEFT JOIN
+    integration.banks ib ON (LEFT(credentialId, CHARINDEX('*', credentialId) - 1) BETWEEN ib.binStart AND ib.binEnd)
 WHERE
 -- if last page transactions + totals is bigger than pageSize we don't want to show transacions
     (RowNum BETWEEN @startRow AND @endRow) OR ((@startRow >= recordsTotal AND RowNum > recordsTotal - (recordsTotal % @pageSize) AND @lastPageSize <= @pageSize))
@@ -216,6 +220,7 @@ UNION ALL SELECT
     NULL AS merchantName,
     NULL AS channelType,
     NULL AS rrn,
+    NULL AS bankCode,
     NULL AS traceNumber,
     NULL AS authCode,
     NULL AS [additionalInfo],

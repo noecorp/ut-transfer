@@ -14,6 +14,11 @@ module.exports = {
                     value = 'N/A';
                 }
                 break;
+            case 'destinationAccount':
+                if (!isHeader && value && value === '1') {
+                    value = 'N/A';
+                }
+                break;
             case 'transferDateTime':
                 if (!isHeader && value) {
                     value = {

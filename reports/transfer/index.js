@@ -49,7 +49,8 @@ module.exports = (gridStyle) => ({
             { name: 'merchantName', title: 'Merchant' },
             { name: 'additionalInfo', title: 'Additional Info' },
             { name: 'alerts', title: 'Alerts' },
-            { name: 'channelType', title: 'Channel Type' }
+            { name: 'channelType', title: 'Channel Type' },
+            { name: 'bankCode', title: 'Bank Code' }
         ],
         allowColumnConfig: true,
         method: 'transfer.report.transfer',
@@ -63,9 +64,9 @@ module.exports = (gridStyle) => ({
         filterAutoFetch: false
     },
     filters: [
-        { name: 'transferId', label: 'Trans#', placeholder: 'Trans#', type: filterElementTypes.searchBox },
-        { name: 'cardNumber', label: 'Card Number', placeholder: 'Card Number', type: filterElementTypes.searchBox },
         { name: 'traceNumber', label: 'Trace Number', placeholder: 'Trace Number', type: filterElementTypes.searchBox },
+        { name: 'cardNumber', label: 'Card Number', placeholder: 'Card Number', type: filterElementTypes.searchBox },
+        { name: 'transferIdIssuer', label: 'Auth code', placeholder: 'Auth code', type: filterElementTypes.searchBox },
         { name: 'accountNumber', label: 'Account Number', placeholder: 'Account Number', type: filterElementTypes.searchBox },
         { name: 'deviceId', label: 'Device ID', placeholder: 'Device ID', type: filterElementTypes.searchBox },
         {
