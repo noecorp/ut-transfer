@@ -175,7 +175,9 @@ SELECT
     CASE WHEN t.issuerId != 'cbs' THEN t.issuerSerialNumber
         ELSE t.transferId
     END [traceNumber],
-    CASE WHEN t.channelType = 'iso' THEN t.transferIdAcquirer
+    CASE t.channelType
+        WHEN 'iso' THEN t.transferIdAcquirer
+        WHEN 'atm' THEN t.issuerSerialNumber
         ELSE ''
     END [stan],
     t.retrievalReferenceNumber [rrn],

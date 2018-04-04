@@ -28,7 +28,6 @@ module.exports = {
                 }
                 break;
             case 'stan':
-            case 'transferId':
             case 'traceNumber':
                 if (!isHeader && value) {
                     value = (`000000${value}`).slice(-6);
